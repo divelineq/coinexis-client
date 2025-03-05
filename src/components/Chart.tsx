@@ -1,12 +1,7 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import type { Trade } from "./App";
 
-type Props = {
-	trades: Trade[]
-}
-
-function LineChart({ trades }: Props) {
+function LineChart() {
 	const options = {
 		chart: {
 			type: "spline",
@@ -16,7 +11,7 @@ function LineChart({ trades }: Props) {
 		},
 		series: [
 			{
-				data: trades,
+				data: [1, 2, 3, 2, 6, 1, 13, 10],
 			},
 		],
 	};

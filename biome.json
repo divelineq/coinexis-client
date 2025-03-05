@@ -1,66 +1,30 @@
-
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-  "vcs": {
-    "enabled": true,
-    "clientKind": "git",
-    "useIgnoreFile": true,
-    "defaultBranch": "dev"
-  },
-  "files": {
-    "ignoreUnknown": false,
-    "include": ["./**/*.ts", "./**/*.tsx"],
-    "ignore": [
-      "./dist",
-      "./coverage",
-      "./.nx/cache",
-      "./.nx/workspace-data",
-      "./.vscode",
-      "**/_generated.tsx"
-    ]
-  },
-  "formatter": {
-    "enabled": true,
-    "useEditorconfig": true,
-    "formatWithErrors": false,
-    "indentStyle": "space",
-    "indentWidth": 2,
-    "lineEnding": "lf",
-    "lineWidth": 80,
-    "attributePosition": "auto",
-    "bracketSpacing": true
-  },
-  "organizeImports": { "enabled": true },
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": false,
-      "correctness": { "noUnusedImports": "warn" },
-      "complexity": { "noUselessRename": "warn" },
-      "style": {
-        "useImportType": "warn",
-        "useBlockStatements": "warn",
-        "noYodaExpression": "warn",
-        "useWhile": "warn",
-        "useExportType": "warn"
-      }
-    }
-  },
-  "css": {
-    "parser": { "cssModules": true }
-  },
-  "javascript": {
-    "formatter": {
-      "jsxQuoteStyle": "double",
-      "quoteProperties": "asNeeded",
-      "trailingCommas": "es5",
-      "semicolons": "always",
-      "arrowParentheses": "always",
-      "bracketSameLine": false,
-      "quoteStyle": "double",
-      "attributePosition": "auto",
-      "bracketSpacing": true
-    }
-  }
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"vcs": {
+		"enabled": false,
+		"clientKind": "git",
+		"useIgnoreFile": false
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"ignore": []
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab"
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double"
+		}
+	}
 }
-
