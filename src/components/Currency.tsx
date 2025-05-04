@@ -6,9 +6,9 @@ type Props = {
 };
 
 export function InfoCurrency({ currency }: Props) {
-	const { data, isLoading, isError } = useCurrencyCoin(currency);
+	const { data, isPending, isError } = useCurrencyCoin(currency);
 
-	if (!data || isLoading) {
+	if (!data || isPending) {
 		return (
 			<div className="flex gap-4 items-center justify-between p-2 m-4 bg-emerald-800 rounded-md">
 				Loading...
@@ -35,8 +35,10 @@ export function InfoCurrency({ currency }: Props) {
 					/>
 					<p>{data.name}</p>
 				</div>
-				<SparklineChart className="w-[250px]" currency={currency} />
-				<p>{`$${data.price.toFixed(2)}`}</p>
+				<SparklineChart currency={currency} />
+				<p
+					className={`${data.price_change_24h > 0 ? "text-green-500" : "text-red-500"}`}
+				>{`$${data.price.toFixed(2)}`}</p>
 				<p>{`1h: ${data.price_change_1h.toFixed(3)}`}</p>
 				<p>{`24h: ${data.price_change_24h.toFixed(3)}`}</p>
 				<p>{`7d: ${data.price_change_7d.toFixed(3)}`}</p>

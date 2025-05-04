@@ -1,6 +1,7 @@
 "use client";
 
 import { InfoCurrency } from "./components/Currency";
+import { CurrencyChart } from "./components/CurrencyChart";
 import { Header } from "./components/Header";
 
 const ALL_COIN = [
@@ -33,7 +34,7 @@ const App = () => {
 			{ALL_COIN.map((coin) => (
 				<InfoCurrency key={coin} currency={coin} />
 			))}
-			{/* <CurrencyChart currency="Bitcoin" /> */}
+			<CurrencyChart currency="Bitcoin" />
 		</div>
 	);
 };

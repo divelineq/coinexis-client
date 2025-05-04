@@ -45,5 +45,7 @@ export const useCurrencyCoin = (currency: string) => {
        `https://production-api.mobula.io/api/1/market/data?asset=${currency}`,
       );
       return res.data.data;
-    }
+    },
+    refetchInterval: 10000, 
+    staleTime: 0,
 })}
