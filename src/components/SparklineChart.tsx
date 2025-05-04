@@ -1,7 +1,7 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { useEffect, useMemo } from "react";
-import { useHistoryCoin } from "../state/useHistoryCoin";
+import { useMemo } from "react";
+import { useHistoryCoin } from "../api/useHistoryCoin";
 
 type Props = {
 	color?: string;
@@ -10,11 +10,11 @@ type Props = {
 };
 
 export const SparklineChart = ({ color, currency, className }: Props) => {
-	const { coin, error, loading, getHistoryCoin } = useHistoryCoin();
+	const { data, isLoading, isError } = useHistoryCoin(currency);
 
-	useEffect(() => {
-		getHistoryCoin(currency);
-	}, []);
+	// useEffect(() => {
+	// 	getHistoryCoin(currency);
+	// }, []);
 
 	const options: Highcharts.Options = useMemo(
 		() => ({
@@ -45,9 +45,9 @@ export const SparklineChart = ({ color, currency, className }: Props) => {
 			legend: { enabled: false },
 			series: [
 				{
-					data: !coin[currency]?.price_history
+					data: !data?.price_history
 						? []
-						: coin[currency].price_history.map((el: [number, number]) => el[1]),
+						: data?.price_history.map((el: [number, number]) => el[1]),
 					type: "spline",
 					color,
 					lineWidth: 1.5,
@@ -57,15 +57,15 @@ export const SparklineChart = ({ color, currency, className }: Props) => {
 				},
 			],
 		}),
-		[coin, color, currency],
+		[data, color, currency],
 	);
 
-	if (loading) {
+	if (isLoading) {
 		return <div>Loading...</div>;
 	}
 
-	if (error) {
-		return <div>Error: {error}</div>;
+	if (isError) {
+		return <div>Error!</div>;
 	}
 
 	return (

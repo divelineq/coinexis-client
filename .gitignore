@@ -1,24 +1,36 @@
-# Logs
-logs
-*.log
+# Node.js
+node_modules/
+
+# Логи и файлы ошибок
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Логи
+logs/
+*.log
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Файлы операционной системы
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
+
+# Кэшированные файлы
+.cache/
+
+# IDE и редакторы
+.idea/
+.vscode/
+
+# TypeScript и сборка
+dist/
+build/
+
+# Переменные окружения
+*.env
+
+# Папки для временных файлов (если они присутствуют)
+tmp/
+
+# Папки для инструментов тестирования
+coverage/
