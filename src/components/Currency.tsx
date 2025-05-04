@@ -1,16 +1,16 @@
 import { SparklineChart } from "./SparklineChart";
 import { useGetCurrency } from "./useGetCurrency";
 
-type CurrencyProps = {
+type Props = {
 	currency: string;
 };
 
-export function Currency({ currency }: CurrencyProps) {
+export function InfoCurrency({ currency }: Props) {
 	const { value, loading, error } = useGetCurrency(currency);
 
 	if (loading) {
 		return (
-			<div className="flex justify-center items-center h-screen">
+			<div className="flex gap-4 items-center justify-between p-2 m-4 bg-emerald-800 rounded-md">
 				Loading...
 			</div>
 		);
@@ -18,7 +18,9 @@ export function Currency({ currency }: CurrencyProps) {
 
 	if (error) {
 		return (
-			<div className="flex justify-center items-center h-screen">{error}</div>
+			<div className="flex gap-4 items-center justify-between p-2 m-4 bg-emerald-800 rounded-md">
+				Произошла какая то ошибка!
+			</div>
 		);
 	}
 
@@ -29,7 +31,7 @@ export function Currency({ currency }: CurrencyProps) {
 					<img src={value?.logo} className="w-6 h-6" aria-label="logo" />
 					<p>{value?.name}</p>
 				</div>
-				<SparklineChart currency={currency} />
+				<SparklineChart className="w-[250px]" currency={currency} />
 				<p>{`$${value?.price.toFixed(2)}`}</p>
 				<p>{`1h: ${value?.price_change_1h.toFixed(3)}`}</p>
 				<p>{`24h: ${value?.price_change_24h.toFixed(3)}`}</p>
