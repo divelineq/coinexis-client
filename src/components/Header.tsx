@@ -1,5 +1,4 @@
 import { useLogin } from "../state/loginState";
-import Select from "./Select";
 
 function Header() {
 	const login = useLogin((state) => state.loggedIn);
@@ -9,7 +8,6 @@ function Header() {
 		<div className="bg-emerald-800 h-12 flex items-center justify-between p-2">
 			<div className="flex items-center gap-3">
 				<h2>Project X</h2>
-				<Select />
 			</div>
 			<div>
 				<button

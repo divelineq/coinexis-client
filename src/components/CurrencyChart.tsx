@@ -1,38 +1,54 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { useCurrency } from "../state/currencyState";
+import { useMemo } from "react";
+import { useGetHistoryCoin } from "./useGetHistoryCoin";
 
-export default function CurrencyChart() {
-	const name = useCurrency((state) => state.currencyName);
+type Props = {
+	currency: string;
+};
 
-	const options = {
-		title: {
-			text: name,
-		},
-		xAxis: {
+export function CurrencyChart({ currency }: Props) {
+	const data = useGetHistoryCoin(5000, currency);
+
+	const options = useMemo(
+		() => ({
 			title: {
-				name: "Time",
+				text: !data?.name ? "Loading..." : data.name,
 			},
-			categories: ["1", "2", "3", "4", "5"],
-		},
-		yAxis: {
-			title: {
-				name: "Price",
+			xAxis: {
+				labels: {
+					enabled: false,
+				},
 			},
-		},
-		plotOptions: {
-			type: "line",
-		},
-		series: [{ data: [1, 2, 3, 4, 5], color: "green" }],
-		chart: {
-			styleMode: true,
-			type: "line",
-			style: {
-				borderRadius: "6px",
-				background: "red",
+			tooltip: {
+				formatter: function (this: any) {
+					return `<b>${new Date(this.x).toLocaleDateString("ru-RU")}</b><br/><b>${(this.y).toFixed(2)} $</b>`;
+				},
 			},
-		},
-	};
+			plotOptions: {
+				type: "line",
+			},
+			legend: { enabled: false },
+			series: [
+				{
+					data: data?.price_history ?? [],
+					color: "green",
+				},
+			],
+			chart: {
+				zooming: {
+					type: "x",
+				},
+				styleMode: true,
+				type: "line",
+				style: {
+					borderRadius: "6px",
+					backgroundColor: "#1e293b",
+				},
+			},
+		}),
+		[data],
+	);
 
 	return (
 		<div className="p-2">
