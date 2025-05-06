@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { useCurrencyCoin } from "../api/useCurrencyCoin";
 import { SparklineChart } from "./SparklineChart";
 
@@ -46,7 +47,11 @@ export function InfoCurrency({ currency }: Props) {
 				<p>{`1y: ${data.price_change_1y.toFixed(3)}`}</p>
 			</div>
 			<div>
-				<button className="bg-emerald-700 p-2 rounded-sm">View chart</button>
+				<Link to="/charts/$coin" params={{ coin: currency }}>
+					<button className="bg-emerald-700 p-2 rounded-sm cursor-pointer">
+						Посмотреть график
+					</button>
+				</Link>
 			</div>
 		</div>
 	);

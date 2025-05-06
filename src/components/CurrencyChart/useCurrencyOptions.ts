@@ -30,12 +30,13 @@ export function useCurrencyOptions(data: any){
           zooming: {
             type: "x",
           },
+
           styleMode: true,
           type: "line",
           style: {
             borderRadius: "6px",
-            backgroundColor: "#1e293b",
           },
+          backgroundColor: "#D0D0D0",
         },
       }),
       [data],

@@ -5,9 +5,10 @@ import { useCurrencyOptions } from "./useCurrencyOptions";
 
 type Props = {
 	currency: string;
+	className?: string;
 };
 
-export function CurrencyChart({ currency }: Props) {
+export function CurrencyChart({ currency, className }: Props) {
 	const { data, isPending, isError } = useHistoryCoin(currency);
 
 	const options = useCurrencyOptions(data);
@@ -20,7 +21,7 @@ export function CurrencyChart({ currency }: Props) {
 	}
 
 	return (
-		<div className="p-2">
+		<div className={className}>
 			<HighchartsReact highcharts={Highcharts} options={options} />
 		</div>
 	);
