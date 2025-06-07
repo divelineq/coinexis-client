@@ -1,5 +1,10 @@
-import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import {
+	getCoreRowModel,
+	getPaginationRowModel,
+	useReactTable,
+} from "@tanstack/react-table";
 import { HeaderGroups } from "./HeaderGroups";
+import { PaginationActions } from "./PaginationActions";
 import { Rows } from "./RowModel";
 
 type Props<TColumns extends Array<unknown>, TData extends Array<unknown>> = {
@@ -15,6 +20,8 @@ export function Table<TColumns extends Array<any>, TData extends Array<any>>({
 		columns: defaultColumns,
 		data: data,
 		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		autoResetPageIndex: false,
 	});
 
 	return (
@@ -24,6 +31,7 @@ export function Table<TColumns extends Array<any>, TData extends Array<any>>({
 		>
 			<HeaderGroups headers={table.getHeaderGroups()} />
 			<Rows rowModel={table.getRowModel()} />
+			<PaginationActions table={table} />
 		</div>
 	);
 }
