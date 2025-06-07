@@ -6,12 +6,12 @@ type Props = {
 
 export function HeaderGroups({ headers }: Props) {
 	return headers.map((headerGroup) => (
-		<div key={headerGroup.id} className="flex gap-3 border ">
+		<div key={headerGroup.id} className="flex gap-3 border border-gray-500">
 			{headerGroup.headers.map((header) => (
 				<div
 					key={header.id}
-					className="p-2 border-r-2"
-					style={{ width: header.getSize() * 2 }}
+					className="p-2 border-r border-gray-500"
+					style={{ width: header.getSize() }}
 				>
 					{flexRender(header.column.columnDef.header, header.getContext())}
 				</div>

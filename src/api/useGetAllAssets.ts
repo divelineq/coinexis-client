@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { type AxiosResponse } from "axios";
 import type { Api } from "./types";
 const API = import.meta.env.VITE_API_KEY;
 
@@ -7,7 +7,7 @@ export const useGetAllAssets = () => {
 	return useSuspenseQuery<Api[]>({
 		queryKey: ["currencies"],
 		queryFn: async () => {
-			const res = await axios.get(
+			const res = await axios.get<AxiosResponse<Api[]>>(
 						'https://api.mobula.io/api/1/all?fields=id%2Cname%2Clogo%2Cprice%2Cprice_change_1h%2Cprice_change_24h%2Cprice_change_7d%2Cprice_change_1m%2Cprice_change_1y',
             {
         headers: {

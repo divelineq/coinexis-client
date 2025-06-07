@@ -22,13 +22,16 @@ export function Table<TColumns extends Array<any>, TData extends Array<any>>({
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		autoResetPageIndex: false,
+		initialState: {
+			pagination: {
+				pageIndex: 0,
+				pageSize: 15,
+			},
+		},
 	});
 
 	return (
-		<div
-			style={{ width: table.getTotalSize() * 2 }}
-			className="gap-2 p-4 w-full m-auto"
-		>
+		<div className="p-4 m-auto" style={{ width: table.getTotalSize() }}>
 			<HeaderGroups headers={table.getHeaderGroups()} />
 			<Rows rowModel={table.getRowModel()} />
 			<PaginationActions table={table} />

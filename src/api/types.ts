@@ -1,6 +1,7 @@
 
 export type Api = {
   id: number;
+  name: string;
   logo: string;
   price: number;
   price_change_1h: number;

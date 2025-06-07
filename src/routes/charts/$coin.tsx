@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { CurrencyChart } from "../../components/CurrencyChart";
 
 export const Route = createFileRoute("/charts/$coin")({
 	component: RouteComponent,
@@ -9,7 +8,10 @@ export const Route = createFileRoute("/charts/$coin")({
 });
 
 function RouteComponent() {
-	const { coin } = Route.useLoaderData();
+	// const { coin } = Route.useLoaderData();
 
-	return <CurrencyChart currency={coin} className="p-4" />;
+	return (
+		// <CurrencyChart currency={coin} className="p-4" />;
+		<p>coin chart</p>
+	);
 }

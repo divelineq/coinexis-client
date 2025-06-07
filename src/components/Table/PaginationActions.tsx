@@ -13,13 +13,13 @@ export function PaginationActions({ table }: Props) {
 			</p>
 			<div>
 				<button
-					className="px-4 border-1 rounded-l-lg hover:bg-gray-500"
+					className="px-4 border-1 border-gray-500 rounded-l-lg hover:bg-gray-500"
 					onClick={table.previousPage}
 				>
 					{"<"}
 				</button>
 				<button
-					className="px-4 border-1 rounded-r-lg hover:bg-gray-500"
+					className="px-4 border-1 border-gray-500 rounded-r-lg hover:bg-gray-500"
 					onClick={table.nextPage}
 				>
 					{">"}
