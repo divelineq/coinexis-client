@@ -50,6 +50,9 @@ importers:
       tailwindcss:
         specifier: ^4.0.9
         version: 4.0.9
+      zod:
+        specifier: ^3.25.56
+        version: 3.25.56
       zustand:
         specifier: ^5.0.3
         version: 5.0.3(@types/react@19.0.10)(react@19.0.0)(use-sync-external-store@1.5.0(react@19.0.0))
@@ -2108,8 +2111,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  zod@3.24.3:
-    resolution: {integrity: sha512-HhY1oqzWCQWuUqvBFnsyrtZRhyPeR7SUGv+C4+MsisMuVfSPx8HpwWqH8tRahSlt6M3PiFAcoeFhZAqIXTxoSg==}
+  zod@3.25.56:
+    resolution: {integrity: sha512-rd6eEF3BTNvQnR2e2wwolfTmUTnp70aUTqr0oaGbHifzC3BKJsoV+Gat8vxUMR1hwOKBs6El+qWehrHbCpW6SQ==}
 
   zustand@5.0.3:
     resolution: {integrity: sha512-14fwWQtU3pH4dE0dOpdMiWjddcH+QzKIgk1cl8epwSE7yag43k/AD/m4L6+K7DytAOr9gGBe3/EXj9g7cdostg==}
@@ -2646,7 +2649,7 @@ snapshots:
       '@tanstack/virtual-file-routes': 1.115.0
       prettier: 3.5.3
       tsx: 4.19.4
-      zod: 3.24.3
+      zod: 3.25.56
     optionalDependencies:
       '@tanstack/react-router': 1.119.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
@@ -2668,7 +2671,7 @@ snapshots:
       babel-dead-code-elimination: 1.0.10
       chokidar: 3.6.0
       unplugin: 2.3.2
-      zod: 3.24.3
+      zod: 3.25.56
     optionalDependencies:
       '@tanstack/react-router': 1.119.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       vite: 6.2.0(@types/node@22.15.30)(jiti@2.4.2)(lightningcss@1.29.1)(tsx@4.19.4)
@@ -4267,7 +4270,7 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod@3.24.3: {}
+  zod@3.25.56: {}
 
   zustand@5.0.3(@types/react@19.0.10)(react@19.0.0)(use-sync-external-store@1.5.0(react@19.0.0)):
     optionalDependencies:
