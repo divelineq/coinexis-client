@@ -17,6 +17,7 @@
     "@tanstack/react-router-devtools": "^1.119.1",
     "@tanstack/react-table": "^8.21.3",
     "axios": "^1.9.0",
+    "classix": "^2.2.2",
     "highcharts": "^12.1.2",
     "highcharts-react-official": "^3.2.1",
     "mobula-sdk": "^1.6.0",

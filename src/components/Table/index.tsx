@@ -32,9 +32,9 @@ export function Table<TColumns extends Array<any>, TData extends Array<any>>({
 
 	return (
 		<div className="p-4 m-auto" style={{ width: table.getTotalSize() }}>
+			<PaginationActions table={table} />
 			<HeaderGroups headers={table.getHeaderGroups()} />
 			<Rows rowModel={table.getRowModel()} />
-			<PaginationActions table={table} />
 		</div>
 	);
 }

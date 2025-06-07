@@ -1,13 +1,13 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import axios, { type AxiosResponse } from "axios";
-import type { Api } from "./types";
+import type { allAssetsTypes } from ".";
 const API = import.meta.env.VITE_API_KEY;
 
 export const useGetAllAssets = () => {
-	return useSuspenseQuery<Api[]>({
+	return useSuspenseQuery<allAssetsTypes[]>({
 		queryKey: ["currencies"],
 		queryFn: async () => {
-			const res = await axios.get<AxiosResponse<Api[]>>(
+			const res = await axios.get<AxiosResponse<allAssetsTypes[]>>(
 						'https://api.mobula.io/api/1/all?fields=id%2Cname%2Clogo%2Cprice%2Cprice_change_1h%2Cprice_change_24h%2Cprice_change_7d%2Cprice_change_1m%2Cprice_change_1y%2Cvolume',
             {
         headers: {
@@ -16,12 +16,13 @@ export const useGetAllAssets = () => {
       }
 					)
 
-        return res.data.data.filter((coin) =>  coin.price > 0.00 && coin.price_change_1m > 0).sort((a, b) => b.volume - a.volume)
+        return res.data.data
 		},
-		staleTime: Number.POSITIVE_INFINITY,
-		refetchOnWindowFocus: false,
-		refetchOnMount: false,
-		refetchOnReconnect: false,
+		select: (data) =>
+      data
+        .filter((coin) =>  coin.price > 0.00 && coin.price_change_1m > 0).sort((a, b) => b.volume - a.volume),
+		refetchInterval: 30000,
+		staleTime: 0,
 		retry: false,
 	});
 };
