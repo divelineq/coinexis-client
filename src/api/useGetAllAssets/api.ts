@@ -22,7 +22,8 @@ export const useGetAllAssets = () => {
       data
         .filter((coin) =>  coin.price > 0.00 && coin.price_change_1m > 0).sort((a, b) => b.volume - a.volume),
 		refetchInterval: 30000,
-		staleTime: 0,
+		refetchIntervalInBackground: false,
+		staleTime: 10000,
 		retry: false,
 	});
 };

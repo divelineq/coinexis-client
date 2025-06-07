@@ -6,7 +6,10 @@ type Props = {
 
 export function HeaderGroups({ headers }: Props) {
 	return headers.map((headerGroup) => (
-		<div key={headerGroup.id} className="flex gap-3 border border-gray-500">
+		<div
+			key={headerGroup.id}
+			className="flex border border-gray-500 rounded-t-sm"
+		>
 			{headerGroup.headers.map((header) => (
 				<div
 					key={header.id}

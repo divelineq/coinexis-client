@@ -19,13 +19,14 @@ export function Table<TColumns extends Array<any>, TData extends Array<any>>({
 	const table = useReactTable({
 		columns: defaultColumns,
 		data: data,
+		rowCount: data.length,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		autoResetPageIndex: false,
 		initialState: {
 			pagination: {
 				pageIndex: 0,
-				pageSize: 15,
+				pageSize: 13,
 			},
 		},
 	});
