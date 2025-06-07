@@ -1,11 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import axios from "axios";
+import type { History } from "./types";
 
-export type History = {
-	name: string;
-	symbol: string;
-	price_history: [number, number][];
-};
+
 
 export const useHistoryCoin = (currency: string) => {
   return useSuspenseQuery<History>({
