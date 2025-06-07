@@ -39,7 +39,7 @@ const DEFAULT_COLUMNS = [
 			return (
 				<span>
 					<p className={color}>
-						{`${props.row.original.price.toFixed(4)}$  ${price24H > 0 ? "▴" : price24H < 0 ? "▾" : ""}`}
+						{`${props.row.original.price.toFixed(2)}$  ${price24H > 0 ? "▴" : price24H < 0 ? "▾" : ""}`}
 					</p>
 				</span>
 			);
@@ -48,27 +48,27 @@ const DEFAULT_COLUMNS = [
 	{
 		accessorKey: "price_change_1h",
 		header: "1H",
-		cell: (props: any) => <p>{props.getValue().toFixed(3)}%</p>,
+		cell: (props: any) => <p>{props.getValue().toFixed(2)}%</p>,
 	},
 	{
 		accessorKey: "price_change_24h",
 		header: "24H",
-		cell: (props: any) => <p>{props.getValue().toFixed(3)}%</p>,
+		cell: (props: any) => <p>{props.getValue().toFixed(2)}%</p>,
 	},
 	{
 		accessorKey: "price_change_7d",
 		header: "7D",
-		cell: (props: any) => <p>{props.getValue().toFixed(3)}%</p>,
+		cell: (props: any) => <p>{props.getValue().toFixed(2)}%</p>,
 	},
 	{
 		accessorKey: "price_change_1m",
 		header: "1M",
-		cell: (props: any) => <p>{props.getValue().toFixed(3)}%</p>,
+		cell: (props: any) => <p>{props.getValue().toFixed(2)}%</p>,
 	},
 	{
 		accessorKey: "price_change_1y",
 		header: "1Y",
-		cell: (props: any) => <p>{props.getValue().toFixed(3)}%</p>,
+		cell: (props: any) => <p>{props.getValue().toFixed(2)}%</p>,
 	},
 ];
 

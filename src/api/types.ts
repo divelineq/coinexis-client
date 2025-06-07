@@ -4,6 +4,7 @@ export type Api = {
   name: string;
   logo: string;
   price: number;
+  volume: number
   price_change_1h: number;
   price_change_1m: number;
   price_change_1y: number;
