@@ -1,3 +1,4 @@
 export * from './types'
-export * from './useCurrencyCoin'
+export * from './useGetAllAssets'
 export * from './useHistoryCoin'
+

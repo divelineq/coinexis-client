@@ -48,5 +48,7 @@ const DEFAULT_COLUMNS = [
 function RouteComponent() {
 	const { data } = useGetAllAssets();
 
+	console.log(data);
+
 	return <Table defaultColumns={DEFAULT_COLUMNS} data={data} />;
 }
