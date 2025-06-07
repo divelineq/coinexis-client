@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCurrencyCoin } from "../api";
+import { useGetAllAssets } from "../api";
 import { MainSkeleton } from "../components/Skeletons/MainSkeleton";
 import { Table } from "../components/Table";
-import { ALL_COIN } from "../consts/allCoins";
 
 export const Route = createFileRoute("/")({
 	component: RouteComponent,
@@ -47,7 +46,7 @@ const DEFAULT_COLUMNS = [
 ];
 
 function RouteComponent() {
-	const { data } = useCurrencyCoin(ALL_COIN);
+	const { data } = useGetAllAssets();
 
 	return <Table defaultColumns={DEFAULT_COLUMNS} data={data} />;
 }
