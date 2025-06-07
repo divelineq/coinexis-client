@@ -4,8 +4,6 @@ export const ALL_COIN = [
 	"bnb",
 	"xrp",
 	"toncoin",
-	"pepe",
-	"tether",
 	"dogecoin",
 	"litecoin",
 	"solana",

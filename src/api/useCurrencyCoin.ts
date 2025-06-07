@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import axios from "axios";
 type Contracts = {
   address: string;
@@ -38,7 +38,7 @@ type Api = {
 
 
 export const useCurrencyCoin = (currency: string) => {
-  return useQuery<Api>({
+  return useSuspenseQuery<Api>({
     queryKey: ["currency", currency],
     queryFn: async () => {
       const res = await axios.get(
@@ -49,3 +49,4 @@ export const useCurrencyCoin = (currency: string) => {
     refetchInterval: 10000, 
     staleTime: 0,
 })}
+

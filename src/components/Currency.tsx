@@ -7,23 +7,7 @@ type Props = {
 };
 
 export function InfoCurrency({ currency }: Props) {
-	const { data, isPending, isError } = useCurrencyCoin(currency);
-
-	if (!data || isPending) {
-		return (
-			<div className="flex gap-4 items-center justify-between p-2 m-4 bg-emerald-800 rounded-md">
-				Loading...
-			</div>
-		);
-	}
-
-	if (isError) {
-		return (
-			<div className="flex gap-4 items-center justify-between p-2 m-4 bg-emerald-800 rounded-md">
-				Произошла какая то ошибка!
-			</div>
-		);
-	}
+	const { data } = useCurrencyCoin(currency);
 
 	return (
 		<div className="flex gap-4 items-center justify-between p-2 m-4 bg-emerald-900 rounded-md">

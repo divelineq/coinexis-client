@@ -21,7 +21,7 @@ declare module "@tanstack/react-router" {
 function ErrorFallback({ error }: any) {
 	return (
 		<div className="text-center items-center justify-center flex flex-col h-screen">
-			<h1>Что-то пошло не так!</h1>
+			<h1>Что-то пошло не так! Попробуйте перезагрузить страницу</h1>
 			<p>{error.message}</p>
 		</div>
 	);

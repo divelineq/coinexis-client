@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { InfoCurrency } from "../components/Currency";
+import { MainSkeleton } from "../components/Skeletons/MainSkeleton";
 import { ALL_COIN } from "../consts/allCoins";
 
 export const Route = createFileRoute("/")({
 	component: RouteComponent,
-	pendingComponent: () => <div>Загрузка...</div>,
+	pendingComponent: () => <MainSkeleton />,
 	errorComponent: () => <div>Ошибка :(</div>,
 });
 

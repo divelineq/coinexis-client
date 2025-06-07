@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export type History = {
@@ -8,7 +8,7 @@ export type History = {
 };
 
 export const useHistoryCoin = (currency: string) => {
-  return useQuery<History>({
+  return useSuspenseQuery<History>({
     queryKey: ['history', currency],
     queryFn: async () => {
       const res = await axios.get(`https://production-api.mobula.io/api/1/market/history?asset=${currency}&from=1697648158`);

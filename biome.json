@@ -20,6 +20,7 @@
 		"enabled": true,
 		"rules": {
 			"suspicious": {
+				"noArrayIndexKey": "off",
         "noExplicitAny": "off"
       },
 			"correctness": {
