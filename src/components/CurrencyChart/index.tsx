@@ -14,7 +14,16 @@ export function CurrencyChart({ currency, className }: Props) {
 
 	return (
 		<div className={className}>
-			<HighchartsReact highcharts={Highcharts} options={options} />
+			<HighchartsReact
+				highcharts={Highcharts}
+				options={options}
+				containerProps={{
+					style: {
+						border: "2px solid rgb(238, 238, 238)",
+						borderRadius: "8px",
+					},
+				}}
+			/>
 		</div>
 	);
 }

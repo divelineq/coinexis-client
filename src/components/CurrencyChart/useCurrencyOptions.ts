@@ -5,11 +5,25 @@ export function useCurrencyOptions(data: any){
       () => ({
         title: {
           text: !data?.name ? "Loading..." : data.name,
+          style: {
+            color: 'rgb(238, 238, 238)'
+          }
         },
         xAxis: {
           labels: {
             enabled: false,
           },
+        },
+        yAxis: {
+          gridLineColor: 'rgb(57, 62, 70)',
+          title: {
+            text: null
+          },
+          labels: {
+            style: {
+              color: 'rgb(238, 238, 238)'
+            }
+          }
         },
         tooltip: {
           formatter: function (this: any) {
@@ -23,7 +37,7 @@ export function useCurrencyOptions(data: any){
         series: [
           {
             data: data?.price_history ?? [],
-            color: "green",
+            color:' rgb(50, 130, 184)',
           },
         ],
         chart: {
@@ -36,7 +50,7 @@ export function useCurrencyOptions(data: any){
           style: {
             borderRadius: "6px",
           },
-          backgroundColor: "#D0D0D0",
+          backgroundColor: "rgb(34, 40, 49)",
         },
       }),
       [data],

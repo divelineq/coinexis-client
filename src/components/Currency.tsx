@@ -10,7 +10,10 @@ export function InfoCurrency({ currency }: Props) {
 	const { data } = useCurrencyCoin(currency);
 
 	return (
-		<div className="flex gap-4 items-center justify-between p-2 m-4 bg-emerald-900 rounded-md">
+		<div
+			style={{ backgroundColor: "rgb(57, 62, 70)" }}
+			className="flex gap-4 items-center justify-between p-2 m-4 rounded-md"
+		>
 			<div className="flex gap-4 items-center">
 				<div className="flex gap-2">
 					<img
@@ -32,7 +35,10 @@ export function InfoCurrency({ currency }: Props) {
 			</div>
 			<div>
 				<Link to="/charts/$coin" params={{ coin: currency }}>
-					<button className="bg-emerald-700 p-2 rounded-sm cursor-pointer">
+					<button
+						style={{ backgroundColor: "rgb(50, 130, 184)" }}
+						className=" p-2 rounded-sm cursor-pointer"
+					>
 						Посмотреть график
 					</button>
 				</Link>

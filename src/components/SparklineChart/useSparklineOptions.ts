@@ -38,6 +38,7 @@ return useMemo(
           animation: false,
           marker: { enabled: false },
           enableMouseTracking: false,
+          color: 'rgb(50, 130, 184)'
         },
       ],
     }),
