@@ -1,3 +1,5 @@
+import { Button } from "@ui/Button";
+import { TextField } from "@ui/TextField";
 import { detectCryptoAddressNetwork } from "./detectCryptoAddressNetwork";
 import { useWalletForm } from "./useWalletForm";
 
@@ -42,22 +44,21 @@ function SearchWalletInfo() {
 									</div>
 								)}
 							</label>
-							<input
+							<TextField
 								id="wallet-adress"
 								placeholder="Enter wallet address"
-								className="p-2 w-full  border-2 border-gray-500 rounded-sm"
 								value={field.state.value}
 								onBlur={field.handleBlur}
 								onChange={(e) => field.handleChange(e.target.value)}
 							/>
-							<button
+							<Button
 								disabled={!detection.isValid}
 								type="submit"
 								onClick={form.handleSubmit}
 								className="bg-blue-600 text-white py-1 rounded-sm w-full my-2 cursor-pointer hover:bg-blue-800 transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed"
 							>
 								Search
-							</button>
+							</Button>
 						</div>
 					);
 				}}

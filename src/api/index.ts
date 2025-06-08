@@ -1,3 +1,1 @@
-export * from './useGetAllAssets'
-export * from './useHistoryCoin'
-
+export * from './useGetAllAssets';

@@ -12,7 +12,7 @@ type Props<TColumns extends Array<unknown>, TData extends Array<unknown>> = {
 	data: TData;
 };
 
-export function Table<TColumns extends Array<any>, TData extends Array<any>>({
+function Table<TColumns extends Array<any>, TData extends Array<any>>({
 	defaultColumns,
 	data,
 }: Props<TColumns, TData>) {
@@ -39,3 +39,5 @@ export function Table<TColumns extends Array<any>, TData extends Array<any>>({
 		</div>
 	);
 }
+
+export { Table };

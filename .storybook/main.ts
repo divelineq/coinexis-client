@@ -1,7 +1,9 @@
 import type { StorybookConfig } from '@storybook/react-vite';
+import path from 'node:path';
+import { mergeConfig } from 'vite';
 
 const config: StorybookConfig = {
-  stories: [
+  "stories": [
     "../src/ui/*/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
   "addons": [
@@ -14,6 +16,15 @@ const config: StorybookConfig = {
   "framework": {
     "name": "@storybook/react-vite",
     "options": {}
-  }
+  },
+  viteFinal: async (config) => {
+    return mergeConfig(config, {
+      resolve: {
+        alias: {
+          '@ui': path.resolve(__dirname, '../src/ui'),
+        },
+      },
+    });
+  },
 };
 export default config;

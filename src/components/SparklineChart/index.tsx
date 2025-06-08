@@ -1,7 +1,5 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { useHistoryCoin } from "../../api/useHistoryCoin";
-import { useSparklineOptions } from "./useSparklineOptions";
 
 type Props = {
 	currency: string;
@@ -9,13 +7,13 @@ type Props = {
 };
 
 export const SparklineChart = ({ currency }: Props) => {
-	const { data } = useHistoryCoin(currency);
-	const options = useSparklineOptions(data);
+	// const { data } = useHistoryCoin(currency);
+	// const options = useSparklineOptions(data);
 
 	return (
 		<HighchartsReact
 			highcharts={Highcharts}
-			options={options}
+			options={{}}
 			containerProps={{
 				style: {
 					width: "100px",
