@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as WalletImport } from './routes/wallet'
+import { Route as CoinsImport } from './routes/coins'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
@@ -19,6 +20,12 @@ import { Route as IndexImport } from './routes/index'
 const WalletRoute = WalletImport.update({
   id: '/wallet',
   path: '/wallet',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CoinsRoute = CoinsImport.update({
+  id: '/coins',
+  path: '/coins',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,6 +46,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/coins': {
+      id: '/coins'
+      path: '/coins'
+      fullPath: '/coins'
+      preLoaderRoute: typeof CoinsImport
+      parentRoute: typeof rootRoute
+    }
     '/wallet': {
       id: '/wallet'
       path: '/wallet'
@@ -53,36 +67,41 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/coins': typeof CoinsRoute
   '/wallet': typeof WalletRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/coins': typeof CoinsRoute
   '/wallet': typeof WalletRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/coins': typeof CoinsRoute
   '/wallet': typeof WalletRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/wallet'
+  fullPaths: '/' | '/coins' | '/wallet'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/wallet'
-  id: '__root__' | '/' | '/wallet'
+  to: '/' | '/coins' | '/wallet'
+  id: '__root__' | '/' | '/coins' | '/wallet'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CoinsRoute: typeof CoinsRoute
   WalletRoute: typeof WalletRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CoinsRoute: CoinsRoute,
   WalletRoute: WalletRoute,
 }
 
@@ -97,11 +116,15 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/coins",
         "/wallet"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/coins": {
+      "filePath": "coins.tsx"
     },
     "/wallet": {
       "filePath": "wallet.tsx"
