@@ -1,4 +1,4 @@
-export const DEFAULT_COLUMNS = [
+export const DEFAULT_ALL_ASSETS_COLUMNS = [
 	{
 		accessorKey: "logo",
 		header: () => <p className="text-center">Logo</p>,

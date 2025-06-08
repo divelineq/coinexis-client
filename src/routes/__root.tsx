@@ -1,29 +1,8 @@
-import { Link, Outlet, createRootRoute } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { createRootRoute } from "@tanstack/react-router";
+import { Header } from "../components/Header";
 
 export const Route = createRootRoute({
-	component: RootComponent,
-	pendingComponent: () => <div>Загрузка...</div>,
-	errorComponent: () => <div>Ошибка :(</div>,
+	component: Header,
+	pendingComponent: () => <div>Loading header</div>,
+	errorComponent: () => <div>Error header :(</div>,
 });
-
-function RootComponent() {
-	return (
-		<>
-			<div className="p-2 flex gap-2 text-center justify-center">
-				<Link to="/" className="[&.active]:font-bold">
-					Home
-				</Link>{" "}
-				<Link to="/charts" className="[&.active]:font-bold">
-					Charts
-				</Link>
-				<Link to="/wallet" className="[&.active]:font-bold">
-					Wallet
-				</Link>
-			</div>
-			<hr />
-			<Outlet />
-			<TanStackRouterDevtools />
-		</>
-	);
-}

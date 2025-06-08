@@ -2,16 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useGetAllAssets } from "../api";
 import { MainSkeleton } from "../components/Skeletons/MainSkeleton";
 import { Table } from "../components/Table";
-import { DEFAULT_COLUMNS } from "../consts/allAssetsDefaultColumns";
+import { DEFAULT_ALL_ASSETS_COLUMNS } from "../consts/allAssetsDefaultColumns";
 
 export const Route = createFileRoute("/")({
-	component: RouteComponent,
+	component: () => {
+		const { data } = useGetAllAssets();
+
+		return <Table defaultColumns={DEFAULT_ALL_ASSETS_COLUMNS} data={data} />;
+	},
 	pendingComponent: () => <MainSkeleton />,
-	errorComponent: () => <div>Ошибка :(</div>,
+	errorComponent: () => <div>Error assets table :(</div>,
 });
-
-function RouteComponent() {
-	const { data } = useGetAllAssets();
-
-	return <Table defaultColumns={DEFAULT_COLUMNS} data={data} />;
-}
