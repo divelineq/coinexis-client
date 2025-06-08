@@ -20,7 +20,7 @@ export interface AddressDetectionResult {
   normalizedAddress?: string;
 }
 
-export const detectCryptoAddressNetwork = (raw: string): AddressDetectionResult => {
+export const validateAdress = (raw: string): AddressDetectionResult => {
   if (!raw || typeof raw !== "string") {
     return { isValid: false, network: "Unknown" };
   }
