@@ -11,7 +11,7 @@ export function Header() {
 				<Link to="/coins" className="[&.active]:font-bold">
 					Coins
 				</Link>
-				<Link to="/wallet" className="[&.active]:font-bold">
+				<Link to="/portfolio" className="[&.active]:font-bold">
 					Wallet
 				</Link>
 			</div>

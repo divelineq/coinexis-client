@@ -1,7 +1,15 @@
-import { Button } from "@ui/Button";
-import { TextField } from "@ui/TextField";
+import { useGetPortfolio } from "@api";
+import { useForm } from "@tanstack/react-form";
+import { Button, TextField } from "@ui";
+import type { z } from "zod/v4";
+import type { ADRESS_VALIDATION_SCHEMA } from "./ValidationSchema";
 import { validateAdress } from "./detectCryptoAddressNetwork";
-import { useWalletForm } from "./useWalletForm";
+
+export type Adress = {
+	adress: z.infer<typeof ADRESS_VALIDATION_SCHEMA>;
+};
+
+const DEFAULT_ADRESS: Adress = { adress: "" };
 
 function buildFieldLabel<T extends Record<string, any>>(field: T) {
 	const detection = validateAdress(field.state.value);
@@ -21,45 +29,56 @@ function buildFieldLabel<T extends Record<string, any>>(field: T) {
 }
 
 function SearchWalletInfo() {
-	const form = useWalletForm();
+	const { mutate, data, isPending } = useGetPortfolio();
+
+	const form = useForm({
+		defaultValues: DEFAULT_ADRESS,
+		onSubmit: (values) => {
+			mutate(values.value.adress);
+		},
+	});
 
 	return (
-		<form
-			className="flex flex-col items-center"
-			onSubmit={(e) => {
-				e.stopPropagation();
-				e.preventDefault();
-			}}
-		>
-			<form.Field
-				name="adress"
-				validators={{
-					onChange: (value) =>
-						value.value.length > 0 &&
-						!validateAdress(value.value).isValid &&
-						"Invalid address",
+		<>
+			<form
+				className="flex flex-col items-center"
+				onSubmit={(e) => {
+					e.stopPropagation();
+					e.preventDefault();
 				}}
-				children={(field) => (
-					<div className="flex flex-col items-center w-[420px]">
-						<TextField
-							label={buildFieldLabel<typeof field>(field)}
-							placeholder="Enter wallet address"
-							value={field.state.value}
-							onBlur={field.handleBlur}
-							onChange={(e) => field.handleChange(e.target.value)}
-						/>
-						<Button
-							disabled={!validateAdress(field.state.value).isValid}
-							type="submit"
-							onClick={form.handleSubmit}
-							className="bg-blue-600 text-white py-1 rounded-sm w-full my-2 cursor-pointer hover:bg-blue-800 transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed"
-						>
-							Search
-						</Button>
-					</div>
-				)}
-			/>
-		</form>
+			>
+				<form.Field
+					name="adress"
+					validators={{
+						onChange: (value) =>
+							value.value.length > 0 &&
+							!validateAdress(value.value).isValid &&
+							"Invalid address",
+					}}
+					children={(field) => (
+						<div className="flex flex-col items-center w-[420px]">
+							<TextField
+								label={buildFieldLabel<typeof field>(field)}
+								placeholder="Enter wallet address"
+								value={field.state.value}
+								onBlur={field.handleBlur}
+								onChange={(e) => field.handleChange(e.target.value)}
+							/>
+							<Button
+								disabled={!validateAdress(field.state.value).isValid}
+								type="submit"
+								onClick={form.handleSubmit}
+								className="bg-blue-600 text-white py-1 rounded-sm w-full my-2 cursor-pointer hover:bg-blue-800 transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed"
+							>
+								Search
+							</Button>
+						</div>
+					)}
+				/>
+			</form>
+			{isPending && <div>Getting wallet data...</div>}
+			{data && <div>Данные получены!</div>}
+		</>
 	);
 }
 
