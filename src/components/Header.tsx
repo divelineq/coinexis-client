@@ -12,7 +12,7 @@ export function Header() {
 					Coins
 				</Link>
 				<Link to="/portfolio" className="[&.active]:font-bold">
-					Wallet
+					Portfolio
 				</Link>
 			</div>
 			<hr />
