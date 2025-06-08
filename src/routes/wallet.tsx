@@ -1,9 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
+import { SearchWalletInfo } from "../components/SearchWalletInfo";
 
-export const Route = createFileRoute('/wallet')({
-  component: RouteComponent,
-})
-
-function RouteComponent() {
-  return <div>Hello "/wallet"!</div>
-}
+export const Route = createFileRoute("/wallet")({
+	component: SearchWalletInfo,
+	errorComponent: () => <div>Ошибка :(</div>,
+	pendingComponent: () => <div>Загрузка...</div>,
+});
