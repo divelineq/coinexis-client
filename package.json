@@ -18,6 +18,9 @@
     "@tanstack/react-router-devtools": "^1.119.1",
     "@tanstack/react-table": "^8.21.3",
     "axios": "^1.9.0",
+    "bech32": "^2.0.0",
+    "bitcoin-address-validation": "^3.0.0",
+    "bs58": "^6.0.0",
     "classix": "^2.2.2",
     "highcharts": "^12.1.2",
     "highcharts-react-official": "^3.2.1",
@@ -26,6 +29,8 @@
     "react-dom": "^19.0.0",
     "react-error-boundary": "^6.0.0",
     "tailwindcss": "^4.0.9",
+    "tronweb": "^6.0.3",
+    "viem": "^2.30.6",
     "zod": "^3.25.56",
     "zustand": "^5.0.3"
   },
