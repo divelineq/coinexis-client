@@ -11,11 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as WalletImport } from './routes/wallet'
 import { Route as IndexImport } from './routes/index'
 import { Route as ChartsIndexImport } from './routes/charts/index'
 import { Route as ChartsCoinImport } from './routes/charts/$coin'
 
 // Create/Update Routes
+
+const WalletRoute = WalletImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -46,6 +53,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/wallet': {
+      id: '/wallet'
+      path: '/wallet'
+      fullPath: '/wallet'
+      preLoaderRoute: typeof WalletImport
+      parentRoute: typeof rootRoute
+    }
     '/charts/$coin': {
       id: '/charts/$coin'
       path: '/charts/$coin'
@@ -67,12 +81,14 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/wallet': typeof WalletRoute
   '/charts/$coin': typeof ChartsCoinRoute
   '/charts': typeof ChartsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/wallet': typeof WalletRoute
   '/charts/$coin': typeof ChartsCoinRoute
   '/charts': typeof ChartsIndexRoute
 }
@@ -80,27 +96,30 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/wallet': typeof WalletRoute
   '/charts/$coin': typeof ChartsCoinRoute
   '/charts/': typeof ChartsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/charts/$coin' | '/charts'
+  fullPaths: '/' | '/wallet' | '/charts/$coin' | '/charts'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/charts/$coin' | '/charts'
-  id: '__root__' | '/' | '/charts/$coin' | '/charts/'
+  to: '/' | '/wallet' | '/charts/$coin' | '/charts'
+  id: '__root__' | '/' | '/wallet' | '/charts/$coin' | '/charts/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  WalletRoute: typeof WalletRoute
   ChartsCoinRoute: typeof ChartsCoinRoute
   ChartsIndexRoute: typeof ChartsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  WalletRoute: WalletRoute,
   ChartsCoinRoute: ChartsCoinRoute,
   ChartsIndexRoute: ChartsIndexRoute,
 }
@@ -116,12 +135,16 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/wallet",
         "/charts/$coin",
         "/charts/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/wallet": {
+      "filePath": "wallet.tsx"
     },
     "/charts/$coin": {
       "filePath": "charts/$coin.tsx"

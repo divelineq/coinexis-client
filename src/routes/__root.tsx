@@ -17,6 +17,9 @@ function RootComponent() {
 				<Link to="/charts" className="[&.active]:font-bold">
 					Charts
 				</Link>
+				<Link to="/wallet" className="[&.active]:font-bold">
+					Wallet
+				</Link>
 			</div>
 			<hr />
 			<Outlet />
