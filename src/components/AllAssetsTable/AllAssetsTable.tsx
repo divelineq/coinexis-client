@@ -1,6 +1,6 @@
-import { Table } from "@ui/Table";
+import { Table } from "@ui";
 import { useGetAllAssets } from "../../api";
-import { DEFAULT_ALL_ASSETS_COLUMNS } from "../../consts/allAssetsDefaultColumns";
+import { DEFAULT_ALL_ASSETS_COLUMNS } from "../../consts";
 
 function AllAssetsTable() {
 	const { data } = useGetAllAssets();

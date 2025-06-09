@@ -8,7 +8,7 @@ export function useGetPortfolio() {
 		mutationKey: ["wallet-portfolio"],
 		mutationFn: async (adress: string) => {
 			const res = await axios.get(
-				`https://api.mobula.io/api/1/wallet/portfolio?wallet=${adress}`,
+				`https://api.mobula.io/api/1/wallet/portfolio?wallet=${adress}&filterSpam=true&liqmin=5000&accuracy=high&cache=false&stale=false&unlistedAssets=false`,
 				{
 					headers: {
 						Authorization: `Bearer ${API}`,

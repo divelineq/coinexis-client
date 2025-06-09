@@ -4,7 +4,7 @@ export const DEFAULT_ALL_ASSETS_COLUMNS = [
 		header: () => <p className="text-center">Logo</p>,
 		size: 70,
 		cell: (props: any) => (
-			<img src={props?.getValue() ?? null} alt="" className="w-8 h-8" />
+			<img src={props.getValue() ?? null} alt="" className="w-8 h-8" />
 		),
 	},
 	{
