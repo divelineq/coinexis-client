@@ -2,6 +2,7 @@ import {
 	getCoreRowModel,
 	getFilteredRowModel,
 	getPaginationRowModel,
+	getSortedRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
 import { useState } from "react";
@@ -31,13 +32,14 @@ function Table<TColumns extends Array<any>, TData extends Array<any>>({
 
 	const table = useReactTable({
 		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		onColumnFiltersChange: setColumnFilters,
 		getFilteredRowModel: getFilteredRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
-		onColumnFiltersChange: setColumnFilters,
 		data: data,
-		enableColumnFilters: true,
 		rowCount: data.length,
 		columns: defaultColumns,
+		enableColumnFilters: true,
 		autoResetPageIndex: false,
 		state: {
 			columnFilters,

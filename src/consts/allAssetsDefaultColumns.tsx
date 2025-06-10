@@ -3,6 +3,7 @@ export const DEFAULT_ALL_ASSETS_COLUMNS = [
 		accessorKey: "logo",
 		header: () => <p className="text-center">Logo</p>,
 		size: 70,
+		enableSorting: false,
 		cell: (props: any) => (
 			<img src={props.getValue() ?? null} alt="" className="w-8 h-8" />
 		),
@@ -11,8 +12,8 @@ export const DEFAULT_ALL_ASSETS_COLUMNS = [
 		accessorKey: "name",
 		header: () => <p className="text-left">Name</p>,
 		size: 300,
-		enableColumnFilter: true,
 		cell: (props: any) => <p>{props.getValue()}</p>,
+		enableSorting: true,
 	},
 	{
 		accessorKey: "price",
@@ -33,30 +34,36 @@ export const DEFAULT_ALL_ASSETS_COLUMNS = [
 				</p>
 			);
 		},
+		enableSorting: true,
 	},
 	{
 		accessorKey: "price_change_1h",
 		header: () => <p className="text-center">1H</p>,
 		cell: (props: any) => <p>{props.getValue().toFixed(2)}%</p>,
+		enableSorting: true,
 	},
 	{
 		accessorKey: "price_change_24h",
 		header: () => <p className="text-center">24H</p>,
 		cell: (props: any) => <p>{props.getValue().toFixed(2)}%</p>,
+		enableSorting: true,
 	},
 	{
 		accessorKey: "price_change_7d",
 		header: () => <p className="text-center">7D</p>,
 		cell: (props: any) => <p>{props.getValue().toFixed(2)}%</p>,
+		enableSorting: true,
 	},
 	{
 		accessorKey: "price_change_1m",
 		header: () => <p className="text-center">1M</p>,
 		cell: (props: any) => <p>{props.getValue().toFixed(2)}%</p>,
+		enableSorting: true,
 	},
 	{
 		accessorKey: "price_change_1y",
 		header: () => <p className="text-center">1Y</p>,
 		cell: (props: any) => <p>{props.getValue().toFixed(2)}%</p>,
+		enableSorting: true,
 	},
 ];

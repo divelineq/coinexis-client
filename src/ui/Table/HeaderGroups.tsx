@@ -10,15 +10,30 @@ export function HeaderGroups({ headers }: Props) {
 			key={headerGroup.id}
 			className="flex border border-gray-500 rounded-t-sm"
 		>
-			{headerGroup.headers.map((header) => (
-				<div
-					key={header.id}
-					className="p-2 border-r border-gray-500"
-					style={{ width: header.getSize() }}
-				>
-					{flexRender(header.column.columnDef.header, header.getContext())}
-				</div>
-			))}
+			{headerGroup.headers.map((header) => {
+				console.log(header.column.getCanSort());
+				return (
+					<div
+						key={header.id}
+						className="px-2 py-1 border-r border-gray-500 flex gap-2 "
+						style={{ width: header.getSize() }}
+					>
+						{flexRender(header.column.columnDef.header, header.getContext())}
+						{header.column.getCanSort() && (
+							<button
+								className="cursor-pointer px-2 "
+								onClick={() => header.column.toggleSorting()}
+							>
+								{header.column.getIsSorted() === "asc"
+									? "↑"
+									: header.column.getIsSorted() === "desc"
+										? "↓"
+										: "⇅"}
+							</button>
+						)}
+					</div>
+				);
+			})}
 		</div>
 	));
 }
