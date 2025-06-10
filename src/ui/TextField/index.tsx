@@ -1,29 +1,29 @@
-import cx from "classix";
 import type React from "react";
 
-type Props = {
+type Props = Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> & {
 	label?: React.ReactNode;
-} & React.InputHTMLAttributes<HTMLInputElement>;
+	value?: string;
+	onChange?: (value: string) => void;
+};
 
-function TextField({ className, label, ...props }: Props) {
+function TextField({ className, label, value, onChange, ...props }: Props) {
 	return (
-		<>
+		<div className={className} {...props}>
 			{label && (
 				<label
 					htmlFor="wallet-adress"
-					className="text-sm mt-6 flex gap-1 w-full justify-between"
+					className="text-sm mt-6 flex gap-1 justify-between"
 				>
 					{label}
 				</label>
 			)}
 			<input
-				className={cx(
-					"p-2 w-full border-2 border-gray-500 rounded-sm",
-					className,
-				)}
-				{...props}
+				placeholder="Enter text"
+				value={value}
+				onChange={(e) => onChange?.(e.target.value)}
+				className={"p-2 border-1 w-full border-gray-500 rounded-sm"}
 			/>
-		</>
+		</div>
 	);
 }
 export { TextField };

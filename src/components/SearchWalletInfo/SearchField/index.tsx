@@ -59,11 +59,11 @@ function SearchField({ onChange, isPending }: Props) {
 				children={(field) => (
 					<div className="flex flex-col items-center w-[420px]">
 						<TextField
+							className="w-full"
 							label={buildFieldLabel<typeof field>(field)}
-							placeholder="Enter wallet address"
 							value={field.state.value}
 							onBlur={field.handleBlur}
-							onChange={(e) => field.handleChange(e.target.value)}
+							onChange={field.handleChange}
 						/>
 						<Button
 							isLoading={isPending}

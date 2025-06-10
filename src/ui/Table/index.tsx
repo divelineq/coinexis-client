@@ -3,9 +3,11 @@ import {
 	getPaginationRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
+import { useState } from "react";
 import { HeaderGroups } from "./HeaderGroups";
 import { PaginationActions } from "./PaginationActions";
 import { Rows } from "./RowModel";
+import { SearchFilter } from "./SearchFilter";
 
 type Props<TColumns extends Array<unknown>, TData extends Array<unknown>> = {
 	defaultColumns: TColumns;
@@ -16,6 +18,8 @@ function Table<TColumns extends Array<any>, TData extends Array<any>>({
 	defaultColumns,
 	data,
 }: Props<TColumns, TData>) {
+	const [columnFilters, setColumnFilters] = useState([]);
+
 	const table = useReactTable({
 		columns: defaultColumns,
 		data: data,
@@ -23,6 +27,9 @@ function Table<TColumns extends Array<any>, TData extends Array<any>>({
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		autoResetPageIndex: false,
+		state: {
+			columnFilters,
+		},
 		initialState: {
 			pagination: {
 				pageIndex: 0,
@@ -33,7 +40,10 @@ function Table<TColumns extends Array<any>, TData extends Array<any>>({
 
 	return (
 		<div className="p-4 m-auto" style={{ width: table.getTotalSize() }}>
-			<PaginationActions table={table} />
+			<div className="flex justify-between w-full py-2">
+				<SearchFilter className="w-1/3" />
+				<PaginationActions table={table} />
+			</div>
 			<HeaderGroups headers={table.getHeaderGroups()} />
 			<Rows rowModel={table.getRowModel()} />
 		</div>

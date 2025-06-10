@@ -34,7 +34,7 @@ function SwitchPageButton({
 
 export function PaginationActions({ table }: Props) {
 	return (
-		<div className="flex m-auto py-2">
+		<div className="flex py-2">
 			<SwitchPageButton
 				disabled={table.getState().pagination.pageIndex === 0}
 				symbol="<"
