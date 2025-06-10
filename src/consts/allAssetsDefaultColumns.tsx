@@ -11,6 +11,7 @@ export const DEFAULT_ALL_ASSETS_COLUMNS = [
 		accessorKey: "name",
 		header: () => <p className="text-left">Name</p>,
 		size: 300,
+		enableColumnFilter: true,
 		cell: (props: any) => <p>{props.getValue()}</p>,
 	},
 	{

@@ -1,5 +1,6 @@
 import {
 	getCoreRowModel,
+	getFilteredRowModel,
 	getPaginationRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
@@ -14,18 +15,27 @@ type Props<TColumns extends Array<unknown>, TData extends Array<unknown>> = {
 	data: TData;
 };
 
+interface ColumnFilter {
+	id: string;
+	value: unknown;
+}
+type ColumnFiltersState = ColumnFilter[];
+
 function Table<TColumns extends Array<any>, TData extends Array<any>>({
 	defaultColumns,
 	data,
 }: Props<TColumns, TData>) {
-	const [columnFilters, setColumnFilters] = useState([]);
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
 	const table = useReactTable({
-		columns: defaultColumns,
-		data: data,
-		rowCount: data.length,
 		getCoreRowModel: getCoreRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
+		onColumnFiltersChange: setColumnFilters,
+		data: data,
+		enableColumnFilters: true,
+		rowCount: data.length,
+		columns: defaultColumns,
 		autoResetPageIndex: false,
 		state: {
 			columnFilters,
@@ -41,7 +51,7 @@ function Table<TColumns extends Array<any>, TData extends Array<any>>({
 	return (
 		<div className="p-4 m-auto" style={{ width: table.getTotalSize() }}>
 			<div className="flex justify-between w-full py-2">
-				<SearchFilter className="w-1/3" />
+				<SearchFilter className="w-1/3" table={table} />
 				<PaginationActions table={table} />
 			</div>
 			<HeaderGroups headers={table.getHeaderGroups()} />
