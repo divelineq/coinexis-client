@@ -13,6 +13,7 @@ function SearchFilter({ className, table, searchId }: Props) {
 			value={table.getColumn(searchId)?.getFilterValue() as string}
 			onChange={table.getColumn(searchId)?.setFilterValue}
 			className={className}
+			placeholder="Search by name"
 		/>
 	);
 }

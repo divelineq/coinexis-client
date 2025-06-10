@@ -50,6 +50,11 @@ function Table<TColumns extends Array<any>, TData extends Array<any>>({
 				pageSize: 13,
 			},
 		},
+		defaultColumn: {
+			size: 200,
+			minSize: 50,
+			maxSize: 700,
+		},
 	});
 
 	return (

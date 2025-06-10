@@ -4,9 +4,17 @@ type Props = Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> & {
 	label?: React.ReactNode;
 	value?: string;
 	onChange?: (value: string) => void;
+	placeholder?: string;
 };
 
-function TextField({ className, label, value, onChange, ...props }: Props) {
+function TextField({
+	className,
+	label,
+	value,
+	onChange,
+	placeholder,
+	...props
+}: Props) {
 	return (
 		<div className={className} {...props}>
 			{label && (
@@ -18,7 +26,7 @@ function TextField({ className, label, value, onChange, ...props }: Props) {
 				</label>
 			)}
 			<input
-				placeholder="Enter text"
+				placeholder={placeholder}
 				value={value}
 				onChange={(e) => onChange?.(e.target.value)}
 				className={"p-2 border-1 w-full border-gray-500 rounded-sm"}

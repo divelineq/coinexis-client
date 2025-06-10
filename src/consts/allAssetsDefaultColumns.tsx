@@ -3,6 +3,7 @@ export const DEFAULT_ALL_ASSETS_COLUMNS = [
 		accessorKey: "logo",
 		header: () => <p className="text-center">Logo</p>,
 		size: 70,
+		enableResizing: false,
 		enableSorting: false,
 		cell: (props: any) => (
 			<img src={props.getValue() ?? null} alt="" className="w-8 h-8" />
@@ -11,14 +12,12 @@ export const DEFAULT_ALL_ASSETS_COLUMNS = [
 	{
 		accessorKey: "name",
 		header: () => <p className="text-left">Name</p>,
-		size: 300,
 		cell: (props: any) => <p>{props.getValue()}</p>,
 		enableSorting: true,
 	},
 	{
 		accessorKey: "price",
 		header: () => <p className="text-center">Price</p>,
-		size: 200,
 		cell: (props: any) => {
 			const price24H = props.row.original.price_change_24h.toFixed(2);
 			const color =
