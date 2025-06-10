@@ -9,6 +9,7 @@ type Props = {
 function PortfolioTable({ data }: Props) {
 	return (
 		<Table
+			searchId="asset_name"
 			defaultColumns={DEFAULT_PORTFOLIO_COLUMNS}
 			data={data?.assets ?? []}
 		/>

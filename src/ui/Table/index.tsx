@@ -13,6 +13,7 @@ import { SearchFilter } from "./SearchFilter";
 type Props<TColumns extends Array<unknown>, TData extends Array<unknown>> = {
 	defaultColumns: TColumns;
 	data: TData;
+	searchId: string;
 };
 
 interface ColumnFilter {
@@ -24,6 +25,7 @@ type ColumnFiltersState = ColumnFilter[];
 function Table<TColumns extends Array<any>, TData extends Array<any>>({
 	defaultColumns,
 	data,
+	searchId,
 }: Props<TColumns, TData>) {
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -51,7 +53,7 @@ function Table<TColumns extends Array<any>, TData extends Array<any>>({
 	return (
 		<div className="p-4 m-auto" style={{ width: table.getTotalSize() }}>
 			<div className="flex justify-between w-full py-2">
-				<SearchFilter className="w-1/3" table={table} />
+				<SearchFilter className="w-1/3" table={table} searchId={searchId} />
 				<PaginationActions table={table} />
 			</div>
 			<HeaderGroups headers={table.getHeaderGroups()} />

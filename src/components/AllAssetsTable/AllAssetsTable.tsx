@@ -5,7 +5,13 @@ import { DEFAULT_ALL_ASSETS_COLUMNS } from "../../consts";
 function AllAssetsTable() {
 	const { data } = useGetAllAssets();
 
-	return <Table defaultColumns={DEFAULT_ALL_ASSETS_COLUMNS} data={data} />;
+	return (
+		<Table
+			defaultColumns={DEFAULT_ALL_ASSETS_COLUMNS}
+			data={data}
+			searchId="name"
+		/>
+	);
 }
 
 export { AllAssetsTable };

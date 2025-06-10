@@ -4,13 +4,14 @@ import { TextField } from "../TextField";
 type Props = {
 	className?: string;
 	table: Table<any>;
+	searchId: string;
 };
 
-function SearchFilter({ className, table }: Props) {
+function SearchFilter({ className, table, searchId }: Props) {
 	return (
 		<TextField
-			value={table.getColumn("asset_name")?.getFilterValue() as string}
-			onChange={table.getColumn("asset_name")?.setFilterValue}
+			value={table.getColumn(searchId)?.getFilterValue() as string}
+			onChange={table.getColumn(searchId)?.setFilterValue}
 			className={className}
 		/>
 	);
