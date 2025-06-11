@@ -8,127 +8,88 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as CoinsRouteImport } from './routes/coins'
+import { Route as IndexRouteImport } from './routes/index'
 
-import { Route as rootRoute } from "./routes/__root";
-import { Route as CoinsImport } from "./routes/coins";
-import { Route as IndexImport } from "./routes/index";
-import { Route as PortfolioImport } from "./routes/portfolio";
-
-// Create/Update Routes
-
-const PortfolioRoute = PortfolioImport.update({
-	id: "/portfolio",
-	path: "/portfolio",
-	getParentRoute: () => rootRoute,
-} as any);
-
-const CoinsRoute = CoinsImport.update({
-	id: "/coins",
-	path: "/coins",
-	getParentRoute: () => rootRoute,
-} as any);
-
-const IndexRoute = IndexImport.update({
-	id: "/",
-	path: "/",
-	getParentRoute: () => rootRoute,
-} as any);
-
-// Populate the FileRoutesByPath interface
-
-declare module "@tanstack/react-router" {
-	interface FileRoutesByPath {
-		"/": {
-			id: "/";
-			path: "/";
-			fullPath: "/";
-			preLoaderRoute: typeof IndexImport;
-			parentRoute: typeof rootRoute;
-		};
-		"/coins": {
-			id: "/coins";
-			path: "/coins";
-			fullPath: "/coins";
-			preLoaderRoute: typeof CoinsImport;
-			parentRoute: typeof rootRoute;
-		};
-		"/portfolio": {
-			id: "/portfolio";
-			path: "/portfolio";
-			fullPath: "/portfolio";
-			preLoaderRoute: typeof PortfolioImport;
-			parentRoute: typeof rootRoute;
-		};
-	}
-}
-
-// Create and export the route tree
+const PortfolioRoute = PortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoinsRoute = CoinsRouteImport.update({
+  id: '/coins',
+  path: '/coins',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-	"/": typeof IndexRoute;
-	"/coins": typeof CoinsRoute;
-	"/portfolio": typeof PortfolioRoute;
+  '/': typeof IndexRoute
+  '/coins': typeof CoinsRoute
+  '/portfolio': typeof PortfolioRoute
 }
-
 export interface FileRoutesByTo {
-	"/": typeof IndexRoute;
-	"/coins": typeof CoinsRoute;
-	"/portfolio": typeof PortfolioRoute;
+  '/': typeof IndexRoute
+  '/coins': typeof CoinsRoute
+  '/portfolio': typeof PortfolioRoute
 }
-
 export interface FileRoutesById {
-	__root__: typeof rootRoute;
-	"/": typeof IndexRoute;
-	"/coins": typeof CoinsRoute;
-	"/portfolio": typeof PortfolioRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/coins': typeof CoinsRoute
+  '/portfolio': typeof PortfolioRoute
 }
-
 export interface FileRouteTypes {
-	fileRoutesByFullPath: FileRoutesByFullPath;
-	fullPaths: "/" | "/coins" | "/portfolio";
-	fileRoutesByTo: FileRoutesByTo;
-	to: "/" | "/coins" | "/portfolio";
-	id: "__root__" | "/" | "/coins" | "/portfolio";
-	fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/coins' | '/portfolio'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/coins' | '/portfolio'
+  id: '__root__' | '/' | '/coins' | '/portfolio'
+  fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
-	IndexRoute: typeof IndexRoute;
-	CoinsRoute: typeof CoinsRoute;
-	PortfolioRoute: typeof PortfolioRoute;
+  IndexRoute: typeof IndexRoute
+  CoinsRoute: typeof CoinsRoute
+  PortfolioRoute: typeof PortfolioRoute
 }
 
-const rootRouteChildren: RootRouteChildren = {
-	IndexRoute: IndexRoute,
-	CoinsRoute: CoinsRoute,
-	PortfolioRoute: PortfolioRoute,
-};
-
-export const routeTree = rootRoute
-	._addFileChildren(rootRouteChildren)
-	._addFileTypes<FileRouteTypes>();
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/coins",
-        "/portfolio"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/coins": {
-      "filePath": "coins.tsx"
-    },
-    "/portfolio": {
-      "filePath": "portfolio.tsx"
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/coins': {
+      id: '/coins'
+      path: '/coins'
+      fullPath: '/coins'
+      preLoaderRoute: typeof CoinsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portfolio': {
+      id: '/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
-ROUTE_MANIFEST_END */
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  CoinsRoute: CoinsRoute,
+  PortfolioRoute: PortfolioRoute,
+}
+export const routeTree = rootRouteImport
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()

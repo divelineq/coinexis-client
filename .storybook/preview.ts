@@ -1,8 +1,18 @@
 import type { Preview } from "@storybook/react-vite";
+import { initialize, mswLoader } from "msw-storybook-addon";
+import { handlers } from "../src/mocks/handlers";
+
+initialize({ onUnhandledRequest: "bypass" });
+
+export const loaders = [mswLoader];
+
 import "../src/index.css";
 
 const preview: Preview = {
 	parameters: {
+		msw: {
+			handlers,
+		},
 		controls: {
 			matchers: {
 				color: /(background|color)$/i,
