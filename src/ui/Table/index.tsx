@@ -11,7 +11,7 @@ import { PaginationActions } from "./PaginationActions";
 import { Rows } from "./RowModel";
 import { SearchFilter } from "./SearchFilter";
 
-type Props<TColumns extends Array<unknown>, TData extends Array<unknown>> = {
+type Props<TColumns extends unknown[], TData extends unknown[]> = {
 	defaultColumns: TColumns;
 	data: TData;
 	searchId: string;
@@ -23,7 +23,7 @@ interface ColumnFilter {
 }
 type ColumnFiltersState = ColumnFilter[];
 
-function Table<TColumns extends Array<any>, TData extends Array<any>>({
+function Table<TColumns extends any[], TData extends any[]>({
 	defaultColumns,
 	data,
 	searchId,
@@ -36,7 +36,7 @@ function Table<TColumns extends Array<any>, TData extends Array<any>>({
 		onColumnFiltersChange: setColumnFilters,
 		getFilteredRowModel: getFilteredRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
-		data: data,
+		data,
 		rowCount: data.length,
 		columns: defaultColumns,
 		enableColumnFilters: true,

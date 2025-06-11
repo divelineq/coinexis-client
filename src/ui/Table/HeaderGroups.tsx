@@ -11,7 +11,6 @@ export function HeaderGroups({ headers }: Props) {
 			className="flex border border-gray-500 rounded-t-sm"
 		>
 			{headerGroup.headers.map((header) => {
-				console.log(header.column.getCanSort());
 				return (
 					<div
 						key={header.id}

@@ -36,10 +36,10 @@ function SearchField({ onChange, isPending }: Props) {
 	const form = useForm({
 		defaultValues: DEFAULT_ADRESS,
 		onSubmit: (values) => {
-			console.log(values);
 			onChange(values.value.adress);
 		},
 	});
+
 	return (
 		<form
 			className="flex flex-col items-center"

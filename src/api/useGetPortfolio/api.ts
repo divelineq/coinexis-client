@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { PORTFOLIO_VALIDATION_SHEMA, type PortfolioType } from "./types";
+
 const API = import.meta.env.VITE_API_KEY;
 
 export function useGetPortfolio() {
@@ -16,9 +17,7 @@ export function useGetPortfolio() {
 				},
 			);
 
-			const validationRes = PORTFOLIO_VALIDATION_SHEMA.parse(res.data.data);
-
-			return validationRes;
+			return PORTFOLIO_VALIDATION_SHEMA.parse(res.data.data);
 		},
 	});
 }

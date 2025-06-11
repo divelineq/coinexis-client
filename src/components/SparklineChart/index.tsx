@@ -1,12 +1,12 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-type Props = {
-	currency: string;
-	className?: string;
-};
+// type Props = {
+// 	currency: string;
+// 	className?: string;
+// };
 
-export const SparklineChart = ({ currency }: Props) => {
+export const SparklineChart = () => {
 	// const { data } = useHistoryCoin(currency);
 	// const options = useSparklineOptions(data);
 
