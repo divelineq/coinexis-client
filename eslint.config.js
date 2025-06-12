@@ -81,6 +81,7 @@ export const tanstackQueryConfig = tseslint.config(
 export default tseslint.config(
 	{
 		ignores: [
+			"**/mockServiceWorker.js",
 			"**/routeTree.gen.ts",
 			"TODO.ts",
 			"**/dist",

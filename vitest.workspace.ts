@@ -20,24 +20,17 @@ export default defineWorkspace([
 			storybookTest({ configDir: path.join(dirname, ".storybook") }),
 		],
 		test: {
-			name: "storybook",
+			globals: true,
+			name: "tests",
 			environment: "jsdom",
+			include: ["src/**/**/*.{test,spec}.{js,ts,jsx,tsx}"],
 			browser: {
 				enabled: true,
 				headless: true,
 				provider: "playwright",
 				instances: [{ browser: "chromium" }],
 			},
-			setupFiles: [".storybook/vitest.setup.ts"],
-		},
-	},
-	{
-		extends: "vite.config.ts",
-		test: {
-			name: "api",
-			environment: "node",
-			setupFiles: ["./src/api/vitest.setup.ts"],
-			include: ["src/api/**/*.test.ts"],
+			setupFiles: [".storybook/vitest.setup.ts", "./src/api/vitest.setup.ts"],
 		},
 	},
 ]);

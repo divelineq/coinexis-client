@@ -16,17 +16,15 @@ function ErrorFallback({ error }: any) {
 	);
 }
 
-const router = createRouter({ routeTree });
-
 async function enableMocking() {
-	if (process.env.NODE_ENV !== "development") {
-		return;
+	if (import.meta.env.MODE === "test") {
+		const { worker } = await import("./mocks/browser");
+
+		return worker.start();
 	}
-
-	const { worker } = await import("./mocks/browser");
-
-	return worker.start();
 }
+
+const router = createRouter({ routeTree });
 
 const queryClient = new QueryClient();
 
