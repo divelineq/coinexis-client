@@ -1,8 +1,8 @@
 import { http, HttpResponse } from "msw";
-import type { AllAssetsTypes } from "../useGetAllAssets/types";
+import type { ManyCoinsType } from "src/api/coins/types";
 
 export const allAssetsHandler = [
-	http.get<never, never, { data: AllAssetsTypes[] }>(
+	http.get<never, never, { data: ManyCoinsType[] }>(
 		"https://api.mobula.io/api/1/all?fields=id%2Cname%2Clogo%2Cprice%2Cprice_change_1h%2Cprice_change_24h%2Cprice_change_7d%2Cprice_change_1m%2Cprice_change_1y%2Cvolume",
 		({ request }) => {
 			const auth = request.headers.get("Authorization");

@@ -32,7 +32,7 @@ function buildFieldLabel<T extends Record<string, any>>(field: T) {
 	);
 }
 
-function SearchField({ onChange, isPending }: Props) {
+function WalletField({ onChange, isPending }: Props) {
 	const form = useForm({
 		defaultValues: DEFAULT_ADRESS,
 		onSubmit: (values) => {
@@ -81,4 +81,4 @@ function SearchField({ onChange, isPending }: Props) {
 	);
 }
 
-export { SearchField };
+export { WalletField };

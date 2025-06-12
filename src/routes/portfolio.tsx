@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { SearchWalletInfo } from "../components/SearchWalletInfo";
+import { SearchWalletInfo } from "../components/PortfolioInfo";
 
 export const Route = createFileRoute("/portfolio")({
 	component: SearchWalletInfo,

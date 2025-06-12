@@ -3,9 +3,9 @@ import { z } from "zod/v4";
 export const MANY_COINS_VALIDATION_SCHEMA = z.object({
 	id: z.number(),
 	name: z.string(),
-	symbol: z.string(),
+	symbol: z.string().optional(),
 	logo: z.string().nullable().optional(),
-	price: z.number().transform((value) => !value && 0),
+	price: z.number().transform((value) => (value === null ? 0 : value)),
 	price_change_1h: z.number().optional(),
 	price_change_24h: z.number().optional(),
 	price_change_7d: z.number().optional(),

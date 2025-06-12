@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as HelpRouteImport } from './routes/help'
 import { Route as CoinsRouteImport } from './routes/coins'
 import { Route as IndexRouteImport } from './routes/index'
 
 const PortfolioRoute = PortfolioRouteImport.update({
   id: '/portfolio',
   path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CoinsRoute = CoinsRouteImport.update({
@@ -32,30 +38,34 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/coins': typeof CoinsRoute
+  '/help': typeof HelpRoute
   '/portfolio': typeof PortfolioRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/coins': typeof CoinsRoute
+  '/help': typeof HelpRoute
   '/portfolio': typeof PortfolioRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/coins': typeof CoinsRoute
+  '/help': typeof HelpRoute
   '/portfolio': typeof PortfolioRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/coins' | '/portfolio'
+  fullPaths: '/' | '/coins' | '/help' | '/portfolio'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/coins' | '/portfolio'
-  id: '__root__' | '/' | '/coins' | '/portfolio'
+  to: '/' | '/coins' | '/help' | '/portfolio'
+  id: '__root__' | '/' | '/coins' | '/help' | '/portfolio'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CoinsRoute: typeof CoinsRoute
+  HelpRoute: typeof HelpRoute
   PortfolioRoute: typeof PortfolioRoute
 }
 
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/portfolio'
       fullPath: '/portfolio'
       preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/coins': {
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CoinsRoute: CoinsRoute,
+  HelpRoute: HelpRoute,
   PortfolioRoute: PortfolioRoute,
 }
 export const routeTree = rootRouteImport
