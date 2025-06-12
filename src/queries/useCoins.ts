@@ -1,5 +1,5 @@
+import { type CoinService, coinService } from "@service";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { type CoinService, coinService } from "../service";
 
 export function useCoins() {
 	return useSuspenseQuery<CoinService>({

@@ -1,8 +1,8 @@
-import type { PortfolioType } from "@api";
+import type { PortfolioService } from "@service";
 import { PortfolioTable } from "./PortfolioTable";
 
 type Props = {
-	data: PortfolioType | undefined;
+	data?: PortfolioService;
 	error: Error | null;
 };
 
@@ -15,15 +15,10 @@ function PortfolioInfo({ data, error }: Props) {
 		<div>
 			<div className="flex text-2xl justify-center gap-2">
 				<p>Total balance:</p>
-				<p>
-					{data?.assets
-						.reduce((acc, val) => acc + val.estimated_balance, 0)
-						.toFixed(2)}
-					$
-				</p>
+				<p>{data.totalPrice}$</p>
 			</div>
 			<div>
-				<PortfolioTable data={data} />
+				<PortfolioTable data={data.portfolio} />
 			</div>
 		</div>
 	);

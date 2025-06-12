@@ -1,6 +1,6 @@
-import type { ManyCoinTypes } from "@api";
+import type { ManyCoinsType } from "@api";
 
 export type CoinService = {
-	coins: ManyCoinTypes[];
+	coins: ManyCoinsType[];
 	totalCoins: number;
 };

@@ -1,4 +1,4 @@
-import { coinApi } from "../../api/coins";
+import { coinApi } from "../../api/coins/api";
 import type { CoinService } from "./types";
 
 export const coinService = {

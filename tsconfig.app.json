@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
+    "verbatimModuleSyntax": true,
     "baseUrl": ".",
     "paths": {
       "@ui": ["src/ui"],
       "@api": ["src/api"],
+      "@service": ["src/service"],
+
     },
     "types": ["node"],
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
