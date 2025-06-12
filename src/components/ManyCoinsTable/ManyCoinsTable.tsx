@@ -1,7 +1,7 @@
 import { Table } from "@ui";
-import { useGetAllAssets } from "../../api";
+import { useCoins } from "../../queries";
 
-export const DEFAULT_ALL_ASSETS_COLUMNS = [
+export const DEFAULT_MANY_COINS_COLUMNS = [
 	{
 		accessorKey: "logo",
 		header: () => <p className="text-center">Logo</p>,
@@ -70,16 +70,16 @@ export const DEFAULT_ALL_ASSETS_COLUMNS = [
 	},
 ];
 
-function AllAssetsTable() {
-	const { data } = useGetAllAssets();
+function ManyCoinsTable() {
+	const { data } = useCoins();
 
 	return (
 		<Table
-			defaultColumns={DEFAULT_ALL_ASSETS_COLUMNS}
-			data={data}
+			defaultColumns={DEFAULT_MANY_COINS_COLUMNS}
+			data={data.coins}
 			searchId="name"
 		/>
 	);
 }
 
-export { AllAssetsTable };
+export { ManyCoinsTable };

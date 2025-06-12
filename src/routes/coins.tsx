@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AllAssetsCkeleton, AllAssetsTable } from "../components";
+import { ManyCoinsSkeleton, ManyCoinsTable } from "../components";
 
 export const Route = createFileRoute("/coins")({
-	component: AllAssetsTable,
-	pendingComponent: () => <AllAssetsCkeleton />,
+	component: ManyCoinsTable,
+	pendingComponent: () => <ManyCoinsSkeleton />,
 	errorComponent: () => <div>Error assets table :(</div>,
 });

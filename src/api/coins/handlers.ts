@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import type { AllAssetsTypes } from "./types";
+import type { AllAssetsTypes } from "../useGetAllAssets/types";
 
 export const allAssetsHandler = [
 	http.get<never, never, { data: AllAssetsTypes[] }>(
