@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TransactionsRouteImport } from './routes/transactions'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as CoinsRouteImport } from './routes/coins'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TransactionsRoute = TransactionsRouteImport.update({
+  id: '/transactions',
+  path: '/transactions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PortfolioRoute = PortfolioRouteImport.update({
   id: '/portfolio',
   path: '/portfolio',
@@ -40,12 +46,14 @@ export interface FileRoutesByFullPath {
   '/coins': typeof CoinsRoute
   '/help': typeof HelpRoute
   '/portfolio': typeof PortfolioRoute
+  '/transactions': typeof TransactionsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/coins': typeof CoinsRoute
   '/help': typeof HelpRoute
   '/portfolio': typeof PortfolioRoute
+  '/transactions': typeof TransactionsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/coins': typeof CoinsRoute
   '/help': typeof HelpRoute
   '/portfolio': typeof PortfolioRoute
+  '/transactions': typeof TransactionsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/coins' | '/help' | '/portfolio'
+  fullPaths: '/' | '/coins' | '/help' | '/portfolio' | '/transactions'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/coins' | '/help' | '/portfolio'
-  id: '__root__' | '/' | '/coins' | '/help' | '/portfolio'
+  to: '/' | '/coins' | '/help' | '/portfolio' | '/transactions'
+  id: '__root__' | '/' | '/coins' | '/help' | '/portfolio' | '/transactions'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,10 +76,18 @@ export interface RootRouteChildren {
   CoinsRoute: typeof CoinsRoute
   HelpRoute: typeof HelpRoute
   PortfolioRoute: typeof PortfolioRoute
+  TransactionsRoute: typeof TransactionsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/transactions': {
+      id: '/transactions'
+      path: '/transactions'
+      fullPath: '/transactions'
+      preLoaderRoute: typeof TransactionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/portfolio': {
       id: '/portfolio'
       path: '/portfolio'
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   CoinsRoute: CoinsRoute,
   HelpRoute: HelpRoute,
   PortfolioRoute: PortfolioRoute,
+  TransactionsRoute: TransactionsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

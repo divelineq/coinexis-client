@@ -14,6 +14,9 @@ export function Header() {
 				<Link to="/portfolio" className="[&.active]:font-bold">
 					Portfolio
 				</Link>
+				<Link to="/transactions" className="[&.active]:font-bold">
+					Transactions
+				</Link>
 				<Link to="/help" className="[&.active]:font-bold">
 					Help
 				</Link>

@@ -13,13 +13,13 @@ export function Rows({ rowModel }: Props) {
 					{row.getVisibleCells().map((cell) => (
 						<div
 							key={cell.id}
-							className="p-3 border-r border-gray-500 box-border"
+							className="p-3 border-r border-gray-500 box-border overflow-auto"
 							style={{ width: cell.column.getSize() }}
 						>
 							<div
 								className={cx(
-									"flex h-full items-center",
-									cell.column.id === "name"
+									"flex h-full items-center truncate",
+									cell.column.id === "name" || cell.column.id === "asset_name"
 										? "justify-start"
 										: "justify-center",
 								)}
