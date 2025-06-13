@@ -58,9 +58,9 @@ function Table<TColumns extends any[], TData extends any[]>({
 	});
 
 	return (
-		<div className="p-4 m-auto" style={{ width: table.getTotalSize() }}>
+		<div className="p-2 m-auto" style={{ width: table.getTotalSize() }}>
 			<div className="flex justify-between w-full py-2">
-				<SearchFilter className="w-1/3" table={table} searchId={searchId} />
+				<SearchFilter className="w-1/5" table={table} searchId={searchId} />
 				<PaginationActions table={table} />
 			</div>
 			<HeaderGroups headers={table.getHeaderGroups()} />

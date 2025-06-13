@@ -3,6 +3,8 @@ import { Table } from "@ui";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import { AiOutlineCopy } from "react-icons/ai";
+import { Toaster, toast } from "sonner";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -11,6 +13,32 @@ type Props = {
 	data: SmartTransactions | undefined;
 	error: Error | null;
 };
+
+export function CopyText(props: { getValue: () => string }) {
+	const value = props.getValue();
+
+	const handleCopy = () => {
+		navigator.clipboard
+			.writeText(value)
+			.then(() => toast.success("Copied to clipboard"))
+			.catch((error) => {
+				console.error("Failed to copy:", error);
+			});
+	};
+
+	return (
+		<div className="flex gap-3 truncate items-center">
+			<Toaster position="top-center" duration={1500} richColors />
+			<p className="truncate text-ellipsis whitespace-nowrap">{value}</p>
+			<button
+				onClick={handleCopy}
+				className="text-gray-400 hover:text-white transition"
+			>
+				<AiOutlineCopy />
+			</button>
+		</div>
+	);
+}
 
 export const DEFAULT_TRANSACTIONS_COLUMNS = [
 	{
@@ -23,7 +51,7 @@ export const DEFAULT_TRANSACTIONS_COLUMNS = [
 			const color =
 				type === "buy"
 					? "text-green-500"
-					: type === "cell"
+					: type === "sell"
 						? "text-red-500"
 						: "text-blue-500";
 
@@ -50,19 +78,23 @@ export const DEFAULT_TRANSACTIONS_COLUMNS = [
 	{
 		accessorKey: "from",
 		header: () => <p className="text-center">From</p>,
-		cell: (props: any) => <p>{props.getValue()}</p>,
+		cell: (props: any) => CopyText({ getValue: props.getValue }),
 		enableSorting: false,
 	},
 	{
 		accessorKey: "to",
 		header: () => <p className="text-center">To</p>,
-		cell: (props: any) => <p>{props.getValue()}</p>,
+		cell: (props: any) => CopyText({ getValue: props.getValue }),
 		enableSorting: false,
 	},
 	{
 		accessorKey: "blockchain",
 		header: () => <p className="text-center">Blockchain</p>,
-		cell: (props: any) => <p>{props.getValue()}</p>,
+		cell: (props: any) => (
+			<div className="truncate">
+				<p className="truncate">{props.getValue()}</p>
+			</div>
+		),
 		enableSorting: false,
 	},
 	{
