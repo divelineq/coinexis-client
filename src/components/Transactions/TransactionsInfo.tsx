@@ -1,13 +1,16 @@
 import type { SmartTransactions } from "@api";
 import { Table } from "@ui";
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import { AiOutlineCopy } from "react-icons/ai";
+import { Tooltip } from "react-tooltip";
 import { Toaster, toast } from "sonner";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(relativeTime);
 
 type Props = {
 	data: SmartTransactions | undefined;
@@ -29,7 +32,14 @@ export function CopyText(props: { getValue: () => string }) {
 	return (
 		<div className="flex gap-3 truncate items-center">
 			<Toaster position="top-center" duration={1500} richColors />
-			<p className="truncate text-ellipsis whitespace-nowrap">{value}</p>
+			<Tooltip id="wallet" place="top" />
+			<p
+				data-tooltip-content={value}
+				data-tooltip-id="wallet"
+				className="truncate text-ellipsis whitespace-nowrap"
+			>
+				{value}
+			</p>
 			<button
 				onClick={handleCopy}
 				className="text-gray-400 hover:text-white transition"
@@ -72,7 +82,18 @@ export const DEFAULT_TRANSACTIONS_COLUMNS = [
 
 			const localTime = dayjs.utc(timestamp).tz(userTimezone);
 
-			return <p>{localTime.format("YYYY-MM-DD HH:mm:ss")}</p>;
+			return (
+				<>
+					<p
+						data-tooltip-id="full-time"
+						data-tooltip-content={localTime.format("YYYY-MM-DD HH:mm:ss")}
+						className="cursor-default"
+					>
+						{localTime.fromNow()}
+					</p>
+					<Tooltip id="full-time" place="top" />
+				</>
+			);
 		},
 	},
 	{
