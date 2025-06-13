@@ -47,7 +47,7 @@ function Table<TColumns extends any[], TData extends any[]>({
 		initialState: {
 			pagination: {
 				pageIndex: 0,
-				pageSize: 13,
+				pageSize: 15,
 			},
 		},
 		defaultColumn: {

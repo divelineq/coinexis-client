@@ -5,6 +5,7 @@ type Props = Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> & {
 	value?: string;
 	onChange?: (value: string) => void;
 	placeholder?: string;
+	startIcon?: React.ReactNode;
 };
 
 function TextField({
@@ -13,6 +14,7 @@ function TextField({
 	value,
 	onChange,
 	placeholder,
+	startIcon,
 	...props
 }: Props) {
 	return (
@@ -20,17 +22,20 @@ function TextField({
 			{label && (
 				<label
 					htmlFor="wallet-adress"
-					className="text-sm mt-6 flex gap-1 justify-between"
+					className="text-sm mt-6 flex justify-between"
 				>
 					{label}
 				</label>
 			)}
-			<input
-				placeholder={placeholder}
-				value={value}
-				onChange={(e) => onChange?.(e.target.value)}
-				className={"p-2 border-1 w-full border-gray-500 rounded-sm"}
-			/>
+			<div className="flex border-1 w-full border-gray-500 rounded-sm h-full items-center">
+				{startIcon}
+				<input
+					placeholder={placeholder}
+					value={value}
+					onChange={(e) => onChange?.(e.target.value)}
+					className={"p-2 w-full focus:outline-none focus:ring-0"}
+				/>
+			</div>
 		</div>
 	);
 }

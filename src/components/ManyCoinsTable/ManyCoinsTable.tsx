@@ -1,15 +1,17 @@
 import { Table } from "@ui";
+import cx from "classix";
+import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { useCoins } from "../../queries";
 
 export const DEFAULT_MANY_COINS_COLUMNS = [
 	{
 		accessorKey: "logo",
 		header: () => <p className="text-center">Logo</p>,
-		size: 70,
 		enableResizing: false,
 		enableSorting: false,
+		size: 50,
 		cell: (props: any) => (
-			<img src={props.getValue() ?? null} alt="" className="w-8 h-8" />
+			<img src={props.getValue() ?? null} alt="" className="w-6 h-6" />
 		),
 	},
 	{
@@ -31,9 +33,14 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 						: "text-gray-200";
 
 			return (
-				<p className={color}>
-					{`${props.row.original.price.toFixed(2)}$  ${price24H > 0 ? "▴" : price24H < 0 ? "▾" : ""}`}
-				</p>
+				<div className={cx("flex items-center gap-1", color)}>
+					<span>{`${props.row.original.price.toFixed(2)}$`}</span>
+					{price24H > 0 ? (
+						<AiFillCaretUp className="w-4 h-4" />
+					) : price24H < 0 ? (
+						<AiFillCaretDown className="w-4 h-4" />
+					) : null}
+				</div>
 			);
 		},
 		enableSorting: true,

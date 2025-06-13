@@ -1,12 +1,13 @@
 import type { Table } from "@tanstack/react-table";
 import { cx } from "classix";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 
 type Props = {
 	table: Table<any>;
 };
 
 type SwitchPageButtonProps = {
-	symbol: string;
+	symbol: React.ReactNode;
 	onChange: () => void;
 	className?: string;
 	disabled?: boolean;
@@ -37,7 +38,7 @@ export function PaginationActions({ table }: Props) {
 		<div className="flex py-2">
 			<SwitchPageButton
 				disabled={table.getState().pagination.pageIndex === 0}
-				symbol="<"
+				symbol={<AiFillCaretLeft />}
 				onChange={table.previousPage}
 				className="rounded-l-md"
 			/>
@@ -48,7 +49,7 @@ export function PaginationActions({ table }: Props) {
 				disabled={
 					table.getState().pagination.pageIndex === table.getPageCount() - 1
 				}
-				symbol=">"
+				symbol={<AiFillCaretRight />}
 				onChange={table.nextPage}
 				className="rounded-r-md"
 			/>
