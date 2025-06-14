@@ -86,16 +86,16 @@ const AssetSchema = z.object({
 
 // Схема для отдельной транзакции
 const TransactionSchema = z.object({
-	timestamp: z.number(), // Unix timestamp в миллисекундах
-	asset: AssetSchema, // Информация об активе
-	type: z.string(), // например: "buy", "sell", "transfer"
-	method_id: z.string().nullable(), // может быть null
-	hash: z.string(), // хеш транзакции
-	blockchain: z.string(), // название блокчейна
-	amount: z.number(), // количество токенов
-	amount_usd: z.number(), // стоимость в USD
-	to: z.string(), // адрес получателя
-	from: z.string(), // адрес отправителя
+	timestamp: z.number(),
+	asset: AssetSchema,
+	type: z.string(),
+	method_id: z.string().nullable(),
+	hash: z.string(),
+	blockchain: z.string(),
+	amount: z.number(),
+	amount_usd: z.number(),
+	to: z.string(),
+	from: z.string(),
 });
 
 export const WalletTransactionsResponseSchema = z.object({

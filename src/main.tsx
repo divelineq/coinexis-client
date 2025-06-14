@@ -4,6 +4,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
+import { Toaster } from "sonner";
 import "./index.css";
 import { routeTree } from "./routeTree.gen";
 
@@ -17,7 +18,7 @@ function ErrorFallback({ error }: any) {
 }
 
 async function enableMocking() {
-	if (import.meta.env.MODE === "test") {
+	if (import.meta.env.MODE === "development") {
 		const { worker } = await import("./mocks/browser");
 
 		return worker.start();
@@ -34,6 +35,12 @@ enableMocking().then(() => {
 			<ErrorBoundary FallbackComponent={ErrorFallback}>
 				<QueryClientProvider client={queryClient}>
 					<RouterProvider router={router} />
+					<Toaster
+						closeButton
+						duration={1500}
+						position="top-center"
+						richColors
+					/>
 					<ReactQueryDevtools initialIsOpen={false} position="right" />
 				</QueryClientProvider>
 			</ErrorBoundary>

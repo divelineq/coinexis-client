@@ -11,20 +11,18 @@ export const allAssetsHandler = [
 			}
 
 			return HttpResponse.json({
-				data: [
-					{
-						id: 1,
-						name: "coin",
-						logo: "https://cryptologos.cc/logos/logo.svg",
-						price: 200,
-						volume: 60_000,
-						price_change_1h: 1,
-						price_change_24h: 2,
-						price_change_7d: 3,
-						price_change_1m: 4,
-						price_change_1y: 5,
-					},
-				],
+				data: Array.from({ length: 30 }).map((_, i) => ({
+					id: i + 1,
+					name: `coin-${i}`,
+					logo: "https://cryptologos.cc/logos/logo.svg",
+					price: i + 20,
+					volume: i + 4000,
+					price_change_1h: i,
+					price_change_24h: i,
+					price_change_7d: i,
+					price_change_1m: i,
+					price_change_1y: i,
+				})),
 			});
 		},
 	),

@@ -6,7 +6,7 @@ import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import { AiOutlineCopy } from "react-icons/ai";
 import { Tooltip } from "react-tooltip";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -31,7 +31,7 @@ export function CopyText(props: { getValue: () => string }) {
 
 	return (
 		<div className="flex gap-3 truncate items-center">
-			<Toaster position="top-center" duration={1500} richColors />
+			{/* <Toaster position="top-center" duration={1500} richColors /> */}
 			<Tooltip id="wallet" place="top" />
 			<p
 				data-tooltip-content={value}
