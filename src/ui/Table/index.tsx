@@ -1,3 +1,4 @@
+import type { Updater } from "@tanstack/react-query";
 import {
 	type PaginationState,
 	getCoreRowModel,
@@ -35,7 +36,7 @@ type Props<TColumns extends unknown[], TData extends unknown[]> = {
 	isRefetching?: boolean;
 	manualPagination?: boolean;
 	pagination?: PaginationState;
-	onPaginationChange?: (old: PaginationState) => PaginationState;
+	onPaginationChange?: (old: PaginationState) => void;
 };
 
 interface ColumnFilter {
@@ -62,7 +63,9 @@ function Table<TColumns extends any[], TData extends any[]>({
 		onColumnFiltersChange: setColumnFilters,
 		getFilteredRowModel: getFilteredRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
-		onPaginationChange,
+		onPaginationChange: onPaginationChange as (
+			updater: Updater<PaginationState, PaginationState>,
+		) => void,
 		data,
 		rowCount,
 		columns: defaultColumns,

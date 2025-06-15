@@ -6,7 +6,10 @@ export const portfolioService = {
 		const portfolio = await portfolioApi.getOne(adress);
 
 		return {
-			portfolio,
+			portfolio: {
+				...portfolio,
+				assets: portfolio.assets.filter((asset) => asset.token_balance > 0),
+			},
 			totalPrice: portfolio.assets
 				.reduce((acc, val) => acc + val.estimated_balance, 0)
 				.toFixed(2),

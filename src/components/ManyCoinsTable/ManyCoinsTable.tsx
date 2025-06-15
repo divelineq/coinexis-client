@@ -36,7 +36,7 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 
 			return (
 				<div className={cx("flex items-center gap-1", color)}>
-					<span>{`${props.row.original.price.toFixed(2)}$`}</span>
+					<span>{`${props.row.original.price.toFixed(10)}$`}</span>
 					{price24H > 0 ? (
 						<AiFillCaretUp className="w-4 h-4" />
 					) : price24H < 0 ? (

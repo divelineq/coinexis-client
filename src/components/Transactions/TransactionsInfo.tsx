@@ -1,13 +1,11 @@
 import type { SmartTransactions } from "@api";
 import type { PaginationState } from "@tanstack/react-table";
-import { Table } from "@ui";
+import { CopyableText, Table } from "@ui";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
-import { AiOutlineCopy } from "react-icons/ai";
 import { Tooltip } from "react-tooltip";
-import { toast } from "sonner";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -17,41 +15,9 @@ type Props = {
 	data: SmartTransactions | undefined;
 	error: Error | null;
 	pagination: PaginationState;
-	onPaginationChange: (pagination: PaginationState) => PaginationState;
+	onPaginationChange: (pagination: PaginationState) => void;
 	isRefetching: boolean;
 };
-
-export function CopyText(props: { getValue: () => string }) {
-	const value = props.getValue();
-
-	const handleCopy = () => {
-		navigator.clipboard
-			.writeText(value)
-			.then(() => toast.success("Copied to clipboard"))
-			.catch((error) => {
-				console.error("Failed to copy:", error);
-			});
-	};
-
-	return (
-		<div className="flex gap-3 truncate items-center">
-			<Tooltip id="wallet" place="top" />
-			<p
-				data-tooltip-content={value}
-				data-tooltip-id="wallet"
-				className="truncate text-ellipsis whitespace-nowrap"
-			>
-				{value}
-			</p>
-			<button
-				onClick={handleCopy}
-				className="text-gray-400 hover:text-white transition"
-			>
-				<AiOutlineCopy />
-			</button>
-		</div>
-	);
-}
 
 export const DEFAULT_TRANSACTIONS_COLUMNS = [
 	{
@@ -102,13 +68,13 @@ export const DEFAULT_TRANSACTIONS_COLUMNS = [
 	{
 		accessorKey: "from",
 		header: () => <p className="text-center">From</p>,
-		cell: (props: any) => CopyText({ getValue: props.getValue }),
+		cell: (props: any) => CopyableText({ value: props.getValue() }),
 		enableSorting: false,
 	},
 	{
 		accessorKey: "to",
 		header: () => <p className="text-center">To</p>,
-		cell: (props: any) => CopyText({ getValue: props.getValue }),
+		cell: (props: any) => CopyableText({ value: props.getValue() }),
 		enableSorting: false,
 	},
 	{

@@ -1,5 +1,7 @@
 import type { PortfolioType } from "@api";
-import { Table } from "@ui";
+import type { PaginationState } from "@tanstack/react-table";
+import { CopyableText, Table } from "@ui";
+import { useState } from "react";
 
 type Props = {
 	data: PortfolioType | undefined;
@@ -30,7 +32,7 @@ export const DEFAULT_PORTFOLIO_COLUMNS = [
 		accessorKey: "token_balance",
 		header: () => <p className="text-center">Token Balance</p>,
 		cell: (props: any) => {
-			return <p>{props.getValue().toFixed(2)}</p>;
+			return <p>{props.getValue().toFixed(8)}</p>;
 		},
 	},
 	{
@@ -51,13 +53,21 @@ export const DEFAULT_PORTFOLIO_COLUMNS = [
 	{
 		accessorKey: "asset.contracts",
 		header: () => <p className="text-center">Contract Address</p>,
-		cell: (props: any) => <p className="truncate">{props.getValue()[0]}</p>,
+		cell: (props: any) => CopyableText({ value: props.getValue() }),
+		enableSorting: false,
 	},
 ];
 
 function PortfolioTable({ data }: Props) {
+	const [pagination, setPagination] = useState<PaginationState>({
+		pageIndex: 0,
+		pageSize: 10,
+	});
+
 	return (
 		<Table
+			pagination={pagination}
+			onPaginationChange={setPagination}
 			searchId="asset_name"
 			defaultColumns={DEFAULT_PORTFOLIO_COLUMNS}
 			data={data?.assets ?? []}

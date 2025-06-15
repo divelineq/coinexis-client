@@ -1,6 +1,11 @@
 import type { Table } from "@tanstack/react-table";
 import { cx } from "classix";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import {
+	AiFillBackward,
+	AiFillCaretLeft,
+	AiFillCaretRight,
+	AiFillForward,
+} from "react-icons/ai";
 import { PulseLoader } from "react-spinners";
 
 type Props = {
@@ -25,7 +30,7 @@ function SwitchPageButton({
 		<button
 			disabled={disabled}
 			className={cx(
-				"px-4 border-1 border-gray-500 hover:bg-gray-500 disabled:bg-gray-700 disabled:cursor-not-allowed",
+				"px-2 border-1 border-gray-500 hover:bg-gray-500 disabled:bg-gray-700 disabled:cursor-not-allowed",
 				className,
 			)}
 			onClick={onChange}
@@ -47,9 +52,14 @@ export function PaginationActions({ table, isRefetching }: Props) {
 			)}
 			<SwitchPageButton
 				disabled={!table.getCanPreviousPage()}
+				symbol={<AiFillBackward />}
+				onChange={() => table.firstPage()}
+				className="rounded-l-md"
+			/>
+			<SwitchPageButton
+				disabled={!table.getCanPreviousPage()}
 				symbol={<AiFillCaretLeft />}
 				onChange={() => table.previousPage()}
-				className="rounded-l-md"
 			/>
 			<p className="px-4 border-y-1 border-gray-500">
 				{table.getState().pagination.pageIndex + 1} of{" "}
@@ -59,6 +69,11 @@ export function PaginationActions({ table, isRefetching }: Props) {
 				disabled={!table.getCanNextPage()}
 				symbol={<AiFillCaretRight />}
 				onChange={() => table.nextPage()}
+			/>
+			<SwitchPageButton
+				disabled={!table.getCanNextPage()}
+				symbol={<AiFillForward />}
+				onChange={() => table.lastPage()}
 				className="rounded-r-md"
 			/>
 		</div>
