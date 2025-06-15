@@ -31,7 +31,6 @@ export function CopyText(props: { getValue: () => string }) {
 
 	return (
 		<div className="flex gap-3 truncate items-center">
-			{/* <Toaster position="top-center" duration={1500} richColors /> */}
 			<Tooltip id="wallet" place="top" />
 			<p
 				data-tooltip-content={value}

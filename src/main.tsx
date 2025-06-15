@@ -18,7 +18,8 @@ function ErrorFallback({ error }: any) {
 }
 
 async function enableMocking() {
-	if (import.meta.env.MODE === "development") {
+	//* test/development/production
+	if (import.meta.env.MODE === "test") {
 		const { worker } = await import("./mocks/browser");
 
 		return worker.start();

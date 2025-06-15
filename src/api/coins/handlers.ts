@@ -14,7 +14,7 @@ export const allAssetsHandler = [
 				data: Array.from({ length: 30 }).map((_, i) => ({
 					id: i + 1,
 					name: `coin-${i}`,
-					logo: "https://cryptologos.cc/logos/logo.svg",
+					logo: "https://metacore.mobula.io/fde8226ca6b18057c48534006ee2482b83f7cf138a83e1d90ea53f65b76133ae.png",
 					price: i + 20,
 					volume: i + 4000,
 					price_change_1h: i,

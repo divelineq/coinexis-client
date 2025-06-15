@@ -29,8 +29,6 @@ httpClient.interceptors.response.use(
 				default:
 					toast.error("Unknown error");
 			}
-		} else if (err.request) {
-			toast.error("Network error");
 		} else {
 			toast.error(`Error: ${err.message}`);
 		}

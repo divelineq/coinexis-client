@@ -18,7 +18,7 @@ export const transactionsHandler = [
 							name: `name-${i}`,
 							symbol: `symbol-${i}`,
 							id: i + 1,
-							logo: "https://cryptologos.cc/logos/logo.svg",
+							logo: "https://metacore.mobula.io/fde8226ca6b18057c48534006ee2482b83f7cf138a83e1d90ea53f65b76133ae.png",
 							contract: `contract-${i}`,
 						},
 						type: "buy",
