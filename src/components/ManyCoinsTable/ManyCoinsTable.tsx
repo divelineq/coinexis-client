@@ -1,5 +1,7 @@
+import type { PaginationState } from "@tanstack/react-table";
 import { Table } from "@ui";
 import cx from "classix";
+import { useState } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { useCoins } from "../../queries";
 
@@ -78,10 +80,16 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 ];
 
 function ManyCoinsTable() {
+	const [pagination, setPagination] = useState<PaginationState>({
+		pageIndex: 0,
+		pageSize: 15,
+	});
 	const { data } = useCoins();
 
 	return (
 		<Table
+			pagination={pagination}
+			onPaginationChange={setPagination}
 			defaultColumns={DEFAULT_MANY_COINS_COLUMNS}
 			data={data.coins}
 			searchId="name"

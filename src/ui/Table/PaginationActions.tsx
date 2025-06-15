@@ -1,9 +1,11 @@
 import type { Table } from "@tanstack/react-table";
 import { cx } from "classix";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import { PulseLoader } from "react-spinners";
 
 type Props = {
 	table: Table<any>;
+	isRefetching?: boolean;
 };
 
 type SwitchPageButtonProps = {
@@ -33,24 +35,30 @@ function SwitchPageButton({
 	);
 }
 
-export function PaginationActions({ table }: Props) {
+export function PaginationActions({ table, isRefetching }: Props) {
 	return (
 		<div className="flex py-2">
+			{isRefetching && (
+				<PulseLoader
+					size={6}
+					color="rgb(238, 238, 238)"
+					className="pr-2 items-center"
+				/>
+			)}
 			<SwitchPageButton
-				disabled={table.getState().pagination.pageIndex === 0}
+				disabled={!table.getCanPreviousPage()}
 				symbol={<AiFillCaretLeft />}
-				onChange={table.previousPage}
+				onChange={() => table.previousPage()}
 				className="rounded-l-md"
 			/>
 			<p className="px-4 border-y-1 border-gray-500">
-				{table.getState().pagination.pageIndex + 1}/{table.getPageCount()}
+				{table.getState().pagination.pageIndex + 1} of{" "}
+				{table.getPageCount().toLocaleString()}
 			</p>
 			<SwitchPageButton
-				disabled={
-					table.getState().pagination.pageIndex === table.getPageCount() - 1
-				}
+				disabled={!table.getCanNextPage()}
 				symbol={<AiFillCaretRight />}
-				onChange={table.nextPage}
+				onChange={() => table.nextPage()}
 				className="rounded-r-md"
 			/>
 		</div>

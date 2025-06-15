@@ -1,10 +1,12 @@
 import type { SmartTransactions } from "@api";
 import { transactionService } from "@service";
-import { useMutation } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
-export function useTransactions() {
-	return useMutation<SmartTransactions, Error, string>({
-		mutationKey: ["wallet-portfolio"],
-		mutationFn: (adress: string) => transactionService.getTransactions(adress),
+export function useTransactions(adress: string, limit: number, offset: number) {
+	return useQuery<SmartTransactions>({
+		queryKey: ["wallet-portfolio", adress, limit, offset],
+		queryFn: () => transactionService.getTransactions(adress, limit, offset),
+		enabled: !!adress,
+		placeholderData: keepPreviousData,
 	});
 }

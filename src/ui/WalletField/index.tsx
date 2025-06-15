@@ -35,9 +35,7 @@ function buildFieldLabel<T extends Record<string, any>>(field: T) {
 function WalletField({ onChange, isPending }: Props) {
 	const form = useForm({
 		defaultValues: DEFAULT_ADRESS,
-		onSubmit: (values) => {
-			onChange(values.value.adress);
-		},
+		onSubmit: (values) => onChange(values.value.adress),
 	});
 
 	return (

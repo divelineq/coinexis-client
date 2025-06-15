@@ -1,4 +1,5 @@
 import {
+	type PaginationState,
 	getCoreRowModel,
 	getFilteredRowModel,
 	getPaginationRowModel,
@@ -12,9 +13,29 @@ import { Rows } from "./RowModel";
 import { SearchFilter } from "./SearchFilter";
 
 type Props<TColumns extends unknown[], TData extends unknown[]> = {
+	/**
+	 * Обьявление колонок
+	 */
 	defaultColumns: TColumns;
+	/**
+	 * Масив данных
+	 */
 	data: TData;
+	/**
+	 * По какому полю будет поиск в таблице `accessorKey`
+	 */
 	searchId: string;
+	/**
+	 * Общее колличество строк в таблице если известно
+	 */
+	rowCount?: number;
+	/**
+	 * Булеан значение обозначающее загрузку данных если есть серверная пагинация
+	 */
+	isRefetching?: boolean;
+	manualPagination?: boolean;
+	pagination?: PaginationState;
+	onPaginationChange?: (old: PaginationState) => PaginationState;
 };
 
 interface ColumnFilter {
@@ -27,6 +48,11 @@ function Table<TColumns extends any[], TData extends any[]>({
 	defaultColumns,
 	data,
 	searchId,
+	rowCount,
+	isRefetching,
+	pagination,
+	onPaginationChange,
+	manualPagination = false,
 }: Props<TColumns, TData>) {
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -36,20 +62,17 @@ function Table<TColumns extends any[], TData extends any[]>({
 		onColumnFiltersChange: setColumnFilters,
 		getFilteredRowModel: getFilteredRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
+		onPaginationChange,
 		data,
-		rowCount: data.length,
+		rowCount,
 		columns: defaultColumns,
 		enableColumnFilters: true,
 		autoResetPageIndex: false,
 		state: {
 			columnFilters,
+			pagination,
 		},
-		initialState: {
-			pagination: {
-				pageIndex: 0,
-				pageSize: 15,
-			},
-		},
+		manualPagination,
 		defaultColumn: {
 			size: 200,
 			minSize: 50,
@@ -61,7 +84,7 @@ function Table<TColumns extends any[], TData extends any[]>({
 		<div className="p-2 m-auto" style={{ width: table.getTotalSize() }}>
 			<div className="flex justify-between w-full py-2">
 				<SearchFilter className="w-1/5" table={table} searchId={searchId} />
-				<PaginationActions table={table} />
+				<PaginationActions table={table} isRefetching={isRefetching} />
 			</div>
 			<HeaderGroups headers={table.getHeaderGroups()} />
 			<Rows rowModel={table.getRowModel()} />
