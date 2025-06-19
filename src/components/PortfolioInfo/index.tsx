@@ -1,11 +1,10 @@
 import { WalletField } from "@ui";
 import { parseAsString, useQueryState } from "nuqs";
-import { usePortfolio } from "../../queries/usePortfolio";
 import { PortfolioTable } from "./PortfolioTable";
+import { usePortfolio } from "./usePortfolio";
 
 function SearchWalletInfo() {
 	const [address, setAddress] = useQueryState("address", parseAsString);
-
 	const { data, isLoading, error } = usePortfolio(address);
 
 	if (error) return <div>{error.message}</div>;

@@ -3,7 +3,7 @@ import { Table } from "@ui";
 import cx from "classix";
 import { useState } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
-import { useCoins } from "../../queries";
+import { useCoins } from "./useCoins";
 
 export const DEFAULT_MANY_COINS_COLUMNS = [
 	{

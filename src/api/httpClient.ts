@@ -29,8 +29,6 @@ httpClient.interceptors.response.use(
 				default:
 					toast.error("Unknown error");
 			}
-		} else {
-			toast.error(`Error: ${err.message}`);
 		}
 
 		// eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors

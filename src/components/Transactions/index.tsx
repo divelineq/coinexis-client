@@ -1,8 +1,8 @@
 import { WalletField } from "@ui";
 import { parseAsString, useQueryState } from "nuqs";
-import { useTransactions } from "../../queries/useTransactions";
 import { TransactionsInfo } from "./TransactionsInfo";
 import { usePaginationState } from "./usePaginationState";
+import { useTransactions } from "./useTransactions";
 
 function Transactions() {
 	const [address, setAddress] = useQueryState("address", parseAsString);
