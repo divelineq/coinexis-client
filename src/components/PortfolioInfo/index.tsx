@@ -1,15 +1,18 @@
 import { WalletField } from "@ui";
+import { parseAsString, useQueryState } from "nuqs";
 import { usePortfolio } from "../../queries/usePortfolio";
 import { PortfolioTable } from "./PortfolioTable";
 
 function SearchWalletInfo() {
-	const { mutate, data, isPending, error } = usePortfolio();
+	const [address, setAddress] = useQueryState("address", parseAsString);
+
+	const { data, isLoading, error } = usePortfolio(address);
 
 	if (error) return <div>{error.message}</div>;
 
 	return (
 		<div>
-			<WalletField onChange={mutate} isPending={isPending} />
+			<WalletField onChange={setAddress} isPending={isLoading} />
 			{data && (
 				<div>
 					<div className="flex text-2xl justify-center gap-2">

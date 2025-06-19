@@ -1,7 +1,6 @@
 import type { PortfolioType } from "@api";
-import type { PaginationState } from "@tanstack/react-table";
 import { CopyableText, Table } from "@ui";
-import { useState } from "react";
+import { parseAsInteger, useQueryStates } from "nuqs";
 
 type Props = {
 	data: PortfolioType | undefined;
@@ -59,10 +58,13 @@ export const DEFAULT_PORTFOLIO_COLUMNS = [
 ];
 
 function PortfolioTable({ data }: Props) {
-	const [pagination, setPagination] = useState<PaginationState>({
-		pageIndex: 0,
-		pageSize: 10,
-	});
+	const [pagination, setPagination] = useQueryStates(
+		{
+			pageIndex: parseAsInteger.withDefault(0),
+			pageSize: parseAsInteger.withDefault(10),
+		},
+		{ history: "push" },
+	);
 
 	return (
 		<Table

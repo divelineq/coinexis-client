@@ -2,8 +2,11 @@ import { portfolioApi } from "@api";
 import type { PortfolioService } from "./types";
 
 export const portfolioService = {
-	async getPortfolio(adress: string): Promise<PortfolioService> {
-		const portfolio = await portfolioApi.getOne(adress);
+	async getPortfolio(
+		address: string | null,
+		signal: AbortSignal,
+	): Promise<PortfolioService> {
+		const portfolio = await portfolioApi.getOne(address, signal);
 
 		return {
 			portfolio: {

@@ -1,9 +1,10 @@
 import { type PortfolioService, portfolioService } from "@service";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
-export function usePortfolio() {
-	return useMutation<PortfolioService, Error, string>({
-		mutationKey: ["wallet-portfolio"],
-		mutationFn: (adress: string) => portfolioService.getPortfolio(adress),
+export function usePortfolio(address: string | null) {
+	return useQuery<PortfolioService>({
+		queryKey: ["wallet-portfolio", address],
+		queryFn: ({ signal }) => portfolioService.getPortfolio(address, signal),
+		enabled: !!address,
 	});
 }

@@ -31,6 +31,7 @@
     "highcharts": "^12.1.2",
     "highcharts-react-official": "^3.2.1",
     "mobula-sdk": "^1.6.0",
+    "nuqs": "^2.4.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-error-boundary": "^6.0.0",

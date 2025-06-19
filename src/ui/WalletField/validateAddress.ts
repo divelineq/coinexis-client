@@ -21,7 +21,7 @@ export interface AddressDetectionResult {
 }
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
-export function validateAdress(raw: string): AddressDetectionResult {
+export function validateAddress(raw: string): AddressDetectionResult {
 	if (!raw || typeof raw !== "string") {
 		return { isValid: false, network: "Unknown" };
 	}

@@ -1,9 +1,9 @@
+import { validateAddress } from "src/ui/WalletField/validateAddress";
 import { z } from "zod/v4";
-import { validateAdress } from "./validateAdress";
 
-export const ADRESS_VALIDATION_SCHEMA = z
+export const ADDRESS_VALIDATION_SCHEMA = z
 	.string()
 	.trim()
-	.refine((value) => validateAdress(value).isValid, {
+	.refine((value) => validateAddress(value).isValid, {
 		message: "Некорректный адрес кошелька",
 	});

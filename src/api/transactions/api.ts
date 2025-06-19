@@ -1,10 +1,10 @@
 import { httpClient } from "../../api/httpClient";
-import type { SmartTransactions } from "./types";
+import type { SmartTransactions } from "./dto";
 
 const API = import.meta.env.VITE_API_KEY;
 
 export const transactionsApi = {
-	async getMany(address: string, limit: number, offset: number) {
+	async getMany(address: string | null, limit: number, offset: number) {
 		const res = await httpClient.get<SmartTransactions>(
 			`/wallet/transactions?wallet=${address}&limit=${limit}&offset=${offset}`,
 			{

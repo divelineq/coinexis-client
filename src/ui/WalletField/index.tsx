@@ -1,22 +1,22 @@
 import { useForm } from "@tanstack/react-form";
 import { Button, TextField } from "@ui";
 import type { z } from "zod/v4";
-import type { ADRESS_VALIDATION_SCHEMA } from "./ValidationSchema";
-import { validateAdress } from "./validateAdress";
+import type { ADDRESS_VALIDATION_SCHEMA } from "./ValidationSchema";
+import { validateAddress } from "./validateAddress";
 
 type Props = {
 	onChange: (val: string) => void;
 	isPending: boolean;
 };
 
-type Adress = {
-	adress: z.infer<typeof ADRESS_VALIDATION_SCHEMA>;
+type Address = {
+	address: z.infer<typeof ADDRESS_VALIDATION_SCHEMA>;
 };
 
-const DEFAULT_ADRESS: Adress = { adress: "" };
+const DEFAULT_ADDRESS: Address = { address: "" };
 
 function buildFieldLabel<T extends Record<string, any>>(field: T) {
-	const detection = validateAdress(field.state.value);
+	const detection = validateAddress(field.state.value);
 	const showNetwork = detection.isValid && detection.network;
 
 	return (
@@ -34,8 +34,8 @@ function buildFieldLabel<T extends Record<string, any>>(field: T) {
 
 function WalletField({ onChange, isPending }: Props) {
 	const form = useForm({
-		defaultValues: DEFAULT_ADRESS,
-		onSubmit: (values) => onChange(values.value.adress),
+		defaultValues: DEFAULT_ADDRESS,
+		onSubmit: (values) => onChange(values.value.address),
 	});
 
 	return (
@@ -47,11 +47,11 @@ function WalletField({ onChange, isPending }: Props) {
 			}}
 		>
 			<form.Field
-				name="adress"
+				name="address"
 				validators={{
 					onChange: (value) =>
 						value.value.length > 0 &&
-						!validateAdress(value.value).isValid &&
+						!validateAddress(value.value).isValid &&
 						"Invalid address",
 				}}
 				children={(field) => (
@@ -65,7 +65,7 @@ function WalletField({ onChange, isPending }: Props) {
 						/>
 						<Button
 							isLoading={isPending}
-							disabled={!validateAdress(field.state.value).isValid}
+							disabled={!validateAddress(field.state.value).isValid}
 							type="submit"
 							onClick={form.handleSubmit}
 							className="bg-blue-600 text-white py-1 rounded-sm w-full my-2 cursor-pointer hover:bg-blue-800 transition-colors"

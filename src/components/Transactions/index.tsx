@@ -1,25 +1,22 @@
-import type { PaginationState } from "@tanstack/react-table";
 import { WalletField } from "@ui";
-import { useState } from "react";
+import { parseAsString, useQueryState } from "nuqs";
 import { useTransactions } from "../../queries/useTransactions";
 import { TransactionsInfo } from "./TransactionsInfo";
+import { usePaginationState } from "./usePaginationState";
 
 function Transactions() {
-	const [adress, setAdress] = useState<string>("");
-	const [pagination, setPagination] = useState<PaginationState>({
-		pageIndex: 0,
-		pageSize: 13,
-	});
+	const [address, setAddress] = useQueryState("address", parseAsString);
+	const [pagination, setPagination] = usePaginationState();
 
 	const { data, isLoading, error, isRefetching } = useTransactions(
-		adress,
+		address,
 		pagination.pageSize,
 		pagination.pageIndex * pagination.pageSize,
 	);
 
 	return (
 		<div>
-			<WalletField onChange={setAdress} isPending={isLoading} />
+			<WalletField onChange={setAddress} isPending={isLoading} />
 			{data && (
 				<TransactionsInfo
 					isRefetching={isRefetching}
