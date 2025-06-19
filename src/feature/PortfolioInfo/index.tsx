@@ -3,7 +3,7 @@ import { parseAsString, useQueryState } from "nuqs";
 import { PortfolioTable } from "./PortfolioTable";
 import { usePortfolio } from "./usePortfolio";
 
-function SearchWalletInfo() {
+function PortfolioInfo() {
 	const [address, setAddress] = useQueryState("address", parseAsString);
 	const { data, isLoading, error } = usePortfolio(address);
 
@@ -27,4 +27,4 @@ function SearchWalletInfo() {
 	);
 }
 
-export { SearchWalletInfo };
+export { PortfolioInfo };

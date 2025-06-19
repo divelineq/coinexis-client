@@ -1,5 +1,5 @@
+import { ManyCoinsSkeleton, ManyCoinsTable } from "@feature";
 import { createFileRoute } from "@tanstack/react-router";
-import { ManyCoinsSkeleton, ManyCoinsTable } from "../components";
 
 export const Route = createFileRoute("/coins")({
 	component: ManyCoinsTable,

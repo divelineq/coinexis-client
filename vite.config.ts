@@ -15,6 +15,7 @@ export default defineConfig({
 			"@ui": path.resolve(__dirname, "./src/ui"),
 			"@api": path.resolve(__dirname, "./src/api"),
 			"@service": path.resolve(__dirname, "./src/service"),
+			"@feature": path.resolve(__dirname, "./src/feature"),
 		},
 	},
 });

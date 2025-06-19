@@ -1,8 +1,8 @@
+import { PortfolioInfo } from "@feature";
 import { createFileRoute } from "@tanstack/react-router";
-import { SearchWalletInfo } from "../components/PortfolioInfo";
 
 export const Route = createFileRoute("/portfolio")({
-	component: SearchWalletInfo,
+	component: PortfolioInfo,
 	pendingComponent: () => <div>Loading wallet...</div>,
 	errorComponent: () => <div>Error wallet :(</div>,
 });
