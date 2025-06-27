@@ -2,6 +2,7 @@
   "compilerOptions": {
     "verbatimModuleSyntax": true,
     "baseUrl": ".",
+    "strictNullChecks": true,
     "paths": {
       "@ui": ["src/ui"],
       "@api": ["src/api"],

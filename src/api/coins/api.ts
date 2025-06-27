@@ -1,5 +1,5 @@
 import { httpClient } from "../httpClient";
-import type { ManyCoinsType, OneCoinType } from "./types";
+import type { ManyCoinsType, OneCoinType } from "./dto";
 
 const API = import.meta.env.VITE_API_KEY;
 

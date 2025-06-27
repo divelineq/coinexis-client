@@ -358,6 +358,10 @@ export default tseslint.config(
 							message:
 								"Возможно вы хотели использовать useHookForm из @ask/features",
 						},
+						{
+							name: "zod",
+							message: "Используйте zod/v4",
+						},
 					],
 					patterns: [
 						{

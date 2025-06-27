@@ -17,6 +17,9 @@ export function Header() {
 				<Link to="/transactions" className="[&.active]:font-bold">
 					Transactions
 				</Link>
+				<Link to="/nft" className="[&.active]:font-bold">
+					Nft
+				</Link>
 				<Link to="/help" className="[&.active]:font-bold">
 					Help
 				</Link>
