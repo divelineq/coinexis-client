@@ -1,12 +1,14 @@
 import { BiCheckCircle } from "react-icons/bi";
 
-function FeatureItem({
-	title,
-	description,
-}: { title: string; description: string }) {
+type Props = {
+	title: string;
+	description: string;
+};
+
+function FeatureItem({ title, description }: Props) {
 	return (
-		<div className="bg-[#1a1a22] p-6 rounded-xl border border-[#2a2a3d] hover:shadow-lg transition">
-			<div className="flex items-center gap-3 mb-4 text-[#00f9bb]">
+		<div className="bg-surface p-6 rounded-xl border border-custom hover:shadow-lg transition">
+			<div className="flex items-center gap-3 mb-4 text-accent">
 				<BiCheckCircle className="w-6 h-6" />
 				<h3 className="text-xl font-semibold">{title}</h3>
 			</div>

@@ -1,8 +1,8 @@
-import { ManyCoinsSkeleton, ManyCoinsTable } from "@feature";
+import { Coins } from "@feature";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/coins")({
-	component: ManyCoinsTable,
-	pendingComponent: () => <ManyCoinsSkeleton />,
+	component: () => <Coins />,
+	pendingComponent: () => <Coins.Skeleton />,
 	errorComponent: () => <div>Error assets table :(</div>,
 });

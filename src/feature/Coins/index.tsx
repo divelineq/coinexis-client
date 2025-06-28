@@ -3,6 +3,7 @@ import { Table } from "@ui";
 import cx from "classix";
 import { useState } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
+import { Skeleton } from "./Skeleton";
 import { useCoins } from "./useCoins";
 
 export const DEFAULT_MANY_COINS_COLUMNS = [
@@ -79,7 +80,7 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 	},
 ];
 
-function ManyCoinsTable() {
+function BaseCoins() {
 	const [pagination, setPagination] = useState<PaginationState>({
 		pageIndex: 0,
 		pageSize: 15,
@@ -97,4 +98,4 @@ function ManyCoinsTable() {
 	);
 }
 
-export { ManyCoinsTable };
+export const Coins = Object.assign(BaseCoins, { Skeleton });

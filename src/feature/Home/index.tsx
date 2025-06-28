@@ -15,14 +15,14 @@ function Home() {
 						>
 							Web3 Dashboard для анализа
 							<br />
-							<span className="text-[#00f9bb]">твоего кошелька</span>
+							<span className="text-accent">твоего кошелька</span>
 						</motion.h1>
 						<p className="text-gray-400 text-lg">
 							Оценивай баланс, активы, токены, NFT и транзакции в одном месте —
 							в удобном интерфейсе, без регистрации, в духе Web3.
 						</p>
 						<div className="flex gap-4">
-							<button className="bg-[#00f9bb] text-black px-6 py-3 rounded-lg font-semibold hover:brightness-110 transition">
+							<button className="bg-[var(--accent)] hover:bg-[var(--accent-light)] text-black px-6 py-3 rounded-lg font-semibold hover:brightness-110 transition">
 								Попробовать
 							</button>
 							<button className="border border-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
@@ -36,7 +36,7 @@ function Home() {
 						transition={{ duration: 1 }}
 						className="relative"
 					>
-						<div className="rounded-2xl bg-gradient-to-br from-[#1e1e2f] to-[#2e2e3f] p-6 shadow-xl border border-[#2a2a3d]">
+						<div className="rounded-2xl bg-gradient-to-br from-[#1e1e2f] to-[#2e2e3f] p-6 shadow-xl border border-custom">
 							Тут можно ебануть криптовалюту
 						</div>
 						<div className="absolute -top-6 -left-6 w-16 h-16 bg-[#00f9bb44] rounded-full blur-2xl animate-pulse" />
@@ -44,7 +44,7 @@ function Home() {
 					</motion.div>
 				</div>
 			</section>
-			<section className="py-20 px-6 md:px-20 bg-[#111118] border-t border-[#1f1f2a]">
+			<section className="py-20 px-6 md:px-20 bg-surface border-t border-custom">
 				<div className="max-w-5xl mx-auto text-center space-y-6">
 					<h2 className="text-3xl md:text-4xl font-semibold text-white">
 						Умный мониторинг криптокошельков
@@ -56,7 +56,7 @@ function Home() {
 					</p>
 				</div>
 			</section>
-			<section className="py-20 px-6 md:px-20 bg-[#0e0e12] border-t border-[#1e1e2a]">
+			<section className="py-20 px-6 md:px-20 bg-[#0e0e12] border-t border-custom">
 				<div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-12">
 					<FeatureItem
 						title="Полный портфель"
@@ -72,7 +72,7 @@ function Home() {
 					/>
 				</div>
 			</section>
-			<footer className="bg-[#0a0a0f] border-t border-[#1f1f2a] text-gray-400 px-6 md:px-20 py-12 mt-auto">
+			<footer className="bg-background border-t border-custom text-gray-400 px-6 md:px-20 py-12 mt-auto">
 				<div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
 					<div className="space-y-2 text-center md:text-left">
 						<p className="text-sm font-medium text-white">
@@ -86,7 +86,7 @@ function Home() {
 							href="https://github.com/divelineq"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="hover:text-white transition"
+							className="hover:text-[var(--accent)] transition"
 						>
 							GitHub
 						</a>
@@ -94,7 +94,7 @@ function Home() {
 							href="https://t.me/divelineq"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="hover:text-white transition"
+							className="hover:text-[var(--accent)] transition"
 						>
 							Telegram
 						</a>

@@ -1,4 +1,4 @@
-function ManyCoinsSkeleton() {
+function Skeleton() {
 	return (
 		<div className="flex flex-col gap-2 p-4">
 			{Array.from({ length: 20 }).map((_, index) => (
@@ -11,4 +11,4 @@ function ManyCoinsSkeleton() {
 	);
 }
 
-export { ManyCoinsSkeleton };
+export { Skeleton };
