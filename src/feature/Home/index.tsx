@@ -98,9 +98,6 @@ function Home() {
 						>
 							Telegram
 						</a>
-						<a href="https://twitter.com/divelineq" className="text-accent">
-							JOPA
-						</a>
 					</div>
 				</div>
 			</footer>

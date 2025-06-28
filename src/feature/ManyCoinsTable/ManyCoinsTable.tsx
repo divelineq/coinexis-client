@@ -11,7 +11,7 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 		header: () => <p className="text-center">Logo</p>,
 		enableResizing: false,
 		enableSorting: false,
-		size: 50,
+		size: 60,
 		cell: (props: any) => (
 			<img src={props.getValue() ?? null} alt="" className="w-6 h-6" />
 		),

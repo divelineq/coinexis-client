@@ -30,7 +30,7 @@ function SwitchPageButton({
 		<button
 			disabled={disabled}
 			className={cx(
-				"px-2 border-1 border-gray-500 hover:bg-gray-500 disabled:bg-gray-700 disabled:cursor-not-allowed",
+				"px-2 border-1 border-custom bg-card hover:bg-gray-500 disabled:bg-surface disabled:cursor-not-allowed",
 				className,
 			)}
 			onClick={onChange}
@@ -61,7 +61,7 @@ export function PaginationActions({ table, isRefetching }: Props) {
 				symbol={<AiFillCaretLeft />}
 				onChange={() => table.previousPage()}
 			/>
-			<p className="px-4 border-y-1 border-gray-500">
+			<p className="px-4 border-y-1 border-custom bg-card">
 				{table.getState().pagination.pageIndex + 1} of{" "}
 				{table.getPageCount().toLocaleString()}
 			</p>

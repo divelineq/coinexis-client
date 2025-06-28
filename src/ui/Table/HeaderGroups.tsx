@@ -13,13 +13,13 @@ export function HeaderGroups({ headers }: Props) {
 	return headers.map((headerGroup) => (
 		<div
 			key={headerGroup.id}
-			className="flex border border-gray-500 rounded-t-sm"
+			className="flex border border-custom rounded-t-sm bg-card"
 		>
 			{headerGroup.headers.map((header) => {
 				return (
 					<div
 						key={header.id}
-						className="px-2 py-1 border-r border-gray-500 flex gap-1"
+						className="px-2 py-1 border-r border-custom flex gap-1"
 						style={{ width: header.getSize() }}
 					>
 						{flexRender(header.column.columnDef.header, header.getContext())}

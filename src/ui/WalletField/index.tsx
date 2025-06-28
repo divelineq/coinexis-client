@@ -54,7 +54,7 @@ function WalletField({ onChange, isPending }: Props) {
 					return (
 						<div className="w-full flex gap-2 items-center justify-center">
 							<Input
-								className="min-w-[420px]"
+								className="min-w-[430px]"
 								startIcon={<IoWalletOutline size={20} />}
 								endIcon={buildMessage(
 									field.state.meta.errors as string[],

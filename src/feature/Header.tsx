@@ -24,7 +24,7 @@ export function Header() {
 					Help
 				</Link>
 			</div>
-			<hr />
+			<hr className="border-custom" />
 			<Outlet />
 			<TanStackRouterDevtools />
 		</>

@@ -27,7 +27,7 @@ function Input({
 				inputMode="text"
 				type={type}
 				className={cx(
-					"flex w-full rounded-md border border-zinc-700 bg-zinc-900 py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+					"flex w-full rounded-md border border-custom bg-card py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50",
 					startIcon ? "pl-10" : "px-3",
 					inputClassName,
 				)}

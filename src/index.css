@@ -1,7 +1,31 @@
 @import "tailwindcss";
 
+@layer base {
+  :root {
+    --background: #0a0a0f;
+    --surface: #12121b;
+    --card: #1e1e2a;
+    --border: #2a2a40;
+    --accent: #16bd77;
+    --accent-light:  #34faa7;
+    --accent-disabled: #085233;
+    --accent2: #6948b5;
+    --accent2-light: #8b61ee;
+    --accent2-disabled: #302054;
+  }
+}
+
+@layer utilities {
+  .bg-background { background-color: var(--background) }
+  .bg-surface { background-color: var(--surface) }
+  .bg-card { background-color: var(--card) }
+  .border-custom { border-color: var(--border) }
+  .text-accent { color: var(--accent) }
+  .text-accent2 { color: var(--accent2) }
+}
+
 body {
   font-family: 'Inter','Roboto', sans-serif;
-  background-color: rgb(34, 40, 49);
+  background-color: var(--background);
   color: rgb(238, 238, 238);
 }
