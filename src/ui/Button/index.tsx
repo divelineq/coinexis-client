@@ -1,49 +1,32 @@
 import cx from "classix";
+import { ClipLoader } from "react-spinners";
 
-type Props = {
-	children: React.ReactNode;
+export interface ButtonProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	isLoading?: boolean;
-	disabled?: boolean;
-} & React.ButtonHTMLAttributes<HTMLButtonElement>;
+}
 
-function Button({ children, className, isLoading, disabled, ...props }: Props) {
+function Button({
+	className,
+	children,
+	isLoading,
+	disabled,
+	...props
+}: ButtonProps) {
 	return (
 		<button
-			disabled={disabled || isLoading}
-			type="button"
 			className={cx(
+				"inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium",
+				"bg-blue-600 text-white hover:bg-blue-700 transition-colors",
+				"disabled:bg-zinc-600 disabled:text-zinc-400 disabled:cursor-not-allowed",
+				isLoading && "opacity-80",
 				className,
-				"p-2 rounded-sm cursor-pointer flex justify-center disabled:bg-gray-700 disabled:cursor-not-allowed",
 			)}
+			disabled={disabled || isLoading}
 			{...props}
 		>
-			{isLoading ? (
-				<svg
-					className="animate-spin h-5 w-5 text-white"
-					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
-					viewBox="0 0 24 24"
-					role="img"
-					aria-labelledby="loading-title"
-				>
-					<title id="loading-title">Loading...</title>
-					<circle
-						className="opacity-25"
-						cx="12"
-						cy="12"
-						r="10"
-						stroke="currentColor"
-						strokeWidth="4"
-					/>
-					<path
-						className="opacity-75"
-						fill="currentColor"
-						d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-					/>
-				</svg>
-			) : (
-				children
-			)}
+			{isLoading && <ClipLoader size={6} color="rgb(238, 238, 238)" />}
+			{children}
 		</button>
 	);
 }

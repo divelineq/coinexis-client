@@ -13,8 +13,8 @@ export function CopyableText(props: { value: string }) {
 	};
 
 	return (
-		<div className="flex gap-3 truncate items-center">
-			<Tooltip id="wallet" place="top" />
+		<div className="flex gap-3 truncate items-center cursor-default">
+			<Tooltip delayShow={200} id="wallet" place="top" />
 			<p
 				data-tooltip-content={props.value}
 				data-tooltip-id="wallet"

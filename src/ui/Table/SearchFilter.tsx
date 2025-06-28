@@ -1,6 +1,6 @@
 import type { Table } from "@tanstack/react-table";
 import { AiOutlineSearch } from "react-icons/ai";
-import { TextField } from "../TextField";
+import { Input } from "./../Input";
 
 type Props = {
 	className?: string;
@@ -10,12 +10,14 @@ type Props = {
 
 function SearchFilter({ className, table, searchId }: Props) {
 	return (
-		<TextField
+		<Input
 			value={table.getColumn(searchId)?.getFilterValue() as string}
-			onChange={table.getColumn(searchId)?.setFilterValue}
+			onChange={(e) =>
+				table.getColumn(searchId)?.setFilterValue(e.target.value)
+			}
 			className={className}
 			placeholder="Search by name"
-			startIcon={<AiOutlineSearch className="w-6 h-6 ml-2" />}
+			startIcon={<AiOutlineSearch size={20} />}
 		/>
 	);
 }

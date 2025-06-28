@@ -10,7 +10,7 @@ function PortfolioInfo() {
 	if (error) return <div>{error.message}</div>;
 
 	return (
-		<div>
+		<div className="p-4">
 			<WalletField onChange={setAddress} isPending={isLoading} />
 			{data && (
 				<div>

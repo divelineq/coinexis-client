@@ -1,4 +1,5 @@
 import { nftApi } from "@api";
+import axios from "axios";
 import type { NftMetadata, ServiceOutput } from "./types";
 
 async function getNFTMetadata(tokenUri: string): Promise<NftMetadata | null> {
@@ -8,8 +9,8 @@ async function getNFTMetadata(tokenUri: string): Promise<NftMetadata | null> {
 			url = tokenUri.replace("ipfs://", "https://ipfs.io/ipfs/");
 		}
 
-		const response = await fetch(url);
-		const metadata = await response.json();
+		const response = await axios.get(url, { timeout: 1000 });
+		const metadata = response.data;
 
 		if (metadata.image?.startsWith("ipfs://")) {
 			metadata.image = metadata.image.replace(

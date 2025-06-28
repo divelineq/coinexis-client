@@ -1,7 +1,8 @@
 import { useForm } from "@tanstack/react-form";
-import { Button, TextField } from "@ui";
-import type { z } from "zod/v4";
-import type { ADDRESS_VALIDATION_SCHEMA } from "./ValidationSchema";
+import { IconButton, Input } from "@ui";
+import { AiOutlineSearch } from "react-icons/ai";
+import { IoIosCheckmark, IoIosClose } from "react-icons/io";
+import { IoWalletOutline } from "react-icons/io5";
 import { validateAddress } from "./validateAddress";
 
 type Props = {
@@ -9,42 +10,33 @@ type Props = {
 	isPending: boolean;
 };
 
-type Address = {
-	address: z.infer<typeof ADDRESS_VALIDATION_SCHEMA>;
+const buildMessage = (errors: string[], success: boolean) => {
+	if (errors.length > 0) {
+		return <IoIosClose size={20} className="cursor-default" color="red" />;
+	}
+
+	if (success) {
+		return (
+			<IoIosCheckmark size={20} className="cursor-default" color="green" />
+		);
+	}
+
+	return null;
 };
-
-const DEFAULT_ADDRESS: Address = { address: "" };
-
-function buildFieldLabel<T extends Record<string, any>>(field: T) {
-	const detection = validateAddress(field.state.value);
-	const showNetwork = detection.isValid && detection.network;
-
-	return (
-		<>
-			<p>Wallet address</p>
-			{field.state.meta.errors && (
-				<div className="text-red-500 text-md">{field.state.meta.errors}</div>
-			)}
-			{showNetwork && (
-				<div className="text-green-500 text-md">{detection.network}</div>
-			)}
-		</>
-	);
-}
 
 function WalletField({ onChange, isPending }: Props) {
 	const form = useForm({
-		defaultValues: DEFAULT_ADDRESS,
+		defaultValues: { address: "" },
 		onSubmit: (values) => onChange(values.value.address),
 	});
 
 	return (
 		<form
-			className="flex flex-col items-center"
 			onSubmit={(e) => {
-				e.stopPropagation();
 				e.preventDefault();
+				e.stopPropagation();
 			}}
+			className="w-full flex flex-col items-center gap-3"
 		>
 			<form.Field
 				name="address"
@@ -54,27 +46,39 @@ function WalletField({ onChange, isPending }: Props) {
 						!validateAddress(value.value).isValid &&
 						"Invalid address",
 				}}
-				children={(field) => (
-					<div className="flex flex-col items-center w-[420px]">
-						<TextField
-							className="w-full"
-							label={buildFieldLabel<typeof field>(field)}
-							value={field.state.value}
-							onBlur={field.handleBlur}
-							onChange={field.handleChange}
-						/>
-						<Button
-							isLoading={isPending}
-							disabled={!validateAddress(field.state.value).isValid}
-							type="submit"
-							onClick={form.handleSubmit}
-							className="bg-blue-600 text-white py-1 rounded-sm w-full my-2 cursor-pointer hover:bg-blue-800 transition-colors"
-						>
-							Search
-						</Button>
-					</div>
-				)}
-			/>
+			>
+				{(field) => {
+					const detection = validateAddress(field.state.value);
+					const showNetwork = detection.isValid && detection.network;
+
+					return (
+						<div className="w-full flex gap-2 items-center justify-center">
+							<Input
+								className="min-w-[420px]"
+								startIcon={<IoWalletOutline size={20} />}
+								endIcon={buildMessage(
+									field.state.meta.errors as string[],
+									!!showNetwork,
+								)}
+								id="wallet-address"
+								type="text"
+								placeholder="Enter wallet address"
+								value={field.state.value}
+								onBlur={field.handleBlur}
+								onChange={(e) => field.handleChange(e.target.value)}
+							/>
+							<IconButton
+								className="h-9 w-9"
+								icon={<AiOutlineSearch size={20} className="m-auto" />}
+								isLoading={isPending}
+								type="submit"
+								onClick={form.handleSubmit}
+								disabled={!validateAddress(field.state.value).isValid}
+							/>
+						</div>
+					);
+				}}
+			</form.Field>
 		</form>
 	);
 }

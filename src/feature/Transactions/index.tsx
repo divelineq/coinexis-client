@@ -15,7 +15,7 @@ function Transactions() {
 	);
 
 	return (
-		<div>
+		<div className="p-4">
 			<WalletField onChange={setAddress} isPending={isLoading} />
 			{data && (
 				<TransactionsInfo

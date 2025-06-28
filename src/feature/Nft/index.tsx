@@ -16,7 +16,7 @@ function Nft() {
 	if (error) return <div className="m-auto p-6">{error.message}</div>;
 
 	return (
-		<div>
+		<div className="p-4">
 			<WalletField onChange={setAddress} isPending={isLoading} />
 			<Card
 				data={data}
