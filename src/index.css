@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Inter','Roboto', sans-serif;
   background-color: rgb(34, 40, 49);
   color: rgb(238, 238, 238);
 }

@@ -1,6 +1,7 @@
 export * from "./CurrencyChart";
 export * from "./Header";
 export * from "./Help";
+export * from "./Home";
 export * from "./ManyCoinsTable";
 export * from "./Nft";
 export * from "./PortfolioInfo";

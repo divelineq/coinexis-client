@@ -28,6 +28,7 @@
     "bs58": "^6.0.0",
     "classix": "^2.2.2",
     "dayjs": "^1.11.13",
+    "framer-motion": "^12.19.2",
     "highcharts": "^12.1.2",
     "highcharts-react-official": "^3.2.1",
     "mobula-sdk": "^1.6.0",
