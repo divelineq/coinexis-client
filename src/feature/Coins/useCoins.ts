@@ -4,7 +4,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 export function useCoins() {
 	return useSuspenseQuery<CoinService>({
 		queryKey: ["coins"],
-		queryFn: ({ signal }) => coinService.getAllCoins(signal),
+		queryFn: ({ signal }) => coinService.getCoins(signal),
 		select: (data) => ({
 			...data,
 			coins: data.coins

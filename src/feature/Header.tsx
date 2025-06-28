@@ -20,9 +20,6 @@ export function Header() {
 				<Link to="/nft" className="[&.active]:font-bold">
 					Nft
 				</Link>
-				<Link to="/help" className="[&.active]:font-bold">
-					Help
-				</Link>
 			</div>
 			<hr className="border-custom" />
 			<Outlet />

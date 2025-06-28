@@ -57,6 +57,31 @@ export const ONE_COIN_VALIDATION_SCHEMA = z.object({
 	),
 });
 
-export type ManyCoinsType = z.infer<typeof MANY_COINS_VALIDATION_SCHEMA>;
+export const SORTED_COINS_VALIDATION_SCHEMA = z.object({
+	id: z.number(),
+	name: z.string(),
+	symbol: z.string(),
+	logo: z.string().nullable(),
+	rank: z.number().nullable(),
+	price: z.number(),
+	market_cap: z.number(),
+	volume: z.number(),
+	off_chain_volume: z.number(),
+	liquidity: z.number(),
+	price_change_1h: z.number(),
+	price_change_24h: z.number(),
+	price_change_7d: z.number(),
+	categories: z.array(z.string()),
+	contracts: z.array(
+		z.object({
+			address: z.string(),
+			blockchain: z.string(),
+			blockchainId: z.string(),
+			decimals: z.number(),
+		}),
+	),
+});
 
+export type ManyCoinsType = z.infer<typeof MANY_COINS_VALIDATION_SCHEMA>;
 export type OneCoinType = z.infer<typeof ONE_COIN_VALIDATION_SCHEMA>;
+export type SortedCoinsType = z.infer<typeof SORTED_COINS_VALIDATION_SCHEMA>;
