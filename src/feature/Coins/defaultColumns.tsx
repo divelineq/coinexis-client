@@ -1,20 +1,15 @@
 import cx from "classix";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 
-function buildPercentageNumber(props: any, value: number) {
-	const price24H = props.row.original.price_change_24h.toFixed(2);
+function buildPercentageNumber(value: number) {
 	const color =
-		price24H > 0
-			? "text-green-500"
-			: price24H < 0
-				? "text-red-500"
-				: "text-gray-200";
+		value > 0 ? "text-green-500" : value < 0 ? "text-red-500" : "text-gray-200";
 
 	return (
 		<div className={cx("flex items-center", color)}>
-			{price24H > 0 ? (
+			{value > 0 ? (
 				<AiFillCaretUp className="w-4 h-4" />
-			) : price24H < 0 ? (
+			) : value < 0 ? (
 				<AiFillCaretDown className="w-4 h-4" />
 			) : null}
 			<span>{value}%</span>
@@ -56,22 +51,19 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 	{
 		accessorKey: "price_change_1h",
 		header: () => <p className="text-center">1h %</p>,
-		cell: (props: any) =>
-			buildPercentageNumber(props, props.getValue().toFixed(2)),
+		cell: (props: any) => buildPercentageNumber(props.getValue().toFixed(2)),
 		enableSorting: true,
 	},
 	{
 		accessorKey: "price_change_24h",
 		header: () => <p className="text-center">24h %</p>,
-		cell: (props: any) =>
-			buildPercentageNumber(props, props.getValue().toFixed(2)),
+		cell: (props: any) => buildPercentageNumber(props.getValue().toFixed(2)),
 		enableSorting: true,
 	},
 	{
 		accessorKey: "price_change_7d",
 		header: () => <p className="text-center">7d %</p>,
-		cell: (props: any) =>
-			buildPercentageNumber(props, props.getValue().toFixed(2)),
+		cell: (props: any) => buildPercentageNumber(props.getValue().toFixed(2)),
 		enableSorting: true,
 	},
 	{
