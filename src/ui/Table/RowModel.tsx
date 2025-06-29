@@ -6,13 +6,13 @@ type Props = {
 
 export function Rows({ rowModel }: Props) {
 	return (
-		<div className="border border-custom rounded-b-sm bg-card">
+		<div className="border-b border-custom">
 			{rowModel.rows.map((row) => (
-				<div key={row.id} className="flex border-b border-custom">
+				<div key={row.id} className="flex border-b border-custom h-20">
 					{row.getVisibleCells().map((cell) => (
 						<div
 							key={cell.id}
-							className="p-3 border-r border-custom overflow-hidden"
+							className="p-3 overflow-hidden"
 							style={{ width: cell.column.getSize() }}
 						>
 							<div className={"flex items-center h-full text-sm"}>

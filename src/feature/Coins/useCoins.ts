@@ -8,10 +8,8 @@ export function useCoins() {
 		select: (data) => ({
 			...data,
 			coins: data.coins
-				.filter(
-					(coin) => coin.price && coin.price > 0.0 && coin.price_change_1m > 0,
-				)
-				.sort((a, b) => b.volume - a.volume),
+				.filter((coin) => coin.price && coin.price > 0 && coin.volume > 0)
+				.sort((a, b) => b.market_cap! - a.market_cap!),
 		}),
 		refetchInterval: 30_000,
 		refetchIntervalInBackground: false,

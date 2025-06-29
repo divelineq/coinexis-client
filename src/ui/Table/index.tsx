@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import { HeaderGroups } from "./HeaderGroups";
 import { PaginationActions } from "./PaginationActions";
+import { PaginationInfo } from "./PaginationInfo";
 import { Rows } from "./RowModel";
 import { SearchFilter } from "./SearchFilter";
 
@@ -35,7 +36,8 @@ type Props<TColumns extends unknown[], TData extends unknown[]> = {
 	 */
 	isRefetching?: boolean;
 	manualPagination?: boolean;
-	pagination?: PaginationState;
+	className?: string;
+	pagination: PaginationState;
 	onPaginationChange?: (old: PaginationState) => void;
 };
 
@@ -50,6 +52,7 @@ function Table<TColumns extends any[], TData extends any[]>({
 	data,
 	searchId,
 	rowCount,
+	className,
 	isRefetching,
 	pagination,
 	onPaginationChange,
@@ -84,13 +87,17 @@ function Table<TColumns extends any[], TData extends any[]>({
 	});
 
 	return (
-		<div className="p-2 m-auto" style={{ width: table.getTotalSize() }}>
+		<div className={className}>
 			<div className="flex justify-between w-full py-2">
 				<SearchFilter className="w-1/5" table={table} searchId={searchId} />
 				<PaginationActions table={table} isRefetching={isRefetching} />
 			</div>
 			<HeaderGroups headers={table.getHeaderGroups()} />
 			<Rows rowModel={table.getRowModel()} />
+			<div className="flex justify-between w-full py-2">
+				<PaginationInfo pagination={table.getState().pagination} data={data} />
+				<PaginationActions table={table} isRefetching={isRefetching} />
+			</div>
 		</div>
 	);
 }
