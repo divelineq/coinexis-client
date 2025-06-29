@@ -38,7 +38,7 @@ function Home() {
 						className="relative"
 					>
 						<div className="rounded-2xl bg-gradient-to-br from-[#1e1e2f] to-[#2e2e3f] p-6 shadow-xl border border-custom flex gap-3">
-							<BestCoinsInfo coins={["bitcoin", "ethereum", "toncoin"]} />
+							<BestCoinsInfo coins={["bitcoin", "ethereum", "bnb"]} />
 						</div>
 						<div className="absolute -top-6 -left-6 w-16 h-16 bg-[#00f9bb44] rounded-full blur-2xl animate-pulse" />
 						<div className="absolute -bottom-6 -right-6 w-20 h-20 bg-[#6c5dd355] rounded-full blur-2xl animate-pulse" />

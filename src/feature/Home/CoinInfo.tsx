@@ -31,7 +31,7 @@ function BestCoinsInfo({ coins }: Props) {
 									<AiFillCaretDown className="w-4 h-4 text-red-500" />
 								) : null}
 							</span>
-							<span>{coin.price.toFixed(3)}</span>
+							<span>{coin.price.toFixed(2)}$</span>
 						</div>
 					</span>
 				</div>
