@@ -18,7 +18,7 @@ export function HeaderGroups({ headers }: Props) {
 				return (
 					<th
 						key={header.id}
-						className="px-4 py-1 flex items-center"
+						className="px-3 py-1 flex items-center"
 						style={{
 							width: header.getSize() ? `${header.getSize()}px` : "100%",
 						}}

@@ -2,6 +2,7 @@ import cx from "classix";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { Tooltip } from "react-tooltip";
+import { Sparkline } from "./Sparkline";
 
 function buildPercentageNumber(value: number) {
 	const color =
@@ -33,9 +34,10 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 			return (
 				<div className="flex items-center gap-2">
 					<img
-						src={props.row.original.logo ?? "logo.png"}
-						alt=""
+						src={props.row.original.logo || "logo.png"}
+						alt="logo"
 						className="w-7 h-7 rounded-sm"
+						loading="lazy"
 					/>
 					<p className="text-md">{props.getValue()}</p>
 					<p className="text-md text-gray-400">{props.row.original.symbol}</p>
@@ -129,7 +131,7 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 	{
 		accessorKey: "Chart",
 		header: () => <p className="text-center">Last 7 Days</p>,
-		cell: (props: any) => <p>тут будет sparkline</p>,
+		cell: (props: any) => <Sparkline id={props.row.original.id} />,
 		enableSorting: false,
 	},
 ];

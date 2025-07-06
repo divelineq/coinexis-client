@@ -1,15 +1,12 @@
-import type { PaginationState } from "@tanstack/react-table";
 import { Table } from "@ui";
-import { useState } from "react";
 import { Skeleton } from "./Skeleton";
 import { DEFAULT_MANY_COINS_COLUMNS } from "./defaultColumns";
 import { useCoins } from "./useCoins";
+import { usePaginationState } from "./usePaginationState";
 
 function BaseCoins() {
-	const [pagination, setPagination] = useState<PaginationState>({
-		pageIndex: 0,
-		pageSize: 50,
-	});
+	const [pagination, setPagination] = usePaginationState();
+
 	const { data } = useCoins();
 
 	return (

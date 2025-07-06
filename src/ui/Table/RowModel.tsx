@@ -15,7 +15,7 @@ export function Rows({ rowModel }: Props) {
 						return (
 							<div
 								key={cell.id}
-								className="p-3 overflow-hidden"
+								className="px-3 overflow-hidden"
 								style={{
 									width: size ? `${size}px` : "100%",
 								}}
