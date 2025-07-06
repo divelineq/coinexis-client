@@ -7,37 +7,43 @@ type Props = {
 
 export function HeaderGroups({ headers }: Props) {
 	return headers.map((headerGroup) => (
-		<div
+		<tr
 			key={headerGroup.id}
 			className="flex h-12 border-y border-custom items-center"
 		>
 			{headerGroup.headers.map((header) => {
+				const canSort = header.column.getCanSort();
+				const sorted = header.column.getIsSorted();
+
 				return (
-					<div
+					<th
 						key={header.id}
-						className="px-4 py-1 flex"
-						style={{ width: header.getSize() }}
+						className="px-4 py-1 flex items-center"
+						style={{
+							width: header.getSize() ? `${header.getSize()}px` : "100%",
+						}}
 					>
-						{header.column.getCanSort() && (
+						{canSort ? (
 							<button
-								className="cursor-pointer flex items-center"
+								className="cursor-pointer flex items-center gap-1"
 								onClick={() => header.column.toggleSorting()}
 							>
 								{flexRender(
 									header.column.columnDef.header,
 									header.getContext(),
 								)}
-
-								{header.column.getIsSorted() === "asc" ? (
+								{sorted === "asc" ? (
 									<AiOutlineArrowUp />
-								) : header.column.getIsSorted() === "desc" ? (
+								) : sorted === "desc" ? (
 									<AiOutlineArrowDown />
 								) : null}
 							</button>
+						) : (
+							flexRender(header.column.columnDef.header, header.getContext())
 						)}
-					</div>
+					</th>
 				);
 			})}
-		</div>
+		</tr>
 	));
 }

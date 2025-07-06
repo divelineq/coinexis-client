@@ -9,17 +9,23 @@ export function Rows({ rowModel }: Props) {
 		<div className="border-b border-custom">
 			{rowModel.rows.map((row) => (
 				<div key={row.id} className="flex border-b border-custom h-20">
-					{row.getVisibleCells().map((cell) => (
-						<div
-							key={cell.id}
-							className="p-3 overflow-hidden"
-							style={{ width: cell.column.getSize() }}
-						>
-							<div className={"flex items-center h-full text-sm"}>
-								{flexRender(cell.column.columnDef.cell, cell.getContext())}
+					{row.getVisibleCells().map((cell) => {
+						const size = cell.column.getSize();
+
+						return (
+							<div
+								key={cell.id}
+								className="p-3 overflow-hidden"
+								style={{
+									width: size ? `${size}px` : "100%",
+								}}
+							>
+								<div className={"flex items-center h-full text-sm"}>
+									{flexRender(cell.column.columnDef.cell, cell.getContext())}
+								</div>
 							</div>
-						</div>
-					))}
+						);
+					})}
 				</div>
 			))}
 		</div>

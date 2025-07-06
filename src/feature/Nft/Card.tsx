@@ -42,14 +42,12 @@ function Card({ data, isRefetching, pagination, onPageChange }: Props) {
 						key={`${nft.name}-${index}`}
 						className="bg-zinc-800 border border-zinc-700 rounded-md p-2 flex flex-col gap-3 w-full max-w-[320px] shadow-md hover:shadow-lg transition-shadow"
 					>
-						{(nft.image || nft.url) && (
-							<img
-								loading="lazy"
-								className="rounded-md object-cover w-full h-48"
-								src={nft.image ?? nft.url}
-								alt={nft.name}
-							/>
-						)}
+						<img
+							loading="lazy"
+							className="rounded-md object-cover w-full h-48"
+							src={nft.image ?? nft.url ?? "logo.png"}
+							alt={nft.name}
+						/>
 
 						<div className="flex flex-col gap-1 text-sm">
 							<div className="text-white text-base font-semibold">

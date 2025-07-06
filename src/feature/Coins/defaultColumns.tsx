@@ -21,7 +21,7 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 	{
 		accessorKey: "#",
 		header: () => <p className="text-left">#</p>,
-		size: 60,
+		size: 90,
 		cell: (props: any) => props.row.index + 1,
 	},
 	{
@@ -30,7 +30,11 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 		cell: (props: any) => {
 			return (
 				<div className="flex items-center gap-2">
-					<img src={props.row.original.logo} alt="" className="w-7 h-7" />
+					<img
+						src={props.row.original.logo ?? "logo.png"}
+						alt=""
+						className="w-7 h-7 rounded-sm"
+					/>
 					<p className="text-md">{props.getValue()}</p>
 					<p className="text-md text-gray-400">{props.row.original.symbol}</p>
 				</div>
@@ -96,6 +100,6 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 		accessorKey: "volume",
 		header: () => <p className="text-center">Volume</p>,
 		cell: (props: any) => <p>тут будет sparkline</p>,
-		enableSorting: true,
+		enableSorting: false,
 	},
 ];

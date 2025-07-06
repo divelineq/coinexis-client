@@ -7,7 +7,7 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { HeaderGroups } from "./HeaderGroups";
 import { PaginationActions } from "./PaginationActions";
 import { PaginationInfo } from "./PaginationInfo";
@@ -60,6 +60,14 @@ function Table<TColumns extends any[], TData extends any[]>({
 }: Props<TColumns, TData>) {
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
+	const windowWidth = window.innerWidth;
+
+	const defaultSize = useMemo(() => {
+		if (windowWidth > 1600) return 400;
+		if (windowWidth > 1200) return 300;
+		return 200;
+	}, [windowWidth]);
+
 	const table = useReactTable({
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
@@ -80,7 +88,7 @@ function Table<TColumns extends any[], TData extends any[]>({
 		},
 		manualPagination,
 		defaultColumn: {
-			size: 200,
+			size: defaultSize,
 			minSize: 50,
 			maxSize: 700,
 		},
