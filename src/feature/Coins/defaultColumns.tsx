@@ -1,5 +1,7 @@
 import cx from "classix";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
+import { BsInfoCircle } from "react-icons/bs";
+import { Tooltip } from "react-tooltip";
 
 function buildPercentageNumber(value: number) {
 	const color =
@@ -72,33 +74,61 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 	},
 	{
 		accessorKey: "market_cap",
-		header: () => <p className="text-center">Market Cap</p>,
-		cell: (props: any) => (
-			<p>
-				{props.getValue().toLocaleString("en-US", {
-					style: "currency",
-					currency: "USD",
-				})}
-			</p>
+		header: () => (
+			<div className="flex items-center gap-2">
+				<p className="text-center">Market Cap</p>
+				<BsInfoCircle
+					size={16}
+					color="gray"
+					className="cursor-default"
+					data-tooltip-id="market-cap"
+					data-tooltip-content="Общая рыночная стоимость предложения криптовалюты в обращении. Она аналогична капитализации в свободном обращении на фондовом рынке. Рыночная капитализация = Текущая цена х предложение в обращении."
+				/>
+				<Tooltip
+					delayShow={100}
+					id="market-cap"
+					place="bottom"
+					style={{ fontWeight: "normal", width: "450px" }}
+				/>
+			</div>
 		),
+		cell: (props: any) =>
+			props.getValue().toLocaleString("en-US", {
+				style: "currency",
+				currency: "USD",
+			}),
 		enableSorting: true,
 	},
 	{
 		accessorKey: "volume",
-		header: () => <p className="text-center">Volume</p>,
-		cell: (props: any) => (
-			<p>
-				{props.getValue().toLocaleString("en-US", {
-					style: "currency",
-					currency: "USD",
-				})}
-			</p>
+		header: () => (
+			<div className="flex items-center gap-2">
+				<p className="text-center">Volume</p>
+				<BsInfoCircle
+					size={16}
+					color="gray"
+					className="cursor-default"
+					data-tooltip-id="volume"
+					data-tooltip-content="Показатель того, сколько криптовалюты было продано за последние 24 часа."
+				/>
+				<Tooltip
+					delayShow={100}
+					id="volume"
+					place="bottom"
+					style={{ fontWeight: "normal", width: "300px" }}
+				/>
+			</div>
 		),
+		cell: (props: any) =>
+			props.getValue().toLocaleString("en-US", {
+				style: "currency",
+				currency: "USD",
+			}),
 		enableSorting: true,
 	},
 	{
-		accessorKey: "volume",
-		header: () => <p className="text-center">Volume</p>,
+		accessorKey: "Chart",
+		header: () => <p className="text-center">Last 7 Days</p>,
 		cell: (props: any) => <p>тут будет sparkline</p>,
 		enableSorting: false,
 	},
