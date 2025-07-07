@@ -27,15 +27,16 @@ function Input({
 				inputMode="text"
 				type={type}
 				className={cx(
-					"flex w-full rounded-md border border-custom bg-card py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+					"flex w-full rounded-md border border-custom bg-card py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 text-ellipsis whitespace-nowrap overflow-hidden",
 					startIcon ? "pl-10" : "px-3",
+					endIcon ? "pr-8" : "pr-3",
 					inputClassName,
 				)}
 				{...props}
 			/>
 			{endIcon && (
 				<span
-					className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500 cursor-pointer"
+					className="absolute right-2 top-1/2 -translate-y-1/2 text-red-500 cursor-pointer"
 					title={
 						props["aria-invalid"]
 							? props["aria-errormessage"] || "Error"

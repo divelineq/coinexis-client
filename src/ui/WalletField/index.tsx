@@ -12,12 +12,12 @@ type Props = {
 
 const buildMessage = (errors: string[], success: boolean) => {
 	if (errors.length > 0) {
-		return <IoIosClose size={20} className="cursor-default" color="red" />;
+		return <IoIosClose size={24} className="cursor-default" color="red" />;
 	}
 
 	if (success) {
 		return (
-			<IoIosCheckmark size={20} className="cursor-default" color="green" />
+			<IoIosCheckmark size={24} className="cursor-default" color="green" />
 		);
 	}
 
