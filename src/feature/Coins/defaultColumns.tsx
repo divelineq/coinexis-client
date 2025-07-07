@@ -25,7 +25,12 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 		accessorKey: "#",
 		header: () => <p className="text-left">#</p>,
 		size: 90,
-		cell: (props: any) => props.row.index + 1,
+		cell: (props: any) => {
+			const pageIndex = props.table.options.state.pagination.pageIndex;
+			const pageSize = props.table.options.state.pagination.pageSize;
+
+			return pageIndex * pageSize + props.row.index + 1;
+		},
 	},
 	{
 		accessorKey: "name",
@@ -34,7 +39,7 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 			return (
 				<div className="flex items-center gap-2">
 					<img
-						src={props.row.original.logo || "logo.png"}
+						src={props.row.original.logo ?? "logo.png"}
 						alt="logo"
 						className="w-7 h-7 rounded-sm"
 						loading="lazy"
@@ -77,7 +82,7 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 	{
 		accessorKey: "market_cap",
 		header: () => (
-			<div className="flex items-center gap-2">
+			<div className="flex items-center gap-1">
 				<p className="text-center">Market Cap</p>
 				<BsInfoCircle
 					size={16}
@@ -104,7 +109,7 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 	{
 		accessorKey: "volume",
 		header: () => (
-			<div className="flex items-center gap-2">
+			<div className="flex items-center gap-1">
 				<p className="text-center">Volume</p>
 				<BsInfoCircle
 					size={16}

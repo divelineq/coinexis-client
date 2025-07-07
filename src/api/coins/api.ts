@@ -3,17 +3,21 @@ import type { ManyCoinsType, OneCoinType, SortedCoinsType } from "./dto";
 
 const API = import.meta.env.VITE_API_KEY;
 
-export type QuerySortByType =
-	| "liquidity"
-	| "market_cap"
-	| "off_chain_volume"
-	| "price_change_1h"
-	| "price_change_7d"
-	| "price_change_24h"
-	| "price"
-	| "volume";
+export enum QuerySortBy {
+	Liquidity = "liquidity",
+	MarketCap = "market_cap",
+	OffChainVolume = "off_chain_volume",
+	PriceChange1h = "price_change_1h",
+	PriceChange7d = "price_change_7d",
+	PriceChange24h = "price_change_24h",
+	Price = "price",
+	Volume = "volume",
+}
 
-export type QuerySortOrderType = "asc" | "desc";
+export enum QuerySortOrder {
+	Asc = "asc",
+	Desc = "desc",
+}
 
 export const coinApi = {
 	async getMany(
@@ -56,12 +60,11 @@ export const coinApi = {
 	async getSortedCoins(
 		signal: AbortSignal,
 		limit: number | null,
-		offset?: number,
-		sortBy: QuerySortByType = "volume",
-		sortOrder: QuerySortOrderType = "asc",
-	): Promise<SortedCoinsType> {
-		const res = await httpClient.get<{ data: SortedCoinsType }>(
-			`/market/query?sortBy=${sortBy}&sortOrder=${sortOrder}&limit=${limit}&offset=${offset ?? 0}`,
+		offset: number,
+		sortBy: QuerySortBy = QuerySortBy.MarketCap,
+	): Promise<SortedCoinsType[]> {
+		const res = await httpClient.get<SortedCoinsType[]>(
+			`/market/query?sortBy=${sortBy}&limit=${limit}&offset=${offset}`,
 			{
 				headers: {
 					Authorization: `Bearer ${API}`,
@@ -70,6 +73,6 @@ export const coinApi = {
 			},
 		);
 
-		return res.data.data;
+		return res.data;
 	},
 };

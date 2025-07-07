@@ -1,5 +1,5 @@
 import { type HistoryType, historyApi } from "@api";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 export function useHistory(
 	id: number,
@@ -11,6 +11,7 @@ export function useHistory(
 		queryKey: ["history", id],
 		queryFn: ({ signal }) =>
 			historyApi.getHistory(period, signal, id, from, to),
+		placeholderData: keepPreviousData,
 		staleTime: Number.POSITIVE_INFINITY,
 	});
 }

@@ -16,11 +16,11 @@ import { SearchFilter } from "./SearchFilter";
 
 type Props<TColumns extends unknown[], TData extends unknown[]> = {
 	/**
-	 * Обьявление колонок
+	 * Объявление колонок
 	 */
 	defaultColumns: TColumns;
 	/**
-	 * Масив данных
+	 * Массив данных
 	 */
 	data: TData;
 	/**
@@ -28,14 +28,21 @@ type Props<TColumns extends unknown[], TData extends unknown[]> = {
 	 */
 	searchId: string;
 	/**
-	 * Общее колличество строк в таблице если известно
+	 * Общее количество строк в таблице если известно
 	 */
 	rowCount?: number;
 	/**
-	 * Булеан значение обозначающее загрузку данных если есть серверная пагинация
+	 * Boolean значение обозначающее загрузку данных если есть серверная пагинация
 	 */
 	isRefetching?: boolean;
+	/**
+	 * Указывается в случае если пагинация делается самостоятельно
+	 */
 	manualPagination?: boolean;
+	/**
+	 * Указывает количество страниц, необходимо в случае если на сервере не возвращается pagination данные
+	 */
+	pageCount?: number;
 	className?: string;
 	pagination: PaginationState;
 	onPaginationChange?: (old: PaginationState) => void;
@@ -55,6 +62,7 @@ function Table<TColumns extends any[], TData extends any[]>({
 	className,
 	isRefetching,
 	pagination,
+	pageCount,
 	onPaginationChange,
 	manualPagination = false,
 }: Props<TColumns, TData>) {
@@ -71,6 +79,7 @@ function Table<TColumns extends any[], TData extends any[]>({
 		) => void,
 		data,
 		rowCount,
+		pageCount,
 		columns: defaultColumns,
 		enableColumnFilters: true,
 		autoResetPageIndex: false,

@@ -1,19 +1,18 @@
-import { type CoinService, coinService } from "@service";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import type { QuerySortBy } from "@api";
+import { type QueryCoinsService, coinService } from "@service";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
-export function useCoins() {
-	return useSuspenseQuery<CoinService>({
-		queryKey: ["coins"],
-		queryFn: ({ signal }) => coinService.getCoins(signal),
-		select: (data) => ({
-			...data,
-			coins: data.coins
-				.filter((coin) => coin.price && coin.price > 0 && coin.volume > 0)
-				.sort((a, b) => b.market_cap! - a.market_cap!),
-		}),
+export function useQueryCoins(
+	limit: number,
+	offset: number,
+	sortBy?: QuerySortBy,
+) {
+	return useQuery<QueryCoinsService>({
+		queryKey: ["coins", limit, offset],
+		queryFn: ({ signal }) =>
+			coinService.getSortedCoins(signal, limit, offset, sortBy),
+		placeholderData: keepPreviousData,
+		refetchOnWindowFocus: false,
 		refetchInterval: 30_000,
-		refetchIntervalInBackground: false,
-		staleTime: 10_000,
-		retry: false,
 	});
 }

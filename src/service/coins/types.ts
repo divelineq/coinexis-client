@@ -1,6 +1,11 @@
-import type { ManyCoinsType } from "@api";
+import type { ManyCoinsType, SortedCoinsType } from "@api";
 
-export type CoinService = {
+export type CoinsService = {
 	coins: ManyCoinsType[];
 	totalCoins: number;
+};
+
+export type QueryCoinsService = {
+	queryCoins: SortedCoinsType[];
+	lengthCoins: number;
 };

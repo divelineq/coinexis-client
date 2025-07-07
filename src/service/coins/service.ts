@@ -1,18 +1,10 @@
-import type {
-	OneCoinType,
-	QuerySortByType,
-	QuerySortOrderType,
-	SortedCoinsType,
-} from "@api";
+import type { OneCoinType, QuerySortBy } from "@api";
 import { coinApi } from "../../api/coins/api";
-import type { CoinService } from "./types";
+import type { CoinsService, QueryCoinsService } from "./types";
 
 export const coinService = {
-	async getCoins(signal: AbortSignal): Promise<CoinService> {
-		const coins = await coinApi.getMany(
-			signal,
-			"id,name,logo,price,price_change_1h,price_change_24h,price_change_7d,volume,market_cap,liquidity",
-		);
+	async getCoins(signal: AbortSignal, fields: string): Promise<CoinsService> {
+		const coins = await coinApi.getMany(signal, fields);
 
 		return {
 			coins,
@@ -26,17 +18,15 @@ export const coinService = {
 
 	async getSortedCoins(
 		signal: AbortSignal,
-		limit: number | null,
-		offset?: number,
-		sortBy?: QuerySortByType,
-		sortOrder?: QuerySortOrderType,
-	): Promise<SortedCoinsType> {
-		return await coinApi.getSortedCoins(
-			signal,
-			limit,
-			offset,
-			sortBy,
-			sortOrder,
-		);
+		limit: number,
+		offset: number,
+		sortBy?: QuerySortBy,
+	): Promise<QueryCoinsService> {
+		const [lengthCoins, queryCoins] = await Promise.all([
+			coinApi.getMany(signal, "id").then((res) => res.length),
+			coinApi.getSortedCoins(signal, limit, offset, sortBy),
+		]);
+
+		return { lengthCoins, queryCoins };
 	},
 };

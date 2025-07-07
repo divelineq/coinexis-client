@@ -7,7 +7,7 @@ type Props = {
 
 export function HeaderGroups({ headers }: Props) {
 	return headers.map((headerGroup) => (
-		<tr
+		<div
 			key={headerGroup.id}
 			className="flex h-12 border-y border-custom items-center"
 		>
@@ -16,7 +16,7 @@ export function HeaderGroups({ headers }: Props) {
 				const sorted = header.column.getIsSorted();
 
 				return (
-					<th
+					<div
 						key={header.id}
 						className="px-3 py-1 flex items-center"
 						style={{
@@ -41,9 +41,9 @@ export function HeaderGroups({ headers }: Props) {
 						) : (
 							flexRender(header.column.columnDef.header, header.getContext())
 						)}
-					</th>
+					</div>
 				);
 			})}
-		</tr>
+		</div>
 	));
 }
