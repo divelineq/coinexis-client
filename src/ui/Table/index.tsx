@@ -7,7 +7,9 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useVirtualizer } from "@tanstack/react-virtual";
+import cx from "classix";
+import { useRef, useState } from "react";
 import { HeaderGroups } from "./HeaderGroups";
 import { PaginationActions } from "./PaginationActions";
 import { PaginationInfo } from "./PaginationInfo";
@@ -43,6 +45,11 @@ type Props<TColumns extends unknown[], TData extends unknown[]> = {
 	 * Указывает количество страниц, необходимо в случае если на сервере не возвращается pagination данные
 	 */
 	pageCount?: number;
+	/**
+	 * Высота строк
+	 * @default 80px
+	 */
+	rowHeight?: number;
 	className?: string;
 	pagination: PaginationState;
 	onPaginationChange?: (old: PaginationState) => void;
@@ -64,9 +71,11 @@ function Table<TColumns extends any[], TData extends any[]>({
 	pagination,
 	pageCount,
 	onPaginationChange,
+	rowHeight,
 	manualPagination = false,
 }: Props<TColumns, TData>) {
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+	const parentRef = useRef<HTMLDivElement>(null);
 
 	const table = useReactTable({
 		getCoreRowModel: getCoreRowModel(),
@@ -95,14 +104,25 @@ function Table<TColumns extends any[], TData extends any[]>({
 		},
 	});
 
+	const virtualizer = useVirtualizer({
+		count: table.getRowModel().rows.length,
+		getScrollElement: () => parentRef.current,
+		estimateSize: () => 80,
+		overscan: 5,
+	});
+
 	return (
-		<div className={className}>
+		<div className={cx(className, "overflow-auto")} ref={parentRef}>
 			<div className="flex justify-between w-full py-2">
 				<SearchFilter className="w-1/5" table={table} searchId={searchId} />
 				<PaginationActions table={table} isRefetching={isRefetching} />
 			</div>
 			<HeaderGroups headers={table.getHeaderGroups()} />
-			<Rows rowModel={table.getRowModel()} />
+			<Rows
+				rowModel={table.getRowModel()}
+				virtualizer={virtualizer}
+				rowHeight={rowHeight}
+			/>
 			<div className="flex justify-between w-full py-2">
 				<PaginationInfo pagination={table.getState().pagination} data={data} />
 				<PaginationActions table={table} isRefetching={isRefetching} />

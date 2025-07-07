@@ -7,6 +7,7 @@ import {
 	AiFillForward,
 } from "react-icons/ai";
 import { PulseLoader } from "react-spinners";
+import { useDebouncedCallback } from "use-debounce";
 
 type Props = {
 	table: Table<any>;
@@ -59,7 +60,7 @@ export function PaginationActions({ table, isRefetching }: Props) {
 			<SwitchPageButton
 				disabled={!table.getCanPreviousPage()}
 				symbol={<AiFillCaretLeft />}
-				onChange={() => table.previousPage()}
+				onChange={useDebouncedCallback(() => table.previousPage(), 200)}
 			/>
 			<p className="px-4 border-y-1 border-custom bg-card">
 				{table.getState().pagination.pageIndex + 1} of{" "}
@@ -68,7 +69,7 @@ export function PaginationActions({ table, isRefetching }: Props) {
 			<SwitchPageButton
 				disabled={!table.getCanNextPage()}
 				symbol={<AiFillCaretRight />}
-				onChange={() => table.nextPage()}
+				onChange={useDebouncedCallback(() => table.nextPage(), 200)}
 			/>
 			<SwitchPageButton
 				disabled={!table.getCanNextPage()}

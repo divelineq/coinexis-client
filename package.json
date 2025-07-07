@@ -22,6 +22,7 @@
     "@tanstack/react-router": "^1.121.27",
     "@tanstack/react-router-devtools": "^1.121.5",
     "@tanstack/react-table": "^8.21.3",
+    "@tanstack/react-virtual": "^3.13.12",
     "axios": "^1.9.0",
     "bech32": "^2.0.0",
     "bitcoin-address-validation": "^3.0.0",
@@ -42,6 +43,7 @@
     "sonner": "^2.0.5",
     "tailwindcss": "^4.1.11",
     "tronweb": "^6.0.3",
+    "use-debounce": "^10.0.5",
     "viem": "^2.30.6",
     "zod": "^3.25.56",
     "zustand": "^5.0.3"
