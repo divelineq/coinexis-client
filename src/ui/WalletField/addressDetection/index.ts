@@ -1,18 +1,9 @@
+import { isAddress } from "@solana/addresses";
 import { bech32 } from "bech32";
 import { validate as validateBitcoinAddress } from "bitcoin-address-validation";
-import bs58 from "bs58";
 import { TronWeb } from "tronweb";
 import { isAddress as isEthAddress } from "viem";
-
-type DetectedNetwork =
-	| "Aptos"
-	| "Bitcoin"
-	| "Cosmos"
-	| "Ethereum"
-	| "Solana"
-	| "Sui"
-	| "TRON"
-	| "Unknown";
+import { DetectedNetwork } from "../enums";
 
 export interface AddressDetectionResult {
 	isValid: boolean;
@@ -20,10 +11,9 @@ export interface AddressDetectionResult {
 	normalizedAddress?: string;
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
-export function validateAddress(raw: string): AddressDetectionResult {
+export function addressDetection(raw: string): AddressDetectionResult {
 	if (!raw || typeof raw !== "string") {
-		return { isValid: false, network: "Unknown" };
+		return { isValid: false, network: DetectedNetwork.Unknown };
 	}
 
 	const address = raw.trim();
@@ -32,21 +22,18 @@ export function validateAddress(raw: string): AddressDetectionResult {
 	if (/^0x[\dA-Fa-f]{40}$/.test(address) && isEthAddress(address)) {
 		return {
 			isValid: true,
-			network: "Ethereum",
+			network: DetectedNetwork.Ethereum,
 			normalizedAddress: address.toLowerCase(),
 		};
 	}
 
 	//* === Solana
-	if (/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address)) {
+	if (isAddress(address)) {
 		try {
-			const decoded = bs58.decode(address);
-			if (decoded.length >= 32) {
-				return {
-					isValid: true,
-					network: "Solana",
-				};
-			}
+			return {
+				isValid: true,
+				network: DetectedNetwork.Solana,
+			};
 		} catch {}
 	}
 
@@ -54,30 +41,26 @@ export function validateAddress(raw: string): AddressDetectionResult {
 	if (validateBitcoinAddress(address)) {
 		return {
 			isValid: true,
-			network: "Bitcoin",
+			network: DetectedNetwork.Bitcoin,
 		};
 	}
 
 	//* === Tron
-	if (/^T[1-9A-HJ-NP-Za-km-z]{33}$/.test(address)) {
-		try {
-			if (TronWeb.isAddress(address)) {
-				return {
-					isValid: true,
-					network: "TRON",
-				};
-			}
-		} catch {}
+	if (TronWeb.isAddress(address)) {
+		return {
+			isValid: true,
+			network: DetectedNetwork.TRON,
+		};
 	}
 
 	//* === Cosmos
-	if (/^cosmos1[\da-z]{38}$/.test(address)) {
+	if (TronWeb.isAddress(address)) {
 		try {
 			const { prefix } = bech32.decode(address);
 			if (prefix === "cosmos") {
 				return {
 					isValid: true,
-					network: "Cosmos",
+					network: DetectedNetwork.Cosmos,
 				};
 			}
 		} catch {}
@@ -87,7 +70,7 @@ export function validateAddress(raw: string): AddressDetectionResult {
 	if (/^0x[\dA-Fa-f]{64}$/.test(address)) {
 		return {
 			isValid: true,
-			network: "Aptos",
+			network: DetectedNetwork.Aptos,
 			normalizedAddress: address.toLowerCase(),
 		};
 	}
@@ -96,13 +79,13 @@ export function validateAddress(raw: string): AddressDetectionResult {
 	if (/^0x[\dA-Fa-f]{64,66}$/.test(address)) {
 		return {
 			isValid: true,
-			network: "Sui",
+			network: DetectedNetwork.Sui,
 			normalizedAddress: address.toLowerCase(),
 		};
 	}
 
 	return {
 		isValid: false,
-		network: "Unknown",
+		network: DetectedNetwork.Unknown,
 	};
 }

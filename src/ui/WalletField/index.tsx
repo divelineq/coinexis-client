@@ -2,8 +2,8 @@ import { useForm } from "@tanstack/react-form";
 import { IconButton, Input } from "@ui";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoIosCheckmark, IoIosClose } from "react-icons/io";
-import { IoWalletOutline } from "react-icons/io5";
-import { validateAddress } from "./validateAddress";
+import { addressDetection } from "./addressDetection";
+import { getStartIcon } from "./getStartIcon";
 
 type Props = {
 	onChange: (val: string) => void;
@@ -43,19 +43,19 @@ function WalletField({ onChange, isPending }: Props) {
 				validators={{
 					onChange: (value) =>
 						value.value.length > 0 &&
-						!validateAddress(value.value).isValid &&
+						!addressDetection(value.value).isValid &&
 						"Invalid address",
 				}}
 			>
 				{(field) => {
-					const detection = validateAddress(field.state.value);
+					const detection = addressDetection(field.state.value);
 					const showNetwork = detection.isValid && detection.network;
 
 					return (
 						<div className="w-full flex gap-2 items-center justify-center">
 							<Input
 								className="min-w-[430px]"
-								startIcon={<IoWalletOutline size={20} />}
+								startIcon={getStartIcon(detection.network)}
 								endIcon={buildMessage(
 									field.state.meta.errors as string[],
 									!!showNetwork,
@@ -73,7 +73,7 @@ function WalletField({ onChange, isPending }: Props) {
 								isLoading={isPending}
 								type="submit"
 								onClick={form.handleSubmit}
-								disabled={!validateAddress(field.state.value).isValid}
+								disabled={!addressDetection(field.state.value).isValid}
 							/>
 						</div>
 					);

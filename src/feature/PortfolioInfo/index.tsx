@@ -14,9 +14,15 @@ function PortfolioInfo() {
 			<WalletField onChange={setAddress} isPending={isLoading} />
 			{data && (
 				<div>
-					<div className="flex text-2xl justify-center gap-2">
-						<p>Total balance:</p>
-						<p>{data.totalPrice}$</p>
+					<div className="flex text-2xl justify-center gap-2 pt-2">
+						<p>Balance:</p>
+						<p>
+							{Number(data.totalPrice).toLocaleString("en-US", {
+								style: "currency",
+								currency: "USD",
+							})}
+							$
+						</p>
 					</div>
 					<div>
 						<PortfolioTable data={data.portfolio} />
