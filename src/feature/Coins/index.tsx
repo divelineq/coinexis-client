@@ -1,16 +1,22 @@
 import { Table, Tabs } from "@ui";
+import { useState } from "react";
 import { Skeleton } from "./Skeleton";
 import { DEFAULT_MANY_COINS_COLUMNS } from "./defaultColumns";
-import { useQueryCoins } from "./useCoins";
 import { usePaginationState } from "./usePaginationState";
+import { useQueryCoins } from "./useQueryCoins";
+
+export enum SelectedTab {
+	All = "all",
+	Categories = "categories",
+}
 
 const TAB_OPTIONS = [
-	{ id: "all", label: "All Coins" },
-	{ id: "categories", label: "Categories" },
-	{ id: "favorites", label: "Favorites" },
+	{ id: SelectedTab.All, label: "All Coins" },
+	{ id: SelectedTab.Categories, label: "Categories" },
 ];
 
 function BaseCoins() {
+	const [selectedTab, setSelectedTab] = useState(SelectedTab.All);
 	const [pagination, setPagination] = usePaginationState();
 	const { data, isLoading, isRefetching } = useQueryCoins(
 		pagination.pageSize,
@@ -20,12 +26,13 @@ function BaseCoins() {
 	if (isLoading) return <Skeleton />;
 
 	return (
-		data?.queryCoins && (
+		data && (
 			<div>
 				<Tabs
 					className="px-4"
 					tabs={TAB_OPTIONS}
-					onChange={(val) => console.log("Selected tab:", val)}
+					value={selectedTab as string}
+					onChange={(val) => setSelectedTab(val as SelectedTab)}
 				/>
 				<Table
 					//! костыль
