@@ -79,7 +79,7 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 					delayShow={100}
 					id="market-cap"
 					place="bottom"
-					style={{ fontWeight: "normal", width: "450px" }}
+					style={{ fontWeight: "normal", width: "450px", zIndex: 10 }}
 				/>
 			</div>
 		),
@@ -106,7 +106,7 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 					delayShow={100}
 					id="volume"
 					place="bottom"
-					style={{ fontWeight: "normal", width: "300px" }}
+					style={{ fontWeight: "normal", width: "300px", zIndex: 10 }}
 				/>
 			</div>
 		),

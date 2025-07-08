@@ -4,5 +4,6 @@ export * from "./IconButton";
 export * from "./Input";
 export * from "./Label";
 export * from "./Table";
+export * from "./Tabs";
 export * from "./TextField";
 export * from "./WalletField";

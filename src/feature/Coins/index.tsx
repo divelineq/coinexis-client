@@ -1,8 +1,14 @@
-import { Table } from "@ui";
+import { Table, Tabs } from "@ui";
 import { Skeleton } from "./Skeleton";
 import { DEFAULT_MANY_COINS_COLUMNS } from "./defaultColumns";
 import { useQueryCoins } from "./useCoins";
 import { usePaginationState } from "./usePaginationState";
+
+const TAB_OPTIONS = [
+	{ id: "all", label: "All Coins" },
+	{ id: "categories", label: "Categories" },
+	{ id: "favorites", label: "Favorites" },
+];
 
 function BaseCoins() {
 	const [pagination, setPagination] = usePaginationState();
@@ -16,8 +22,11 @@ function BaseCoins() {
 	return (
 		data?.queryCoins && (
 			<div>
-				{/* <img src={url?.url} alt="jopa" className="w-45" /> */}
-
+				<Tabs
+					className="px-4"
+					tabs={TAB_OPTIONS}
+					onChange={(val) => console.log("Selected tab:", val)}
+				/>
 				<Table
 					//! костыль
 					pageCount={Math.floor(data.lengthCoins / pagination.pageSize) - 8}
