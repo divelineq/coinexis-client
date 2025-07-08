@@ -15,18 +15,22 @@ function BaseCoins() {
 
 	return (
 		data?.queryCoins && (
-			<Table
-				//! костыль
-				pageCount={Math.floor(data.lengthCoins / pagination.pageSize) - 8}
-				isRefetching={isRefetching}
-				manualPagination
-				className="w-full py-2 px-5"
-				pagination={pagination}
-				onPaginationChange={setPagination}
-				defaultColumns={DEFAULT_MANY_COINS_COLUMNS}
-				data={data.queryCoins}
-				searchId="name"
-			/>
+			<div>
+				{/* <img src={url?.url} alt="jopa" className="w-45" /> */}
+
+				<Table
+					//! костыль
+					pageCount={Math.floor(data.lengthCoins / pagination.pageSize) - 8}
+					isRefetching={isRefetching}
+					manualPagination
+					className="w-full py-2 px-5"
+					pagination={pagination}
+					onPaginationChange={setPagination}
+					defaultColumns={DEFAULT_MANY_COINS_COLUMNS}
+					data={data.queryCoins}
+					searchId="name"
+				/>
+			</div>
 		)
 	);
 }

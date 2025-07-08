@@ -6,8 +6,9 @@ import { Sparkline } from "./Sparkline";
 export const DEFAULT_MANY_COINS_COLUMNS = [
 	{
 		accessorKey: "#",
-		header: () => <p className="text-left">#</p>,
+		header: () => <p className="text-left cursor-default">#</p>,
 		size: 90,
+		enableSorting: false,
 		cell: (props: any) => {
 			const pageIndex = props.table.options.state.pagination.pageIndex;
 			const pageSize = props.table.options.state.pagination.pageSize;
@@ -118,7 +119,7 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 	},
 	{
 		accessorKey: "Chart",
-		header: () => <p className="text-center">Last 7 Days</p>,
+		header: () => <p className="text-center cursor-default">Last 7 Days</p>,
 		cell: (props: any) => <Sparkline id={props.row.original.id} />,
 		enableSorting: false,
 	},
