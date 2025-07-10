@@ -4,11 +4,11 @@ import type { CoinsService, SortedCoinsServiceResponse } from "./types";
 
 export const coinService = {
 	async getCoins(signal: AbortSignal, fields: string): Promise<CoinsService> {
-		const coins = await coinApi.getMany(signal, fields);
+		const data = await coinApi.getMany(signal, fields);
 
 		return {
+			total: data.length,
 			data,
-			total: coins.length,
 		};
 	},
 
@@ -22,7 +22,7 @@ export const coinService = {
 		offset: number,
 		sortBy?: QuerySortBy,
 	): Promise<SortedCoinsServiceResponse> {
-		const [lengthData, data] = await Promise.all([
+		const [total, data] = await Promise.all([
 			coinApi.getMany(signal, "id").then((res) => res.length),
 			coinApi.getSortedCoins(signal, limit, offset, sortBy),
 		]);

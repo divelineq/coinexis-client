@@ -44,11 +44,11 @@ const ASSETS_VALIDATION_SCHEMA = z.array(
 	}),
 );
 
-export const MANY_PORTFOLIO_VALIDATION_SHEMA = z.object({
+export const MANY_PORTFOLIO_VALIDATION_SCHEMA = z.object({
 	balances_length: z.number(),
 	wallets: z.array(z.string()),
 	total_wallet_balance: z.number(),
 	assets: ASSETS_VALIDATION_SCHEMA,
 });
 
-export type PortfolioType = z.infer<typeof MANY_PORTFOLIO_VALIDATION_SHEMA>;
+export type PortfolioType = z.infer<typeof MANY_PORTFOLIO_VALIDATION_SCHEMA>;

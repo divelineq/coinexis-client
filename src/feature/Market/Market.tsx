@@ -44,7 +44,7 @@ function Market({
 					onChange={handleTabChange}
 				/>
 				<Table
-					pageCount={Math.floor(queryResult.data.total / pagination.pageSize)}
+					pageCount={Math.floor(queryResult.data?.total / pagination.pageSize)}
 					isRefetching={queryResult.isRefetching}
 					manualPagination={manualPagination}
 					className="w-full py-2 px-5"
