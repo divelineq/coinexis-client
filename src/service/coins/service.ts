@@ -22,11 +22,11 @@ export const coinService = {
 		offset: number,
 		sortBy?: QuerySortBy,
 	): Promise<QueryCoinsService> {
-		const [lengthCoins, queryCoins] = await Promise.all([
+		const [lengthData, data] = await Promise.all([
 			coinApi.getMany(signal, "id").then((res) => res.length),
 			coinApi.getSortedCoins(signal, limit, offset, sortBy),
 		]);
 
-		return { lengthCoins, queryCoins };
+		return { lengthData, data };
 	},
 };

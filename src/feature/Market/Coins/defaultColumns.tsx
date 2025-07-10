@@ -1,7 +1,11 @@
+import type { QueryCoinsService } from "@service";
+import { createColumnHelper } from "@tanstack/react-table";
 import { BsInfoCircle } from "react-icons/bs";
 import { Tooltip } from "react-tooltip";
-import { buildPercentageNumber } from "../hooks/buildPercentageNumber";
+import { buildPercentageNumber } from "../../hooks/buildPercentageNumber";
 import { Sparkline } from "./Sparkline";
+
+const columnHelper = createColumnHelper<QueryCoinsService["data"]>();
 
 export const DEFAULT_MANY_COINS_COLUMNS = [
 	{
@@ -16,9 +20,8 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 			return pageIndex * pageSize + props.row.index + 1;
 		},
 	},
-	{
-		accessorKey: "name",
-		header: () => <p className="text-left">Name</p>,
+	columnHelper.accessor("name", {
+		header: () => <p className="text-left cursor-default">Name</p>,
 		cell: (props: any) => {
 			return (
 				<div className="flex items-center gap-2">
@@ -33,8 +36,7 @@ export const DEFAULT_MANY_COINS_COLUMNS = [
 				</div>
 			);
 		},
-		enableSorting: true,
-	},
+	}),
 	{
 		accessorKey: "price",
 		header: () => <p className="text-center">Price</p>,

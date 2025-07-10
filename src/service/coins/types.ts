@@ -6,6 +6,6 @@ export type CoinsService = {
 };
 
 export type QueryCoinsService = {
-	queryCoins: SortedCoinsType[];
-	lengthCoins: number;
+	data: SortedCoinsType[];
+	lengthData: number;
 };

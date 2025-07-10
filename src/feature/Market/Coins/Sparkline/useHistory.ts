@@ -1,19 +1,19 @@
-import type { QuerySortBy } from "@api";
-import { type QueryCoinsService, coinService } from "@service";
+import { type HistoryType, historyApi } from "@api";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const STALE_TIME_DEFAULT = 5 * 60 * 1000;
 const GC_TIME_DEFAULT = 10 * 60 * 1000;
 
-export function useQueryCoins(
-	limit: number,
-	offset: number,
-	sortBy?: QuerySortBy,
+export function useHistory(
+	id: number,
+	from: number,
+	to: number,
+	period: string,
 ) {
-	return useQuery<QueryCoinsService>({
-		queryKey: ["coins", limit, offset],
+	return useQuery<HistoryType>({
+		queryKey: ["history", id],
 		queryFn: ({ signal }) =>
-			coinService.getSortedCoins(signal, limit, offset, sortBy),
+			historyApi.getHistory(period, signal, id, from, to),
 		placeholderData: keepPreviousData,
 		refetchOnWindowFocus: false,
 		refetchInterval: 30_000,

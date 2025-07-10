@@ -8,8 +8,8 @@ export function Header() {
 				<Link to="/" className="[&.active]:font-bold">
 					Home
 				</Link>{" "}
-				<Link to="/coins" className="[&.active]:font-bold">
-					Coins
+				<Link to="/market" className="[&.active]:font-bold">
+					Market
 				</Link>
 				<Link to="/portfolio" className="[&.active]:font-bold">
 					Portfolio
