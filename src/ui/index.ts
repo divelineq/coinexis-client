@@ -1,5 +1,6 @@
 export * from "./Button";
 export * from "./CopyableText";
+export * from "./ErrorScreen";
 export * from "./IconButton";
 export * from "./Input";
 export * from "./Label";

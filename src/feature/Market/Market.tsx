@@ -1,6 +1,6 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import type { PaginationState } from "@tanstack/react-table";
-import { Table, Tabs } from "@ui";
+import { ErrorScreen, Table, Tabs } from "@ui";
 import type { SelectedDataAll } from "src/feature/Market/types";
 import { Skeleton } from "./Skeleton";
 import type { Tab } from "./enums";
@@ -28,10 +28,7 @@ function Market({
 }: Props) {
 	if (query.isLoading) return <Skeleton />;
 
-	if (!query?.data || query.isError)
-		return (
-			<div>Произошла какая то ошибка, попробуйте перезагрузить страницу</div>
-		);
+	if (!query?.data || query.isError) return <ErrorScreen />;
 
 	const handleTabChange = (val: string) => {
 		onSelectedTabChange(val as Tab);
