@@ -1,11 +1,11 @@
-import type { QueryCoinsService } from "@service";
+import type { SortedCoinsServiceResponse } from "@service";
 import { createColumnHelper } from "@tanstack/react-table";
 import { BsInfoCircle } from "react-icons/bs";
 import { Tooltip } from "react-tooltip";
 import { buildPercentageNumber } from "../../hooks/buildPercentageNumber";
 import { Sparkline } from "./Sparkline";
 
-const columnHelper = createColumnHelper<QueryCoinsService["data"]>();
+const columnHelper = createColumnHelper<SortedCoinsServiceResponse["data"]>();
 
 export const DEFAULT_MANY_COINS_COLUMNS = [
 	{

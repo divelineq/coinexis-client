@@ -1,10 +1,15 @@
-import type { CategoriesServiceType, QueryCoinsService } from "@service";
+import type {
+	CategoriesServiceResponse,
+	SortedCoinsServiceResponse,
+} from "@service";
 import type { UseQueryResult } from "@tanstack/react-query";
 
-export type SelectedDataAll = CategoriesServiceType | QueryCoinsService;
+export type SelectedDataAll =
+	| CategoriesServiceResponse
+	| SortedCoinsServiceResponse;
 
-export interface SelectedData<TQuery> {
-	query: UseQueryResult<TQuery, Error>;
+export interface TableSource<T> {
+	queryResult: UseQueryResult<T, Error>;
 	defaultColumns: any[];
 	manualPagination?: boolean;
 }

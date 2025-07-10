@@ -1,14 +1,14 @@
 import type { OneCoinType, QuerySortBy } from "@api";
 import { coinApi } from "../../api/coins/api";
-import type { CoinsService, QueryCoinsService } from "./types";
+import type { CoinsService, SortedCoinsServiceResponse } from "./types";
 
 export const coinService = {
 	async getCoins(signal: AbortSignal, fields: string): Promise<CoinsService> {
 		const coins = await coinApi.getMany(signal, fields);
 
 		return {
-			coins,
-			totalCoins: coins.length,
+			data,
+			total: coins.length,
 		};
 	},
 
@@ -21,12 +21,12 @@ export const coinService = {
 		limit: number,
 		offset: number,
 		sortBy?: QuerySortBy,
-	): Promise<QueryCoinsService> {
+	): Promise<SortedCoinsServiceResponse> {
 		const [lengthData, data] = await Promise.all([
 			coinApi.getMany(signal, "id").then((res) => res.length),
 			coinApi.getSortedCoins(signal, limit, offset, sortBy),
 		]);
 
-		return { lengthData, data };
+		return { total, data };
 	},
 };

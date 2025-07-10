@@ -12,23 +12,22 @@ type Props = {
 	onSelectedTabChange: (val: Tab) => void;
 	tabOptions: { id: string; label: string }[];
 	manualPagination?: boolean;
-	query: UseQueryResult<SelectedDataAll, Error>;
+	queryResult: UseQueryResult<SelectedDataAll, Error>;
 	defaultColumns: any[];
 };
 
 function Market({
 	onPaginationChange,
 	onSelectedTabChange,
-	query,
+	queryResult,
 	tabOptions,
 	pagination,
 	selectedTab,
 	defaultColumns,
 	manualPagination = false,
 }: Props) {
-	if (query.isLoading) return <Skeleton />;
-
-	if (!query?.data || query.isError) return <ErrorScreen />;
+	if (queryResult.isLoading) return <Skeleton />;
+	if (queryResult.isError) return <ErrorScreen error={queryResult.error} />;
 
 	const handleTabChange = (val: string) => {
 		onSelectedTabChange(val as Tab);
@@ -36,7 +35,7 @@ function Market({
 	};
 
 	return (
-		query.data && (
+		queryResult.data && (
 			<div>
 				<Tabs
 					className="px-4"
@@ -45,14 +44,14 @@ function Market({
 					onChange={handleTabChange}
 				/>
 				<Table
-					pageCount={Math.floor(query.data.lengthData / pagination.pageSize)}
-					isRefetching={query.isRefetching}
+					pageCount={Math.floor(queryResult.data.total / pagination.pageSize)}
+					isRefetching={queryResult.isRefetching}
 					manualPagination={manualPagination}
 					className="w-full py-2 px-5"
 					pagination={pagination}
 					onPaginationChange={onPaginationChange}
 					defaultColumns={defaultColumns}
-					data={query.data.data}
+					data={queryResult.data.data}
 					searchId="name"
 				/>
 			</div>

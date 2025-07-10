@@ -1,11 +1,11 @@
 import type { ManyCoinsType, SortedCoinsType } from "@api";
 
 export type CoinsService = {
-	coins: ManyCoinsType[];
-	totalCoins: number;
+	data: ManyCoinsType[];
+	total: number;
 };
 
-export type QueryCoinsService = {
+export type SortedCoinsServiceResponse = {
 	data: SortedCoinsType[];
-	lengthData: number;
+	total: number;
 };

@@ -1,15 +1,15 @@
 import { categoriesApi } from "@api";
-import type { CategoriesServiceType } from "./types";
+import type { CategoriesServiceResponse } from "./types";
 
 export const categoriesService = {
 	getCategories: async (
 		signal: AbortSignal,
-	): Promise<CategoriesServiceType> => {
+	): Promise<CategoriesServiceResponse> => {
 		const res = await categoriesApi.getMany(signal);
 
 		return {
 			data: res,
-			lengthData: res.length,
+			total: res.length,
 		};
 	},
 };

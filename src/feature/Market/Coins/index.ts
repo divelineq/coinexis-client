@@ -1,14 +1,14 @@
-import type { QueryCoinsService } from "@service";
+import type { SortedCoinsServiceResponse } from "@service";
 import type { PaginationState } from "@tanstack/react-table";
-import type { SelectedData } from "../types";
+import type { TableSource } from "../types";
 import { DEFAULT_MANY_COINS_COLUMNS } from "./defaultColumns";
 import { useQueryCoins } from "./useQueryCoins";
 
-export function getCoinsSelectedData(
+export function getCoinsTableSource(
 	pagination: PaginationState,
-): SelectedData<QueryCoinsService> {
+): TableSource<SortedCoinsServiceResponse> {
 	return {
-		query: useQueryCoins(
+		queryResult: useQueryCoins(
 			pagination.pageSize,
 			pagination.pageIndex * pagination.pageSize,
 		),

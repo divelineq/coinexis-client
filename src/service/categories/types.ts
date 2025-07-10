@@ -1,6 +1,6 @@
 import type { CategoriesType } from "@api";
 
-export type CategoriesServiceType = {
+export type CategoriesServiceResponse = {
 	data: CategoriesType[];
-	lengthData: number;
+	total: number;
 };

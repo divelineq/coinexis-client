@@ -1,11 +1,11 @@
-import type { CategoriesServiceType } from "@service";
-import type { SelectedData } from "../types";
+import type { CategoriesServiceResponse } from "@service";
+import type { TableSource } from "../types";
 import { DEFAULT_CATEGORIES_COLUMNS } from "./defaultColumns";
 import { useCategories } from "./useCategories";
 
-export function getCategoriesSelectedData(): SelectedData<CategoriesServiceType> {
+export function getCategoriesTableSource(): TableSource<CategoriesServiceResponse> {
 	return {
-		query: useCategories(),
+		queryResult: useCategories(),
 		defaultColumns: DEFAULT_CATEGORIES_COLUMNS,
 	};
 }

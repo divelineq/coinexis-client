@@ -1,7 +1,7 @@
 type Props = {
 	message?: string;
 	onRetry?: () => void;
-	error?: Error;
+	error?: Error | null;
 };
 
 export function ErrorScreen({
@@ -23,7 +23,9 @@ export function ErrorScreen({
 				⚠ Ошибка
 			</div>
 			<p className="text-lg text-zinc-300 max-w-xl mb-6">{message}</p>
-			<p className="text-lg text-zinc-300 max-w-xl mb-6">{error?.message}</p>
+			{error && (
+				<p className="text-lg text-zinc-300 max-w-xl mb-6">{error.message}</p>
+			)}
 			<button
 				onClick={handleRetry}
 				className="px-6 py-2 rounded-xl bg-[var(--accent)] text-black font-semibold hover:bg-[--accent-light] transition-colors"

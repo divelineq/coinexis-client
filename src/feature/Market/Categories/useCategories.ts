@@ -1,9 +1,9 @@
-import { type CategoriesServiceType, categoriesService } from "@service";
+import { type CategoriesServiceResponse, categoriesService } from "@service";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { GC_TIME_DEFAULT, STALE_TIME_DEFAULT } from "../consts";
 
 export function useCategories() {
-	return useQuery<CategoriesServiceType>({
+	return useQuery<CategoriesServiceResponse>({
 		queryKey: ["categories"],
 		queryFn: ({ signal }) => categoriesService.getCategories(signal),
 		select: (data) => ({
