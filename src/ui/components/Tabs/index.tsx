@@ -36,7 +36,7 @@ export const Tabs = ({
 	};
 
 	return (
-		<div className={cx("w-full", className)}>
+		<div className={className}>
 			<div className="relative flex justify-start space-x-6 border-b border-custom">
 				{tabs.map((tab) => {
 					const isActive = tab.id === activeTab;
@@ -47,9 +47,7 @@ export const Tabs = ({
 							onClick={() => handleChange(tab.id)}
 							className={cx(
 								"relative py-2 text-md font-medium transition-colors rounded-sm",
-								isActive
-									? "text-[var(--accent)]"
-									: "text-gray-400 hover:text-[var(--accent)]",
+								isActive ? "text-primary" : "text-gray-400 hover:text-primary",
 							)}
 							role="tab"
 							aria-selected={isActive}
@@ -59,7 +57,7 @@ export const Tabs = ({
 							{isActive && (
 								<motion.div
 									layoutId="underline"
-									className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-[var(--accent)] rounded-sm"
+									className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-primary rounded-sm"
 								/>
 							)}
 						</button>

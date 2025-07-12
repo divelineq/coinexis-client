@@ -12,7 +12,7 @@ function IconButton({ icon, className, isLoading, ...props }: IconButtonProps) {
 		<button
 			type="button"
 			className={cx(
-				"items-center justify-center rounded-md bg-[var(--accent)] hover:bg-[var(--accent-light)] focus:outline-none text-white transition-colors duration-200 ease-in-out disabled:bg-[var(--accent-disabled)] disabled:cursor-not-allowed p-2",
+				"items-center justify-center rounded-md bg-primary hover:bg-primary/80 focus:outline-none text-white transition-colors duration-200 ease-in-out disabled:bg-primary/50 disabled:cursor-not-allowed p-2",
 				className,
 			)}
 			{...props}

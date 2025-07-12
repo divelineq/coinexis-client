@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+import { Button } from "@ui";
 import { motion } from "framer-motion";
 import { BestCoinsInfo } from "./CoinInfo";
 import { FeatureItem } from "./FeatureItem";
@@ -16,19 +18,16 @@ function Home() {
 						>
 							Web3 Dashboard для анализа
 							<br />
-							<span className="text-accent">твоего кошелька</span>
+							<span className="text-primary">твоего кошелька</span>
 						</motion.h1>
 						<p className="text-gray-400 text-lg">
 							Оценивай баланс, активы, токены, NFT и транзакции в одном месте —
 							в удобном интерфейсе, без регистрации, в духе Web3.
 						</p>
 						<div className="flex gap-4">
-							<button className="bg-[var(--accent)] hover:bg-[var(--accent-light)] text-black px-6 py-3 rounded-lg font-semibold hover:brightness-110 transition">
-								Попробовать
-							</button>
-							<button className="border border-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
-								Узнать больше
-							</button>
+							<Button>
+								<Link to="/market">Попробовать</Link>
+							</Button>
 						</div>
 					</div>
 					<motion.div
@@ -87,7 +86,7 @@ function Home() {
 							href="https://github.com/divelineq"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="hover:text-[var(--accent)] transition"
+							className="hover:text-primary transition"
 						>
 							GitHub
 						</a>
@@ -95,7 +94,7 @@ function Home() {
 							href="https://t.me/divelineq"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="hover:text-[var(--accent)] transition"
+							className="hover:text-primary transition"
 						>
 							Telegram
 						</a>

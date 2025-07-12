@@ -1,6 +1,6 @@
 import type { Table } from "@tanstack/react-table";
 import { AiOutlineSearch } from "react-icons/ai";
-import { Input } from "./../Input";
+import { Input } from "../Input";
 
 type Props = {
 	className?: string;

@@ -38,7 +38,7 @@ function Market({
 		queryResult.data && (
 			<div>
 				<Tabs
-					className="px-4"
+					className="px-4 w-full"
 					tabs={tabOptions}
 					value={selectedTab}
 					onChange={handleTabChange}

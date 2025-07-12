@@ -35,7 +35,7 @@ export function useSparklineOptions(data: any) {
 					animation: false,
 					marker: { enabled: false },
 					enableMouseTracking: false,
-					color: "var(--accent)",
+					color: "var(--primary)",
 				},
 			],
 		}),

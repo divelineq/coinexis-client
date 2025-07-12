@@ -19,7 +19,7 @@ export function ErrorScreen({
 
 	return (
 		<div className="flex flex-col items-center justify-center text-center px-4 w-full h-[calc(100vh-80px)] bg-[--background] text-white">
-			<div className="text-4xl md:text-5xl font-bold text-[--accent] mb-4">
+			<div className="text-4xl md:text-5xl font-bold text-primary mb-4">
 				⚠ Ошибка
 			</div>
 			<p className="text-lg text-zinc-300 max-w-xl mb-6">{message}</p>
@@ -28,7 +28,7 @@ export function ErrorScreen({
 			)}
 			<button
 				onClick={handleRetry}
-				className="px-6 py-2 rounded-xl bg-[var(--accent)] text-black font-semibold hover:bg-[--accent-light] transition-colors"
+				className="px-6 py-2 rounded-xl bg-primary text-black font-semibold hover:bg-primary transition-colors"
 			>
 				{onRetry ? "Повторить попытку" : "Перезагрузить страницу"}
 			</button>
