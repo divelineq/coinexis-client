@@ -1,5 +1,5 @@
 import { useForm } from "@tanstack/react-form";
-import { IconButton, Input } from "@ui";
+import { Button, Input } from "@ui";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoIosCheckmark, IoIosClose } from "react-icons/io";
 import { addressDetection } from "./addressDetection";
@@ -67,14 +67,15 @@ function WalletField({ onChange, isPending }: Props) {
 								onBlur={field.handleBlur}
 								onChange={(e) => field.handleChange(e.target.value)}
 							/>
-							<IconButton
-								className="h-9 w-9"
-								icon={<AiOutlineSearch size={20} className="m-auto" />}
+							<Button
+								size="icon"
 								isLoading={isPending}
 								type="submit"
 								onClick={form.handleSubmit}
 								disabled={!addressDetection(field.state.value).isValid}
-							/>
+							>
+								<AiOutlineSearch size={20} className="m-auto" />
+							</Button>
 						</div>
 					);
 				}}

@@ -3,7 +3,6 @@ export * from "./Card";
 export * from "./CopyableText";
 export * from "./Dropdown";
 export * from "./ErrorScreen";
-export * from "./IconButton";
 export * from "./Input";
 export * from "./Label";
 export * from "./Table";
