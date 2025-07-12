@@ -1,11 +1,15 @@
+import { useState } from "react";
 import { getCategoriesTableSource } from "./Categories";
 import { getCoinsTableSource } from "./Coins";
 import { Market as MarketComponent } from "./Market";
 import { Skeleton } from "./Skeleton";
-import { Tab } from "./enums";
 import type { SelectedDataAll, TableSource } from "./types";
 import { usePaginationState } from "./usePaginationState";
-import { useTabState } from "./useTabState";
+
+enum Tab {
+	All = "all",
+	Categories = "categories",
+}
 
 const TAB_OPTIONS = [
 	{ id: Tab.All, label: "All Coins" },
@@ -13,7 +17,7 @@ const TAB_OPTIONS = [
 ];
 
 function BaseMarket() {
-	const [selectedTab, setSelectedTab] = useTabState();
+	const [selectedTab, setSelectedTab] = useState(Tab.All);
 	const [pagination, setPagination] = usePaginationState();
 	const tableSources: Record<Tab, TableSource<SelectedDataAll>> = {
 		[Tab.All]: getCoinsTableSource(pagination),
@@ -25,8 +29,8 @@ function BaseMarket() {
 			{...tableSources[selectedTab]}
 			pagination={pagination}
 			onPaginationChange={setPagination}
-			selectedTab={selectedTab}
-			onSelectedTabChange={setSelectedTab}
+			value={selectedTab}
+			onChange={setSelectedTab}
 			tabOptions={TAB_OPTIONS}
 		/>
 	);

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-export function useSparklineOptions(data: any) {
+export function useSparklineOptions(data: (number | undefined)[] | undefined) {
 	return useMemo(
 		() => ({
 			boost: {

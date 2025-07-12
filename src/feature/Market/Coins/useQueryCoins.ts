@@ -1,7 +1,6 @@
 import type { QuerySortBy } from "@api";
 import { type SortedCoinsServiceResponse, coinService } from "@service";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { GC_TIME_DEFAULT, STALE_TIME_DEFAULT } from "../consts";
 
 export function useQueryCoins(
 	limit: number,
@@ -15,7 +14,7 @@ export function useQueryCoins(
 		placeholderData: keepPreviousData,
 		refetchOnWindowFocus: false,
 		refetchInterval: 30_000,
-		staleTime: STALE_TIME_DEFAULT,
-		gcTime: GC_TIME_DEFAULT,
+		staleTime: 5 * 60 * 1000,
+		gcTime: 10 * 60 * 1000,
 	});
 }

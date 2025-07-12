@@ -1,50 +1,34 @@
 import cx from "classix";
 import { motion } from "framer-motion";
-import { useState } from "react";
 
 export type TabItem = {
 	id: string;
 	label: string;
 };
 
-type TabsProps = {
+type TabsProps<TValue extends string> = {
 	tabs: TabItem[];
-	value?: string;
-	defaultValue?: string;
-	onChange?: (value: string) => void;
+	value: TValue;
+	onChange: (value: TValue) => void;
 	className?: string;
 };
 
-export const Tabs = ({
+export const Tabs = <TValue extends string>({
 	tabs,
 	value,
-	defaultValue,
 	onChange,
 	className,
-}: TabsProps) => {
-	const [internalValue, setInternalValue] = useState(
-		defaultValue ?? tabs[0]?.id,
-	);
-	const activeTab = value ?? internalValue;
-
-	const handleChange = (id: string) => {
-		if (!value) {
-			setInternalValue(id);
-		}
-
-		onChange?.(id);
-	};
-
+}: TabsProps<TValue>) => {
 	return (
 		<div className={className}>
 			<div className="relative flex justify-start space-x-6 border-b border-custom">
 				{tabs.map((tab) => {
-					const isActive = tab.id === activeTab;
+					const isActive = tab.id === value;
 
 					return (
 						<button
 							key={tab.id}
-							onClick={() => handleChange(tab.id)}
+							onClick={() => onChange?.(tab.id as TValue)}
 							className={cx(
 								"relative py-2 text-md font-medium transition-colors rounded-sm",
 								isActive ? "text-primary" : "text-gray-400 hover:text-primary",

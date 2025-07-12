@@ -5,6 +5,7 @@ export * from "./Dropdown";
 export * from "./ErrorScreen";
 export * from "./Input";
 export * from "./Label";
+export * from "./Pagination";
 export * from "./Table";
 export * from "./Tabs";
 export * from "./TextField";

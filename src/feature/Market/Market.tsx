@@ -3,34 +3,33 @@ import type { PaginationState } from "@tanstack/react-table";
 import { ErrorScreen, Table, Tabs } from "@ui";
 import type { SelectedDataAll } from "src/feature/Market/types";
 import { Skeleton } from "./Skeleton";
-import type { Tab } from "./enums";
 
-type Props = {
+type Props<TValue extends string> = {
 	pagination: PaginationState;
 	onPaginationChange: (pagination: PaginationState) => void;
-	selectedTab: string;
-	onSelectedTabChange: (val: Tab) => void;
+	value: TValue;
+	onChange: (val: TValue) => void;
 	tabOptions: { id: string; label: string }[];
 	manualPagination?: boolean;
 	queryResult: UseQueryResult<SelectedDataAll, Error>;
 	defaultColumns: any[];
 };
 
-function Market({
+function Market<TValue extends string>({
 	onPaginationChange,
-	onSelectedTabChange,
+	onChange,
 	queryResult,
 	tabOptions,
 	pagination,
-	selectedTab,
+	value,
 	defaultColumns,
 	manualPagination = false,
-}: Props) {
+}: Props<TValue>) {
 	if (queryResult.isLoading) return <Skeleton />;
 	if (queryResult.isError) return <ErrorScreen error={queryResult.error} />;
 
 	const handleTabChange = (val: string) => {
-		onSelectedTabChange(val as Tab);
+		onChange(val as TValue);
 		onPaginationChange({ ...pagination, pageIndex: 0 });
 	};
 
@@ -40,7 +39,7 @@ function Market({
 				<Tabs
 					className="px-4 w-full"
 					tabs={tabOptions}
-					value={selectedTab}
+					value={value}
 					onChange={handleTabChange}
 				/>
 				<Table
