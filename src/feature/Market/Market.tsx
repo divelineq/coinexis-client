@@ -4,11 +4,11 @@ import { ErrorScreen, Table, Tabs } from "@ui";
 import type { SelectedDataAll } from "src/feature/Market/types";
 import { Skeleton } from "./Skeleton";
 
-type Props<TValue extends string> = {
+type Props = {
 	pagination: PaginationState;
 	onPaginationChange: (pagination: PaginationState) => void;
-	value: TValue;
-	onChange: (val: TValue) => void;
+	value: string;
+	onChange: (val: string) => void;
 	tabOptions: { id: string; label: string }[];
 	manualPagination?: boolean;
 	queryResult: UseQueryResult<SelectedDataAll, Error>;
@@ -24,7 +24,7 @@ function Market<TValue extends string>({
 	value,
 	defaultColumns,
 	manualPagination = false,
-}: Props<TValue>) {
+}: Props) {
 	const { data, isError, isFetched, isFetching, error } = queryResult;
 
 	if (queryResult.isLoading) return <Skeleton />;

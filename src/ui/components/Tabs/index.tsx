@@ -6,19 +6,14 @@ export type TabItem = {
 	label: string;
 };
 
-type TabsProps<TValue extends string> = {
+type TabsProps = {
 	tabs: TabItem[];
-	value: TValue;
-	onChange: (value: TValue) => void;
+	value: string;
+	onChange: (value: string) => void;
 	className?: string;
 };
 
-export const Tabs = <TValue extends string>({
-	tabs,
-	value,
-	onChange,
-	className,
-}: TabsProps<TValue>) => {
+export const Tabs = ({ tabs, value, onChange, className }: TabsProps) => {
 	return (
 		<div className={className}>
 			<div className="relative flex justify-start space-x-6 border-b border-custom">
@@ -28,7 +23,7 @@ export const Tabs = <TValue extends string>({
 					return (
 						<button
 							key={tab.id}
-							onClick={() => onChange(tab.id as TValue)}
+							onClick={() => onChange(tab.id)}
 							className={cx(
 								"relative py-2 text-md font-medium transition-colors rounded-sm",
 								isActive ? "text-primary" : "text-gray-400 hover:text-primary",
