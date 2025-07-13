@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "^2.1.15",
+    "@radix-ui/react-navigation-menu": "^1.2.13",
     "@radix-ui/react-slot": "^1.2.3",
     "@solana/addresses": "^2.1.1",
     "@tanstack/eslint-plugin-query": "^5.78.0",
