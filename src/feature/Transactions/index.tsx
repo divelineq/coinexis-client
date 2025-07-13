@@ -8,7 +8,7 @@ function Transactions() {
 	const [address, setAddress] = useQueryState("address", parseAsString);
 	const [pagination, setPagination] = usePaginationState();
 
-	const { data, isLoading, error, isRefetching } = useTransactions(
+	const { data, isLoading, error, isFetched, isFetching } = useTransactions(
 		address,
 		pagination.pageSize,
 		pagination.pageIndex * pagination.pageSize,
@@ -19,7 +19,7 @@ function Transactions() {
 			<WalletField onChange={setAddress} isPending={isLoading} />
 			{data && (
 				<TransactionsInfo
-					isRefetching={isRefetching}
+					shouldShowSkeleton={!isFetched && isFetching}
 					data={data}
 					error={error}
 					pagination={pagination}

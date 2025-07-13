@@ -5,13 +5,15 @@ import { usePaginationState } from "./usePaginationState";
 
 type Props = {
 	data: PortfolioType | undefined;
+	shouldShowSkeleton: boolean;
 };
 
-function PortfolioTable({ data }: Props) {
+function PortfolioTable({ data, shouldShowSkeleton }: Props) {
 	const [pagination, setPagination] = usePaginationState();
 
 	return (
 		<Table
+			shouldShowSkeleton={shouldShowSkeleton}
 			pagination={pagination}
 			onPaginationChange={setPagination}
 			searchId="asset_name"

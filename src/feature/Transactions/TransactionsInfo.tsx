@@ -7,15 +7,15 @@ type Props = {
 	data: SmartTransactions | undefined;
 	error: Error | null;
 	pagination: PaginationState;
+	shouldShowSkeleton: boolean;
 	onPaginationChange: (pagination: PaginationState) => void;
-	isRefetching: boolean;
 };
 
 function TransactionsInfo({
 	data,
 	error,
 	pagination,
-	isRefetching,
+	shouldShowSkeleton,
 	onPaginationChange,
 }: Props) {
 	if (error) return <div>{error.message}</div>;
@@ -24,7 +24,7 @@ function TransactionsInfo({
 		<div>
 			{data?.data.transactions && (
 				<Table
-					isRefetching={isRefetching}
+					shouldShowSkeleton={shouldShowSkeleton}
 					pagination={pagination}
 					onPaginationChange={onPaginationChange}
 					data={data.data.transactions}

@@ -5,7 +5,8 @@ import { usePortfolio } from "./usePortfolio";
 
 function PortfolioInfo() {
 	const [address, setAddress] = useQueryState("address", parseAsString);
-	const { data, isLoading, error } = usePortfolio(address);
+	const { data, isLoading, error, isFetched, isFetching } =
+		usePortfolio(address);
 
 	if (error) return <div>{error.message}</div>;
 
@@ -25,7 +26,10 @@ function PortfolioInfo() {
 						</p>
 					</div>
 					<div>
-						<PortfolioTable data={data.portfolio} />
+						<PortfolioTable
+							data={data.portfolio}
+							shouldShowSkeleton={!isFetched && isFetching}
+						/>
 					</div>
 				</div>
 			)}

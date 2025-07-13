@@ -8,18 +8,16 @@ import {
 	PaginationPrevious,
 } from "@ui";
 import { type ChangeEvent, useState } from "react";
-import { PulseLoader } from "react-spinners";
 import { toast } from "sonner";
 import type { ServiceOutput } from "src/service/nft/types";
 import { useDebouncedCallback } from "use-debounce";
 
 type Props = {
-	isRefetching: boolean;
 	pagination: PaginationState & ServiceOutput["pagination"];
 	onPageChange: (page: { pageIndex: number; pageSize: number }) => void;
 };
 
-export function Action({ pagination, isRefetching, onPageChange }: Props) {
+export function Action({ pagination, onPageChange }: Props) {
 	const [search, setSearch] = useState((pagination.pageIndex + 1).toString());
 
 	const debouncedSetPage = useDebouncedCallback(
@@ -74,13 +72,6 @@ export function Action({ pagination, isRefetching, onPageChange }: Props) {
 
 	return (
 		<Pagination>
-			{isRefetching && (
-				<PulseLoader
-					size={6}
-					color="rgb(238, 238, 238)"
-					className="pr-2 items-center"
-				/>
-			)}
 			<PaginationContent>
 				<PaginationItem>
 					<PaginationPrevious onClick={() => handlePageChange(-1)} />

@@ -4,21 +4,16 @@ import { PaginationInfo } from "./PaginationInfo";
 
 export function ListToolbar({
 	data,
-	isRefetching,
 	pagination,
 	className,
 	onPageChange,
-}: CardsProps & { className?: string }) {
+}: Omit<CardsProps, "shouldShowSkeleton"> & { className?: string }) {
 	const _pagination = { ...data!.pagination, ...pagination };
 
 	return (
 		<div className={className}>
 			<PaginationInfo pagination={_pagination} />
-			<Action
-				isRefetching={isRefetching}
-				pagination={_pagination}
-				onPageChange={onPageChange}
-			/>
+			<Action pagination={_pagination} onPageChange={onPageChange} />
 		</div>
 	);
 }

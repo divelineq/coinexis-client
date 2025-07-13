@@ -17,10 +17,7 @@ type Props = {
 
 function Card({ value, index }: Props) {
 	return (
-		<UiCard
-			key={`${value.name}-${index}`}
-			className="flex flex-col justify-between h-full"
-		>
+		<UiCard className="flex flex-col justify-between h-full">
 			<CardHeader>
 				<CardTitle>{value.name}</CardTitle>
 			</CardHeader>

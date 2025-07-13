@@ -10,7 +10,7 @@ function Nft() {
 		parseAsString.withOptions({ clearOnDefault: false }),
 	);
 	const [pagination, setPagination] = usePaginationState();
-	const { data, isLoading, error, isRefetching } = useNft(
+	const { data, isLoading, error, isFetched, isFetching } = useNft(
 		address,
 		pagination.pageIndex * pagination.pageSize,
 		pagination.pageSize,
@@ -25,7 +25,7 @@ function Nft() {
 				data={data}
 				pagination={pagination}
 				onPageChange={setPagination}
-				isRefetching={isRefetching}
+				shouldShowSkeleton={!isFetched && isFetching}
 			/>
 		</div>
 	);
