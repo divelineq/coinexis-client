@@ -28,7 +28,7 @@ export const Tabs = <TValue extends string>({
 					return (
 						<button
 							key={tab.id}
-							onClick={() => onChange?.(tab.id as TValue)}
+							onClick={() => onChange(tab.id as TValue)}
 							className={cx(
 								"relative py-2 text-md font-medium transition-colors rounded-sm",
 								isActive ? "text-primary" : "text-gray-400 hover:text-primary",
