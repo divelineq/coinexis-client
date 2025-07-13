@@ -5,7 +5,10 @@ import { useNft } from "./useNft";
 import { usePaginationState } from "./usePaginationState";
 
 function Nft() {
-	const [address, setAddress] = useQueryState("address", parseAsString);
+	const [address, setAddress] = useQueryState(
+		"address",
+		parseAsString.withOptions({ clearOnDefault: false }),
+	);
 	const [pagination, setPagination] = usePaginationState();
 	const { data, isLoading, error, isRefetching } = useNft(
 		address,

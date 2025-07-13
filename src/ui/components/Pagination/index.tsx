@@ -48,6 +48,7 @@ function PaginationLink({
 	isActive,
 	to,
 	size = "icon",
+	onClick,
 	...props
 }: PaginationLinkProps) {
 	return (
@@ -63,6 +64,11 @@ function PaginationLink({
 				}),
 				className,
 			)}
+			onClick={(e) => {
+				e.stopPropagation();
+				e.preventDefault();
+				onClick?.(e);
+			}}
 			{...props}
 		/>
 	);

@@ -9,13 +9,14 @@ export function ListToolbar({
 	className,
 	onPageChange,
 }: CardsProps & { className?: string }) {
+	const _pagination = { ...data!.pagination, ...pagination };
+
 	return (
 		<div className={className}>
-			<PaginationInfo pagination={data!.pagination} />
+			<PaginationInfo pagination={_pagination} />
 			<Action
 				isRefetching={isRefetching}
-				pagination={pagination}
-				data={data!}
+				pagination={_pagination}
 				onPageChange={onPageChange}
 			/>
 		</div>

@@ -81,7 +81,7 @@ export function PaginationActions({ table }: Props) {
 						pattern="[0-9]*"
 						className="max-w-14"
 						inputClassName="text-center"
-						placeholder="#"
+						placeholder={table.getPageCount().toString()}
 						value={search}
 						onChange={handleSearchChange}
 					/>
@@ -91,40 +91,5 @@ export function PaginationActions({ table }: Props) {
 				</PaginationItem>
 			</PaginationContent>
 		</Pagination>
-		// 	<div className="flex py-2">
-		// 		{isRefetching && (
-		// 			<PulseLoader
-		// 				size={6}
-		// 				color="rgb(238, 238, 238)"
-		// 				className="pr-2 items-center"
-		// 			/>
-		// 		)}
-		// 		<SwitchPageButton
-		// 			disabled={!table.getCanPreviousPage()}
-		// 			symbol={<AiFillBackward />}
-		// 			onChange={() => table.firstPage()}
-		// 			className="rounded-l-md"
-		// 		/>
-		// 		<SwitchPageButton
-		// 			disabled={!table.getCanPreviousPage()}
-		// 			symbol={<AiFillCaretLeft />}
-		// 			onChange={useDebouncedCallback(() => table.previousPage(), 200)}
-		// 		/>
-		// 		<p className="px-4 border-y-1 border-custom bg-card">
-		// 			{table.getState().pagination.pageIndex + 1} of{" "}
-		// 			{table.getPageCount().toLocaleString()}
-		// 		</p>
-		// 		<SwitchPageButton
-		// 			disabled={!table.getCanNextPage()}
-		// 			symbol={<AiFillCaretRight />}
-		// 			onChange={useDebouncedCallback(() => table.nextPage(), 200)}
-		// 		/>
-		// 		<SwitchPageButton
-		// 			disabled={!table.getCanNextPage()}
-		// 			symbol={<AiFillForward />}
-		// 			onChange={() => table.lastPage()}
-		// 			className="rounded-r-md"
-		// 		/>
-		// </div>
 	);
 }
