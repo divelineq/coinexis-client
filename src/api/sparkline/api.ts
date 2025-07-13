@@ -1,11 +1,11 @@
-import { httpClient } from "../httpClient";
+import { httpModulaClient } from "../httpClient";
 import type { SparklineType } from "./dto";
 
 const API = import.meta.env.VITE_API_KEY;
 
 export const sparklineApi = {
 	async getSparkline(signal: AbortSignal, id: number): Promise<SparklineType> {
-		const res = await httpClient.get<{ data: SparklineType }>(
+		const res = await httpModulaClient.get<{ data: SparklineType }>(
 			`/market/sparkline?id=${id}&timeFrame=7d&png=true`,
 			{
 				headers: {

@@ -1,4 +1,4 @@
-import { httpClient } from "../httpClient";
+import { httpModulaClient } from "../httpClient";
 import type { HistoryType } from "./dto";
 
 const API = import.meta.env.VITE_API_KEY;
@@ -11,7 +11,7 @@ export const historyApi = {
 		from: number,
 		to: number,
 	) {
-		const res = await httpClient.get<{ data: HistoryType }>(
+		const res = await httpModulaClient.get<{ data: HistoryType }>(
 			`/market/history?period=${period}&id=${id}&from=${from}&to=${to}`,
 			{
 				headers: {

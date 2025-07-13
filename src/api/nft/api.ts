@@ -1,4 +1,4 @@
-import { httpClient } from "../httpClient";
+import { httpModulaClient } from "../httpClient";
 import type { WalletNFTsResponse } from "./dto";
 
 const API = import.meta.env.VITE_API_KEY;
@@ -10,7 +10,7 @@ export const nftApi = {
 		limit: number,
 		offset: number,
 	) {
-		const res = await httpClient.get<WalletNFTsResponse>(
+		const res = await httpModulaClient.get<WalletNFTsResponse>(
 			`/wallet/nfts?offset=${offset}&limit=${limit}&wallet=${address}&pagination=true`,
 			{
 				headers: {

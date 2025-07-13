@@ -1,4 +1,4 @@
-import { httpClient } from "../httpClient";
+import { httpModulaClient } from "../httpClient";
 import type { ManyCoinsType, OneCoinType, SortedCoinsType } from "./dto";
 
 const API = import.meta.env.VITE_API_KEY;
@@ -30,7 +30,7 @@ export const coinApi = {
 			params.append("fields", fields);
 		}
 
-		const res = await httpClient.get<{ data: ManyCoinsType[] }>(
+		const res = await httpModulaClient.get<{ data: ManyCoinsType[] }>(
 			`/all?${params.toString()}`,
 			{
 				headers: {
@@ -44,7 +44,7 @@ export const coinApi = {
 	},
 
 	async getOne(name: string, signal: AbortSignal): Promise<OneCoinType> {
-		const res = await httpClient.get<{ data: OneCoinType }>(
+		const res = await httpModulaClient.get<{ data: OneCoinType }>(
 			`/market/data?asset=${name}`,
 			{
 				headers: {
@@ -63,7 +63,7 @@ export const coinApi = {
 		offset: number,
 		sortBy: QuerySortBy = QuerySortBy.MarketCap,
 	): Promise<SortedCoinsType[]> {
-		const res = await httpClient.get<SortedCoinsType[]>(
+		const res = await httpModulaClient.get<SortedCoinsType[]>(
 			`/market/query?sortBy=${sortBy}&limit=${limit}&offset=${offset}`,
 			{
 				headers: {
