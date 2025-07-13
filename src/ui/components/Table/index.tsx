@@ -34,10 +34,6 @@ type Props<TColumns extends unknown[], TData extends unknown[]> = {
 	 */
 	rowCount?: number;
 	/**
-	 * Boolean значение обозначающее загрузку данных если есть серверная пагинация
-	 */
-	isRefetching?: boolean;
-	/**
 	 * Указывается в случае если пагинация делается самостоятельно
 	 */
 	manualPagination?: boolean;
@@ -50,6 +46,7 @@ type Props<TColumns extends unknown[], TData extends unknown[]> = {
 	 * @default 80px
 	 */
 	rowHeight?: number;
+	shouldShowSkeleton: boolean;
 	className?: string;
 	pagination: PaginationState;
 	onPaginationChange?: (old: PaginationState) => void;
@@ -65,9 +62,9 @@ function Table<TColumns extends any[], TData extends any[]>({
 	defaultColumns,
 	data,
 	searchId,
+	shouldShowSkeleton,
 	rowCount,
 	className,
-	isRefetching,
 	pagination,
 	pageCount,
 	onPaginationChange,
@@ -115,17 +112,18 @@ function Table<TColumns extends any[], TData extends any[]>({
 		<div className={cx(className, "overflow-auto")} ref={parentRef}>
 			<div className="flex justify-between w-full py-2">
 				<SearchFilter className="w-1/5" table={table} searchId={searchId} />
-				<PaginationActions table={table} isRefetching={isRefetching} />
+				<PaginationActions table={table} />
 			</div>
 			<HeaderGroups headers={table.getHeaderGroups()} />
 			<Rows
+				shouldShowSkeleton={shouldShowSkeleton}
 				rowModel={table.getRowModel()}
 				virtualizer={virtualizer}
 				rowHeight={rowHeight}
 			/>
 			<div className="flex justify-between w-full py-2">
 				<PaginationInfo pagination={table.getState().pagination} data={data} />
-				<PaginationActions table={table} isRefetching={isRefetching} />
+				<PaginationActions table={table} />
 			</div>
 		</div>
 	);

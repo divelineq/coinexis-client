@@ -17,6 +17,26 @@ export const reactHooksOnlyConfig = tseslint.config({
 	rules: {
 		...eslintPluginReactHooks.configs.recommended.rules,
 		"react-hooks/rules-of-hooks": "error",
+		"react-hooks/exhaustive-deps": "warn",
+		"@typescript-eslint/naming-convention": [
+			"error",
+			{
+				selector: "function",
+				format: ["camelCase"],
+				filter: {
+					regex: "^use[A-Z].*$",
+					match: false,
+				},
+			},
+			{
+				selector: "function",
+				format: ["camelCase"],
+				filter: {
+					regex: "^use[A-Z].*$",
+					match: true,
+				},
+			},
+		],
 	},
 });
 

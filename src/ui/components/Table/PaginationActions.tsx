@@ -1,6 +1,5 @@
 import type { Table } from "@tanstack/react-table";
 import { type ChangeEvent, useState } from "react";
-import { PulseLoader } from "react-spinners";
 import { toast } from "sonner";
 import { useDebouncedCallback } from "use-debounce";
 import { Input } from "../Input";
@@ -14,10 +13,9 @@ import {
 
 type Props = {
 	table: Table<any>;
-	isRefetching?: boolean;
 };
 
-export function PaginationActions({ table, isRefetching }: Props) {
+export function PaginationActions({ table }: Props) {
 	const [search, setSearch] = useState<string>(
 		(table.getState().pagination.pageIndex + 1).toString(),
 	);
@@ -72,13 +70,6 @@ export function PaginationActions({ table, isRefetching }: Props) {
 
 	return (
 		<Pagination>
-			{isRefetching && (
-				<PulseLoader
-					size={6}
-					color="rgb(238, 238, 238)"
-					className="pr-2 items-center"
-				/>
-			)}
 			<PaginationContent>
 				<PaginationItem>
 					<PaginationPrevious onClick={handlePrevPage} />

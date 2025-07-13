@@ -25,8 +25,10 @@ function Market<TValue extends string>({
 	defaultColumns,
 	manualPagination = false,
 }: Props<TValue>) {
+	const { data, isError, isFetched, isFetching, error } = queryResult;
+
 	if (queryResult.isLoading) return <Skeleton />;
-	if (queryResult.isError) return <ErrorScreen error={queryResult.error} />;
+	if (isError) return <ErrorScreen error={error} />;
 
 	const handleTabChange = (val: string) => {
 		onChange(val as TValue);
@@ -34,7 +36,7 @@ function Market<TValue extends string>({
 	};
 
 	return (
-		queryResult.data && (
+		data && (
 			<div>
 				<Tabs
 					className="px-4 w-full"
@@ -43,14 +45,14 @@ function Market<TValue extends string>({
 					onChange={handleTabChange}
 				/>
 				<Table
-					pageCount={Math.floor(queryResult.data?.total / pagination.pageSize)}
-					isRefetching={queryResult.isRefetching}
+					pageCount={Math.floor(data.total / pagination.pageSize)}
 					manualPagination={manualPagination}
+					shouldShowSkeleton={!isFetched && isFetching}
 					className="w-full py-2 px-5"
 					pagination={pagination}
 					onPaginationChange={onPaginationChange}
 					defaultColumns={defaultColumns}
-					data={queryResult.data.data}
+					data={data.data}
 					searchId="name"
 				/>
 			</div>

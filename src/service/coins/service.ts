@@ -1,6 +1,10 @@
-import type { OneCoinType, QuerySortBy } from "@api";
+import { type OneCoinType, type QuerySortBy, historyApi } from "@api";
 import { coinApi } from "../../api/coins/api";
-import type { CoinsService, SortedCoinsServiceResponse } from "./types";
+import type {
+	CoinsService,
+	SortedCoinsServiceResponse,
+	SortedCoinsWithHistoryServiceResponse,
+} from "./types";
 
 export const coinService = {
 	async getCoins(signal: AbortSignal, fields: string): Promise<CoinsService> {
@@ -28,5 +32,41 @@ export const coinService = {
 		]);
 
 		return { total, data };
+	},
+
+	async getSortedCoinsWithHistory(
+		signal: AbortSignal,
+		limit: number,
+		offset: number,
+		period: string,
+		from: number,
+		to: number,
+		sortBy?: QuerySortBy,
+	): Promise<SortedCoinsWithHistoryServiceResponse> {
+		const coins = await coinService.getSortedCoins(
+			signal,
+			limit,
+			offset,
+			sortBy,
+		);
+
+		const coinsWithHistory = await Promise.all(
+			coins.data.map(async (coin) => {
+				const res = await historyApi.getHistory(
+					period,
+					signal,
+					coin.id,
+					from,
+					to,
+				);
+
+				return {
+					...coin,
+					history: res.price_history.map((item) => item?.[1]),
+				};
+			}),
+		);
+
+		return { data: coinsWithHistory, total: coins.total };
 	},
 };

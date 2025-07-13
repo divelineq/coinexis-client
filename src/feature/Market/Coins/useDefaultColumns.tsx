@@ -32,7 +32,6 @@ export function useDefaultColumns() {
 								src={props.row.original.logo ?? "logo.png"}
 								alt="logo"
 								className="w-7 h-7 rounded-sm"
-								loading="lazy"
 							/>
 							<p className="text-md">{props.getValue()}</p>
 							<p className="text-md text-gray-400">
@@ -42,8 +41,7 @@ export function useDefaultColumns() {
 					);
 				},
 			}),
-			{
-				accessorKey: "price",
+			columnHelper.accessor("price", {
 				header: () => <p className="text-center">Price</p>,
 				cell: (props: any) =>
 					props.getValue().toLocaleString("en-US", {
@@ -51,30 +49,26 @@ export function useDefaultColumns() {
 						currency: "USD",
 					}),
 				enableSorting: true,
-			},
-			{
-				accessorKey: "price_change_1h",
+			}),
+			columnHelper.accessor("price_change_1h", {
 				header: () => <p className="text-center">1h %</p>,
 				cell: (props: any) =>
 					buildPercentageNumber(props.getValue().toFixed(2)),
 				enableSorting: true,
-			},
-			{
-				accessorKey: "price_change_24h",
+			}),
+			columnHelper.accessor("price_change_24h", {
 				header: () => <p className="text-center">24h %</p>,
 				cell: (props: any) =>
 					buildPercentageNumber(props.getValue().toFixed(2)),
 				enableSorting: true,
-			},
-			{
-				accessorKey: "price_change_7d",
+			}),
+			columnHelper.accessor("price_change_7d", {
 				header: () => <p className="text-center">7d %</p>,
 				cell: (props: any) =>
 					buildPercentageNumber(props.getValue().toFixed(2)),
 				enableSorting: true,
-			},
-			{
-				accessorKey: "market_cap",
+			}),
+			columnHelper.accessor("market_cap", {
 				header: () => (
 					<div className="flex items-center gap-1">
 						<p className="text-center">Market Cap</p>
@@ -99,9 +93,8 @@ export function useDefaultColumns() {
 						currency: "USD",
 					}),
 				enableSorting: true,
-			},
-			{
-				accessorKey: "volume",
+			}),
+			columnHelper.accessor("volume", {
 				header: () => (
 					<div className="flex items-center gap-1">
 						<p className="text-center">Volume</p>
@@ -126,11 +119,11 @@ export function useDefaultColumns() {
 						currency: "USD",
 					}),
 				enableSorting: true,
-			},
+			}),
 			{
 				accessorKey: "Chart",
 				header: () => <p className="text-center cursor-default">Last 7 Days</p>,
-				cell: (props: any) => <Sparkline id={props.row.original.id} />,
+				cell: (props: any) => <Sparkline data={props.row.original.history} />,
 				enableSorting: false,
 			},
 		],

@@ -9,3 +9,8 @@ export type SortedCoinsServiceResponse = {
 	data: SortedCoinsType[];
 	total: number;
 };
+
+export type SortedCoinsWithHistoryServiceResponse = {
+	data: (SortedCoinsType & { history: (number | undefined)[] })[];
+	total: number;
+};

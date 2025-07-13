@@ -18,7 +18,7 @@ const TAB_OPTIONS = [
 
 function BaseMarket() {
 	const [selectedTab, setSelectedTab] = useState(Tab.All);
-	const [pagination, setPagination] = usePaginationState();
+	const [pagination, setPagination] = usePaginationState(50);
 	const tableSources: Record<Tab, TableSource<SelectedDataAll>> = {
 		[Tab.All]: getCoinsTableSource(pagination),
 		[Tab.Categories]: getCategoriesTableSource(),

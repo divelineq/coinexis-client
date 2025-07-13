@@ -1,4 +1,8 @@
+import type { CategoriesServiceResponse } from "@service";
+import { createColumnHelper } from "@tanstack/react-table";
 import { useMemo } from "react";
+
+const columnHelper = createColumnHelper<CategoriesServiceResponse["data"]>();
 
 export function useDefaultColumns() {
 	return useMemo(
@@ -19,26 +23,23 @@ export function useDefaultColumns() {
 					return props.row.index + 1 + pageSize;
 				},
 			},
-			{
-				accessorKey: "name",
+			columnHelper.accessor("name", {
 				header: () => <p className="text-left cursor-default">Name</p>,
 				cell: (props: any) =>
 					props.getValue().toLocaleString("en-US", {
 						style: "currency",
 						currency: "USD",
 					}),
-			},
-			{
-				accessorKey: "market_cap",
+			}),
+			columnHelper.accessor("market_cap", {
 				header: () => <p className="text-left cursor-default">Market Cap</p>,
 				cell: (props: any) =>
 					props.getValue().toLocaleString("en-US", {
 						style: "currency",
 						currency: "USD",
 					}),
-			},
-			{
-				accessorKey: "market_cap_change_24h",
+			}),
+			columnHelper.accessor("market_cap_change_24h", {
 				header: () => (
 					<p className="text-left cursor-default">Market Cap 24H</p>
 				),
@@ -47,16 +48,15 @@ export function useDefaultColumns() {
 						style: "currency",
 						currency: "USD",
 					}),
-			},
-			{
-				accessorKey: "market_cap_change_7d",
+			}),
+			columnHelper.accessor("market_cap_change_7d", {
 				header: () => <p className="text-left cursor-default">Market Cap 7D</p>,
 				cell: (props: any) =>
 					props.getValue().toLocaleString("en-US", {
 						style: "currency",
 						currency: "USD",
 					}),
-			},
+			}),
 		],
 		[],
 	);

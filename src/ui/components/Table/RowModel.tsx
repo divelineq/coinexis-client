@@ -5,9 +5,15 @@ type Props = {
 	rowModel: RowModel<any>;
 	virtualizer: Virtualizer<HTMLDivElement, Element>;
 	rowHeight?: number;
+	shouldShowSkeleton: boolean;
 };
 
-export function Rows({ rowModel, virtualizer, rowHeight = 80 }: Props) {
+export function Rows({
+	rowModel,
+	virtualizer,
+	shouldShowSkeleton,
+	rowHeight = 80,
+}: Props) {
 	return (
 		<div
 			className="relative border-b border-custom"
@@ -25,21 +31,21 @@ export function Rows({ rowModel, virtualizer, rowHeight = 80 }: Props) {
 							height: `${rowHeight}px`,
 						}}
 					>
-						{row.getVisibleCells().map((cell) => {
-							const size = cell.column.getSize();
-
-							return (
-								<div
-									key={cell.id}
-									className="px-3 overflow-hidden"
-									style={{ width: `${size}px` }}
-								>
-									<div className="flex items-center h-full text-sm">
-										{flexRender(cell.column.columnDef.cell, cell.getContext())}
-									</div>
+						{row.getVisibleCells().map((cell) => (
+							<div
+								key={cell.id}
+								className="px-3 overflow-hidden"
+								style={{ width: `${cell.column.getSize()}px` }}
+							>
+								<div className="flex items-center h-full text-sm">
+									{shouldShowSkeleton && cell.column.id !== "#" ? (
+										<div className="animate-pulse h-6 w-full rounded-sm bg-accent" />
+									) : (
+										flexRender(cell.column.columnDef.cell, cell.getContext())
+									)}
 								</div>
-							);
-						})}
+							</div>
+						))}
 					</div>
 				);
 			})}
