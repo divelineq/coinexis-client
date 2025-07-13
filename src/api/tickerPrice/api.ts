@@ -1,10 +1,13 @@
-import { httpBinanceClient } from "src/api/httpClient";
+import { httpBinanceClient } from "../httpClient";
 import type { TickerPriceSymbolType } from "./dto";
 
 const API = import.meta.env.VITE_API_KEY;
 
 export const tickerPriceApi = {
-	async getOne(symbol: string, signal: AbortSignal) {
+	async getOne(
+		symbol: string,
+		signal: AbortSignal,
+	): Promise<TickerPriceSymbolType> {
 		const res = await httpBinanceClient.get<{ data: TickerPriceSymbolType }>(
 			`/ticker/price?symbol=${symbol}`,
 			{
@@ -15,10 +18,13 @@ export const tickerPriceApi = {
 			},
 		);
 
-		return res.data;
+		return res.data.data;
 	},
 
-	async getMany(symbols: string[], signal: AbortSignal) {
+	async getMany(
+		symbols: string[],
+		signal: AbortSignal,
+	): Promise<TickerPriceSymbolType[]> {
 		const res = await httpBinanceClient.get<{ data: TickerPriceSymbolType[] }>(
 			`/ticker/price??symbols=${symbols.join(",")}`,
 			{
@@ -29,6 +35,6 @@ export const tickerPriceApi = {
 			},
 		);
 
-		return res.data;
+		return res.data.data;
 	},
 };
