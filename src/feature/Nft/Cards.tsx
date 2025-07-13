@@ -1,6 +1,6 @@
 import type { ServiceOutput } from "@service";
 import { ErrorScreen } from "@ui";
-import { Skeleton } from "./Card/Sketeton.tsx";
+import { Skeleton } from "./Card/Skeleton.tsx";
 import { Card } from "./Card/index.ts";
 import { ListToolbar } from "./ListToolbar";
 
@@ -21,7 +21,9 @@ function Cards({
 	shouldShowSkeleton,
 	onPageChange,
 }: CardsProps) {
-	if (!data || error) return <ErrorScreen error={error} />;
+	if (!data) return;
+
+	if (error) return <ErrorScreen error={error} />;
 
 	return (
 		<div className="rounded-md border border-zinc-700 bg-zinc-900 shadow-inner mt-4">

@@ -16,8 +16,6 @@ function Nft() {
 		pagination.pageSize,
 	);
 
-	if (error) return <div className="m-auto p-6">{error.message}</div>;
-
 	return (
 		<div className="p-4">
 			<WalletField onChange={setAddress} isPending={isLoading} />
