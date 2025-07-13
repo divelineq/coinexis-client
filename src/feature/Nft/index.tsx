@@ -1,6 +1,6 @@
 import { WalletField } from "@ui";
 import { parseAsString, useQueryState } from "nuqs";
-import { Card } from "./Card";
+import { Cards } from "./Cards";
 import { useNft } from "./useNft";
 import { usePaginationState } from "./usePaginationState";
 
@@ -18,7 +18,7 @@ function Nft() {
 	return (
 		<div className="p-4">
 			<WalletField onChange={setAddress} isPending={isLoading} />
-			<Card
+			<Cards
 				data={data}
 				pagination={pagination}
 				onPageChange={setPagination}

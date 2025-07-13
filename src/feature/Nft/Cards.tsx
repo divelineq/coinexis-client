@@ -1,4 +1,12 @@
-import { CopyableText } from "@ui";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+	CopyableText,
+} from "@ui";
 import { Tooltip } from "react-tooltip";
 import type { ServiceOutput } from "src/service/nft/types";
 import { Action } from "./Action";
@@ -10,7 +18,7 @@ type Props = {
 	pagination: { pageIndex: number; pageSize: number };
 };
 
-function Card({ data, isRefetching, pagination, onPageChange }: Props) {
+function Cards({ data, isRefetching, pagination, onPageChange }: Props) {
 	if (!data) return;
 
 	const { total, limit, offset } = data.pagination;
@@ -38,57 +46,54 @@ function Card({ data, isRefetching, pagination, onPageChange }: Props) {
 			</div>
 			<div className="grid grid-cols-5 p-4 gap-5">
 				{data.data.map((nft, index) => (
-					<div
+					<Card
 						key={`${nft.name}-${index}`}
-						className="bg-zinc-800 border border-zinc-700 rounded-md p-2 flex flex-col gap-3 w-full max-w-[320px] shadow-md hover:shadow-lg transition-shadow"
+						className="flex flex-col justify-between h-full"
 					>
-						<img
-							loading="lazy"
-							className="rounded-md object-cover w-full h-48"
-							src={nft.image ?? nft.url ?? "logo.png"}
-							alt={nft.name}
-						/>
+						<CardHeader>
+							<CardTitle>{nft.name}</CardTitle>
+						</CardHeader>
+						<CardContent className="flex flex-col gap-2">
+							<CardDescription className="flex gap-1">
+								<span>Blockchain:</span> {nft.blockchain}
+							</CardDescription>
 
-						<div className="flex flex-col gap-1 text-sm">
-							<div className="text-white text-base font-semibold">
-								{nft.name}
-							</div>
-
-							<div className="text-gray-300">
-								<span className="font-medium text-gray-400">Amount:</span>{" "}
-								{nft.amount}
-							</div>
-
-							<div className="text-gray-300">
-								<span className="font-medium text-gray-400">Blockchain:</span>{" "}
-								{nft.blockchain}
-							</div>
-
+							<CardDescription className="flex gap-1">
+								<span>Address:</span>
+								<CopyableText value={nft.token_address} />
+							</CardDescription>
+							<CardDescription>
+								<span>Amount:</span> {nft.amount}
+							</CardDescription>
 							{nft.description && (
-								<div
-									className="line-clamp-3 text-gray-300 leading-snug cursor-help"
+								<CardDescription
+									className="line-clamp-3 leading-snug cursor-help"
 									data-tooltip-id={`description-${index}`}
 									data-tooltip-content={nft.description}
 								>
-									<span className="font-medium text-gray-400">
-										Description:
-									</span>{" "}
 									{nft.description}
 									<Tooltip
 										id={`description-${index}`}
-										className="max-w-[300px] bg-zinc-900 text-gray-100 border border-zinc-600"
+										className="max-w-[300px] text-gray-100 border border-zinc-600"
 										place="top"
 										delayShow={200}
 									/>
-								</div>
+								</CardDescription>
 							)}
-
-							<div className="text-gray-300 flex items-center gap-1">
-								<span className="font-medium text-gray-400">Address:</span>
-								<CopyableText value={nft.token_address} />
-							</div>
-						</div>
-					</div>
+						</CardContent>
+						<CardFooter>
+							<img
+								className="rounded-md object-cover w-full h-48"
+								src={nft.image || nft.url || "logo.png"}
+								alt={nft.name}
+								onError={(e) => {
+									if (e.currentTarget.src !== "logo.png") {
+										e.currentTarget.src = "logo.png";
+									}
+								}}
+							/>
+						</CardFooter>
+					</Card>
 				))}
 			</div>
 			<div className="flex items-center justify-between px-4 py-3">
@@ -104,4 +109,4 @@ function Card({ data, isRefetching, pagination, onPageChange }: Props) {
 	);
 }
 
-export { Card };
+export { Cards };
