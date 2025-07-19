@@ -22,4 +22,13 @@ export default defineConfig({
 			"@feature": path.resolve(__dirname, "./src/feature"),
 		},
 	},
+	server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:4200',
+        changeOrigin: true,
+        secure: true,
+      }
+    }
+  }
 });
