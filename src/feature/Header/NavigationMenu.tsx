@@ -20,7 +20,7 @@ export function NavigationMenuDemo() {
 	const router = useRouter();
 
 	return (
-		<NavigationMenu viewport={false} className="z-10 text-left">
+		<NavigationMenu viewport={false} className="z-200 text-left">
 			<NavigationMenuList>
 				<NavigationMenuItem>
 					<NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
@@ -43,27 +43,10 @@ export function NavigationMenuDemo() {
 											router.invalidate();
 										}}
 									>
-										<div className="font-medium">All coins</div>
+										<div className="font-medium">Spot</div>
 										<div className="text-muted-foreground">
 											A complete list of cryptocurrencies, including both
 											popular and new tokens on the market.
-										</div>
-									</Link>
-								</NavigationMenuLink>
-								<NavigationMenuLink asChild>
-									<Link
-										to={serializer("market", {
-											tab: "categories",
-										})}
-										onClick={() => {
-											router.invalidate();
-										}}
-									>
-										<div className="font-medium">Categories</div>
-										<div className="text-muted-foreground">
-											An overview of cryptocurrencies grouped by thematic
-											categories — technology, purpose, and scope of
-											application.
 										</div>
 									</Link>
 								</NavigationMenuLink>

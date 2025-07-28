@@ -45,15 +45,15 @@ function Market<TValue extends string>({
 					onChange={handleTabChange}
 				/>
 				<Table
-					pageCount={Math.floor(data.total / pagination.pageSize)}
+					pageCount={Math.floor(data.result.list.length / pagination.pageSize)}
 					manualPagination={manualPagination}
 					shouldShowSkeleton={!isFetched && isFetching}
 					className="w-full py-2 px-5"
 					pagination={pagination}
 					onPaginationChange={onPaginationChange}
 					defaultColumns={defaultColumns}
-					data={data.data}
-					searchId="name"
+					data={data.result.list}
+					searchId="symbol"
 				/>
 			</div>
 		)

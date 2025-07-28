@@ -1,19 +1,21 @@
-import type { SortedCoinsServiceResponse } from "@service";
-import type { PaginationState } from "@tanstack/react-table";
+import type { TickersValidationType } from "src/api/tickers";
+import type { DefaultResponse } from "src/api/types";
 import type { TableSource } from "../types";
 import { useDefaultColumns } from "./useDefaultColumns";
-import { useQueryCoinsWithHistory } from "./useQueryCoins";
+import { useQueryCoins } from "./useQueryCoins";
+
+type Params = {
+	category: string;
+	symbol?: string;
+	baseCoin?: string;
+	expDate?: string;
+};
 
 export function getCoinsTableSource(
-	pagination: PaginationState,
-): TableSource<SortedCoinsServiceResponse> {
+	params: Params,
+): TableSource<DefaultResponse<TickersValidationType>> {
 	return {
-		queryResult: useQueryCoinsWithHistory(
-			pagination.pageSize,
-			pagination.pageIndex * pagination.pageSize,
-			"1h",
-		),
+		queryResult: useQueryCoins(params),
 		defaultColumns: useDefaultColumns(),
-		manualPagination: true,
 	};
 }

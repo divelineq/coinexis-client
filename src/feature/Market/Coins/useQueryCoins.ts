@@ -1,32 +1,28 @@
-import type { QuerySortBy } from "@api";
-import {
-	type SortedCoinsWithHistoryServiceResponse,
-	coinService,
-} from "@service";
+import { api } from "@api";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
-export function useQueryCoinsWithHistory(
-	limit: number,
-	offset: number,
-	period: string,
-	sortBy?: QuerySortBy,
-) {
-	const to = Date.now();
-	const from = to - 7 * 24 * 60 * 60 * 1000;
+type Props = {
+	category: string;
+	symbol?: string;
+	baseCoin?: string;
+	expDate?: string;
+};
 
-	return useQuery<SortedCoinsWithHistoryServiceResponse>({
-		queryKey: ["coins", limit, offset, period],
-		queryFn: ({ signal }) =>
-			coinService.getSortedCoinsWithHistory(
-				signal,
-				limit,
-				offset,
-				period,
-				from,
-				to,
-				sortBy,
-			),
+export function useQueryCoins(params: Props) {
+	return useQuery({
+		queryKey: ["coins", params.category],
+		queryFn: ({ signal }) => api.tickers.getTickers(params, signal),
 		placeholderData: keepPreviousData,
+		select: (data) => ({
+			...data,
+			total: data.result.list.length,
+			result: {
+				...data.result,
+				list: data.result.list.sort(
+					(a, b) => Number(b.turnover24h) - Number(a.turnover24h),
+				),
+			},
+		}),
 		refetchOnWindowFocus: false,
 		staleTime: 5 * 60 * 1000,
 		gcTime: 10 * 60 * 1000,

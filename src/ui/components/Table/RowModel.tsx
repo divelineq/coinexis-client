@@ -8,7 +8,7 @@ type Props = {
 	shouldShowSkeleton: boolean;
 };
 
-export function Rows({
+function Rows({
 	rowModel,
 	virtualizer,
 	shouldShowSkeleton,
@@ -16,16 +16,19 @@ export function Rows({
 }: Props) {
 	return (
 		<div
-			className="relative border-b border-custom"
+			className="relative"
 			style={{ height: `${virtualizer.getTotalSize()}px` }}
 		>
 			{virtualizer.getVirtualItems().map((virtualRow) => {
 				const row = rowModel.rows[virtualRow.index];
+				const isOdd = virtualRow.index % 2 !== 0;
 
 				return (
 					<div
 						key={row.id}
-						className="absolute flex border-b border-custom w-full"
+						className={`absolute flex w-full items-center text-sm ${
+							isOdd ? "bg-muted/30" : "bg-background"
+						} hover:bg-muted/50 border-b border-border transition`}
 						style={{
 							transform: `translateY(${virtualRow.start}px)`,
 							height: `${rowHeight}px`,
@@ -34,12 +37,12 @@ export function Rows({
 						{row.getVisibleCells().map((cell) => (
 							<div
 								key={cell.id}
-								className="px-3 overflow-hidden"
+								className="px-4 py-2 overflow-hidden"
 								style={{ width: `${cell.column.getSize()}px` }}
 							>
-								<div className="flex items-center h-full text-sm">
+								<div className="flex items-center h-full">
 									{shouldShowSkeleton && cell.column.id !== "#" ? (
-										<div className="animate-pulse h-6 w-full rounded-sm bg-accent" />
+										<div className="animate-pulse h-5 w-full rounded bg-accent" />
 									) : (
 										flexRender(cell.column.columnDef.cell, cell.getContext())
 									)}
@@ -52,3 +55,5 @@ export function Rows({
 		</div>
 	);
 }
+
+export { Rows };

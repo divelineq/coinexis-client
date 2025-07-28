@@ -5,11 +5,11 @@ type Props = {
 	headers: HeaderGroup<any>[];
 };
 
-export function HeaderGroups({ headers }: Props) {
+function HeaderGroups({ headers }: Props) {
 	return headers.map((headerGroup) => (
 		<div
 			key={headerGroup.id}
-			className="flex h-12 border-y border-custom items-center"
+			className="flex h-14 bg-background sticky top-0 z-10 shadow-sm border-b border-border"
 		>
 			{headerGroup.headers.map((header) => {
 				const canSort = header.column.getCanSort();
@@ -18,14 +18,14 @@ export function HeaderGroups({ headers }: Props) {
 				return (
 					<div
 						key={header.id}
-						className="px-3 py-1 flex items-center"
+						className="px-4 py-2 flex items-center font-medium text-muted-foreground text-sm select-none"
 						style={{
 							width: header.getSize() ? `${header.getSize()}px` : "100%",
 						}}
 					>
 						{canSort ? (
 							<button
-								className="cursor-pointer flex items-center gap-1"
+								className="cursor-pointer flex items-center gap-1 hover:text-foreground transition"
 								onClick={() => header.column.toggleSorting()}
 							>
 								{flexRender(
@@ -33,9 +33,9 @@ export function HeaderGroups({ headers }: Props) {
 									header.getContext(),
 								)}
 								{sorted === "asc" ? (
-									<AiOutlineArrowUp />
+									<AiOutlineArrowUp className="text-xs" />
 								) : sorted === "desc" ? (
-									<AiOutlineArrowDown />
+									<AiOutlineArrowDown className="text-xs" />
 								) : null}
 							</button>
 						) : (
@@ -47,3 +47,5 @@ export function HeaderGroups({ headers }: Props) {
 		</div>
 	));
 }
+
+export { HeaderGroups };

@@ -1,131 +1,145 @@
-import type { SortedCoinsServiceResponse } from "@service";
+import type { TickersValidationType } from "@api";
 import { createColumnHelper } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 import { Tooltip } from "react-tooltip";
-import { buildPercentageNumber } from "../../hooks/buildPercentageNumber";
-import { Sparkline } from "./Sparkline";
 
-const columnHelper = createColumnHelper<SortedCoinsServiceResponse["data"]>();
+const columnHelper =
+	createColumnHelper<TickersValidationType["list"][number]>();
 
 export function useDefaultColumns() {
 	return useMemo(
 		() => [
-			{
-				accessorKey: "#",
-				header: () => <p className="text-left cursor-default">#</p>,
-				size: 90,
-				enableSorting: false,
-				cell: (props: any) => {
-					const pageIndex = props.table.options.state.pagination.pageIndex;
-					const pageSize = props.table.options.state.pagination.pageSize;
+			columnHelper.accessor("symbol", {
+				header: "Symbol",
+				cell: (props) => <span>{props.getValue()}</span>,
+				enableSorting: true,
+			}),
 
-					return pageIndex * pageSize + props.row.index + 1;
-				},
-			},
-			columnHelper.accessor("name", {
-				header: () => <p className="text-left cursor-default">Name</p>,
-				cell: (props: any) => {
-					return (
-						<div className="flex items-center gap-2">
-							<img
-								src={props.row.original.logo ?? "logo.png"}
-								alt="logo"
-								className="w-7 h-7 rounded-sm"
-							/>
-							<p className="text-md">{props.getValue()}</p>
-							<p className="text-md text-gray-400">
-								{props.row.original.symbol}
-							</p>
-						</div>
-					);
-				},
-			}),
-			columnHelper.accessor("price", {
-				header: () => <p className="text-center">Price</p>,
-				cell: (props: any) =>
-					props.getValue().toLocaleString("en-US", {
-						style: "currency",
-						currency: "USD",
-					}),
+			columnHelper.accessor("lastPrice", {
+				header: "Last Price",
+				cell: (props) => (
+					<span>${Number.parseFloat(props.getValue()).toFixed(4)}</span>
+				),
 				enableSorting: true,
 			}),
-			columnHelper.accessor("price_change_1h", {
-				header: () => <p className="text-center">1h %</p>,
-				cell: (props: any) =>
-					buildPercentageNumber(props.getValue().toFixed(2)),
-				enableSorting: true,
-			}),
-			columnHelper.accessor("price_change_24h", {
-				header: () => <p className="text-center">24h %</p>,
-				cell: (props: any) =>
-					buildPercentageNumber(props.getValue().toFixed(2)),
-				enableSorting: true,
-			}),
-			columnHelper.accessor("price_change_7d", {
-				header: () => <p className="text-center">7d %</p>,
-				cell: (props: any) =>
-					buildPercentageNumber(props.getValue().toFixed(2)),
-				enableSorting: true,
-			}),
-			columnHelper.accessor("market_cap", {
+
+			columnHelper.accessor("bid1Price", {
 				header: () => (
 					<div className="flex items-center gap-1">
-						<p className="text-center">Market Cap</p>
+						<p>Bid Price</p>
 						<BsInfoCircle
-							size={16}
+							size={14}
 							color="gray"
-							className="cursor-default"
-							data-tooltip-id="market-cap"
-							data-tooltip-content="Общая рыночная стоимость предложения криптовалюты в обращении. Она аналогична капитализации в свободном обращении на фондовом рынке. Рыночная капитализация = Текущая цена х предложение в обращении."
+							data-tooltip-id="bid-tooltip"
+							data-tooltip-content="Лучшая цена, по которой покупатели готовы купить актив."
 						/>
-						<Tooltip
-							delayShow={100}
-							id="market-cap"
-							place="bottom"
-							style={{ fontWeight: "normal", width: "450px", zIndex: 10 }}
-						/>
+						<Tooltip id="bid-tooltip" place="bottom" />
 					</div>
 				),
-				cell: (props: any) =>
-					props.getValue().toLocaleString("en-US", {
-						style: "currency",
-						currency: "USD",
-					}),
+				cell: (props) => (
+					<span>${Number.parseFloat(props.getValue()).toFixed(5)}</span>
+				),
 				enableSorting: true,
 			}),
-			columnHelper.accessor("volume", {
+
+			columnHelper.accessor("ask1Price", {
 				header: () => (
 					<div className="flex items-center gap-1">
-						<p className="text-center">Volume</p>
+						<p>Ask Price</p>
 						<BsInfoCircle
-							size={16}
+							size={14}
 							color="gray"
-							className="cursor-default"
-							data-tooltip-id="volume"
-							data-tooltip-content="Показатель того, сколько криптовалюты было продано за последние 24 часа."
+							data-tooltip-id="ask-tooltip"
+							data-tooltip-content="Лучшая цена, по которой продавцы готовы продать актив."
 						/>
-						<Tooltip
-							delayShow={100}
-							id="volume"
-							place="bottom"
-							style={{ fontWeight: "normal", width: "300px", zIndex: 10 }}
-						/>
+						<Tooltip id="ask-tooltip" place="bottom" />
 					</div>
 				),
-				cell: (props: any) =>
-					props.getValue().toLocaleString("en-US", {
-						style: "currency",
-						currency: "USD",
+				cell: (props) => (
+					<span>${Number.parseFloat(props.getValue()).toFixed(5)}</span>
+				),
+				enableSorting: true,
+			}),
+
+			// Ask Size
+			columnHelper.accessor("ask1Size", {
+				header: "Ask Size",
+				cell: (props) => (
+					<span>{Number(props.getValue()).toLocaleString("en-US")}</span>
+				),
+			}),
+
+			columnHelper.accessor("price24hPcnt", {
+				header: "24h Change %",
+				cell: (props) => {
+					const percent = Number.parseFloat(props.getValue()) * 100;
+					const color =
+						percent > 0 ? "text-green-500" : percent < 0 ? "text-red-500" : "";
+
+					return <span className={color}>{percent.toFixed(2)}%</span>;
+				},
+				enableSorting: true,
+			}),
+
+			columnHelper.accessor("highPrice24h", {
+				header: "24h High",
+				cell: (props) => (
+					<span>${Number.parseFloat(props.getValue()).toFixed(5)}</span>
+				),
+				enableSorting: true,
+			}),
+
+			// 24h Low
+			columnHelper.accessor("lowPrice24h", {
+				header: "24h Low",
+				cell: (props) => (
+					<span>${Number.parseFloat(props.getValue()).toFixed(5)}</span>
+				),
+				enableSorting: true,
+			}),
+
+			columnHelper.accessor("volume24h", {
+				header: () => (
+					<div className="flex items-center gap-1">
+						<p>Volume (24h)</p>
+						<BsInfoCircle
+							size={14}
+							color="gray"
+							data-tooltip-id="volume-tooltip"
+							data-tooltip-content="Объём торговли за последние 24 часа, в количестве монет."
+						/>
+						<Tooltip id="volume-tooltip" place="bottom" />
+					</div>
+				),
+				cell: (props) =>
+					Number(props.getValue()).toLocaleString("en-US", {
+						maximumFractionDigits: 0,
 					}),
 				enableSorting: true,
 			}),
-			{
-				accessorKey: "Chart",
-				header: () => <p className="text-center cursor-default">Last 7 Days</p>,
-				cell: (props: any) => <Sparkline data={props.row.original.history} />,
-				enableSorting: false,
-			},
+
+			columnHelper.accessor("turnover24h", {
+				header: () => (
+					<div className="flex items-center gap-1">
+						<p>Turnover (USD)</p>
+						<BsInfoCircle
+							size={14}
+							color="gray"
+							data-tooltip-id="turnover-tooltip"
+							data-tooltip-content="Общий денежный объём сделок за 24 часа в USD."
+						/>
+						<Tooltip id="turnover-tooltip" place="bottom" />
+					</div>
+				),
+				cell: (props) =>
+					Number(props.getValue()).toLocaleString("en-US", {
+						style: "currency",
+						currency: "USD",
+						maximumFractionDigits: 0,
+					}),
+				enableSorting: true,
+			}),
 		],
 		[],
 	);

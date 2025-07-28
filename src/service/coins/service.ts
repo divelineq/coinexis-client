@@ -1,5 +1,4 @@
-import { type OneCoinType, type QuerySortBy, historyApi } from "@api";
-import { coinApi } from "../../api/coins/api";
+import { api, historyApi, type OneCoinType, type QuerySortBy } from "@api";
 import type {
 	CoinsService,
 	SortedCoinsServiceResponse,
@@ -8,7 +7,7 @@ import type {
 
 export const coinService = {
 	async getCoins(signal: AbortSignal, fields: string): Promise<CoinsService> {
-		const data = await coinApi.getMany(signal, fields);
+		const data = await api.coins.getMany(signal, fields);
 
 		return {
 			total: data.length,
@@ -17,7 +16,7 @@ export const coinService = {
 	},
 
 	async getCoin(signal: AbortSignal, coin: string): Promise<OneCoinType> {
-		return await coinApi.getOne(coin, signal);
+		return await api.coins.getOne(coin, signal);
 	},
 
 	async getSortedCoins(
@@ -27,8 +26,8 @@ export const coinService = {
 		sortBy?: QuerySortBy,
 	): Promise<SortedCoinsServiceResponse> {
 		const [total, data] = await Promise.all([
-			coinApi.getMany(signal, "id").then((res) => res.length),
-			coinApi.getSortedCoins(signal, limit, offset, sortBy),
+			api.coins.getMany(signal, "id").then((res) => res.length),
+			api.coins.getSortedCoins(signal, limit, offset, sortBy),
 		]);
 
 		return { total, data };

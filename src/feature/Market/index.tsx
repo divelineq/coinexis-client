@@ -1,15 +1,11 @@
 import { useRouter, useSearch } from "@tanstack/react-router";
-import { getCategoriesTableSource } from "./Categories";
 import { getCoinsTableSource } from "./Coins";
 import { Market as MarketComponent } from "./Market";
 import { Skeleton } from "./Skeleton";
 import type { SelectedDataAll, TableSource } from "./types";
 import { usePaginationState } from "./usePaginationState";
 
-const TAB_OPTIONS = [
-	{ id: "all", label: "All Coins" },
-	{ id: "categories", label: "Categories" },
-];
+const TAB_OPTIONS = [{ id: "all", label: "Spot" }];
 
 function BaseMarket() {
 	const router = useRouter();
@@ -17,8 +13,9 @@ function BaseMarket() {
 
 	const [pagination, setPagination] = usePaginationState(50);
 	const tableSources: Record<string, TableSource<SelectedDataAll>> = {
-		all: getCoinsTableSource(pagination),
-		categories: getCategoriesTableSource(),
+		all: getCoinsTableSource({
+			category: "spot",
+		}),
 	};
 
 	const handleTabChange = (newTab: string) => {
