@@ -363,11 +363,6 @@ export default tseslint.config(
 				{
 					paths: [
 						{
-							name: "react-map-gl",
-							message:
-								"Т.к. мы используем maplibre, необходимо импортировать всё только из react-map-gl/maplibre",
-						},
-						{
 							name: "react-hook-form",
 							importNames: ["useForm"],
 							message: "Вместо этого используйте useHookForm из @ask/features",
@@ -381,13 +376,6 @@ export default tseslint.config(
 						{
 							name: "zod",
 							message: "Используйте zod/v4",
-						},
-					],
-					patterns: [
-						{
-							group: ["react-map-gl/*", "!react-map-gl/maplibre"],
-							message:
-								"Т.к. мы используем maplibre, необходимо импортировать всё только из react-map-gl/maplibre",
 						},
 					],
 				},
@@ -444,12 +432,6 @@ export default tseslint.config(
 					message:
 						"localeCompare() в 20 раз (реально в 20) медленней, чем Intl.Collator().compare(). Не забудь вынести new Intl.Collator() конструктор за пределы цикла",
 					property: "localeCompare",
-				},
-				{
-					object: "JSON",
-					property: "parse",
-					message:
-						"Необходимо использовать функцию parseJson из @ask/tools вместо JSON.parse",
 				},
 			],
 			"no-self-compare": "error",
