@@ -1,3 +1,4 @@
+import { useNavigate } from "@tanstack/react-router";
 import { type RowModel, flexRender } from "@tanstack/react-table";
 import type { Virtualizer } from "@tanstack/react-virtual";
 
@@ -14,6 +15,15 @@ function Rows({
 	shouldShowSkeleton,
 	rowHeight = 80,
 }: Props) {
+	const navigate = useNavigate();
+
+	const handleClick = (coin: string) => {
+		navigate({
+			to: "/market/$coin",
+			params: { coin },
+		});
+	};
+
 	return (
 		<div
 			className="relative"
@@ -24,7 +34,7 @@ function Rows({
 				const isOdd = virtualRow.index % 2 !== 0;
 
 				return (
-					<div
+					<button
 						key={row.id}
 						className={`absolute flex w-full items-center text-sm ${
 							isOdd ? "bg-muted/30" : "bg-background"
@@ -32,6 +42,9 @@ function Rows({
 						style={{
 							transform: `translateY(${virtualRow.start}px)`,
 							height: `${rowHeight}px`,
+						}}
+						onClick={() => {
+							handleClick(row.original.symbol);
 						}}
 					>
 						{row.getVisibleCells().map((cell) => (
@@ -49,7 +62,7 @@ function Rows({
 								</div>
 							</div>
 						))}
-					</div>
+					</button>
 				);
 			})}
 		</div>

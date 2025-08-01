@@ -1,3 +1,4 @@
+export * from "./ChartCoin";
 export * from "./Header";
 export * from "./Home";
 export * from "./Market";

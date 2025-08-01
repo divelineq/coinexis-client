@@ -12,8 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TransactionsRouteImport } from './routes/transactions'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as NftRouteImport } from './routes/nft'
-import { Route as MarketRouteImport } from './routes/market'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MarketIndexRouteImport } from './routes/market/index'
+import { Route as MarketSymbolRouteImport } from './routes/market/$symbol'
 
 const TransactionsRoute = TransactionsRouteImport.update({
   id: '/transactions',
@@ -30,53 +31,81 @@ const NftRoute = NftRouteImport.update({
   path: '/nft',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MarketRoute = MarketRouteImport.update({
-  id: '/market',
-  path: '/market',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MarketIndexRoute = MarketIndexRouteImport.update({
+  id: '/market/',
+  path: '/market/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketSymbolRoute = MarketSymbolRouteImport.update({
+  id: '/market/$symbol',
+  path: '/market/$symbol',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/market': typeof MarketRoute
   '/nft': typeof NftRoute
   '/portfolio': typeof PortfolioRoute
   '/transactions': typeof TransactionsRoute
+  '/market/$symbol': typeof MarketSymbolRoute
+  '/market': typeof MarketIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/market': typeof MarketRoute
   '/nft': typeof NftRoute
   '/portfolio': typeof PortfolioRoute
   '/transactions': typeof TransactionsRoute
+  '/market/$symbol': typeof MarketSymbolRoute
+  '/market': typeof MarketIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/market': typeof MarketRoute
   '/nft': typeof NftRoute
   '/portfolio': typeof PortfolioRoute
   '/transactions': typeof TransactionsRoute
+  '/market/$symbol': typeof MarketSymbolRoute
+  '/market/': typeof MarketIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/market' | '/nft' | '/portfolio' | '/transactions'
+  fullPaths:
+    | '/'
+    | '/nft'
+    | '/portfolio'
+    | '/transactions'
+    | '/market/$symbol'
+    | '/market'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/market' | '/nft' | '/portfolio' | '/transactions'
-  id: '__root__' | '/' | '/market' | '/nft' | '/portfolio' | '/transactions'
+  to:
+    | '/'
+    | '/nft'
+    | '/portfolio'
+    | '/transactions'
+    | '/market/$symbol'
+    | '/market'
+  id:
+    | '__root__'
+    | '/'
+    | '/nft'
+    | '/portfolio'
+    | '/transactions'
+    | '/market/$symbol'
+    | '/market/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  MarketRoute: typeof MarketRoute
   NftRoute: typeof NftRoute
   PortfolioRoute: typeof PortfolioRoute
   TransactionsRoute: typeof TransactionsRoute
+  MarketSymbolRoute: typeof MarketSymbolRoute
+  MarketIndexRoute: typeof MarketIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -102,13 +131,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NftRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/market': {
-      id: '/market'
-      path: '/market'
-      fullPath: '/market'
-      preLoaderRoute: typeof MarketRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -116,15 +138,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/market/': {
+      id: '/market/'
+      path: '/market'
+      fullPath: '/market'
+      preLoaderRoute: typeof MarketIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/market/$symbol': {
+      id: '/market/$symbol'
+      path: '/market/$symbol'
+      fullPath: '/market/$symbol'
+      preLoaderRoute: typeof MarketSymbolRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  MarketRoute: MarketRoute,
   NftRoute: NftRoute,
   PortfolioRoute: PortfolioRoute,
   TransactionsRoute: TransactionsRoute,
+  MarketSymbolRoute: MarketSymbolRoute,
+  MarketIndexRoute: MarketIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

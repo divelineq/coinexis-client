@@ -22,9 +22,11 @@ const CANDLESTICK_COLORS: Partial<CandlestickStyleOptions> = {
 type Props = {
 	data: OhlcData[];
 	className?: string;
+	chartStyle?: { width: number; height: number };
 };
 
-function Chart({ data }: Props) {
+function Chart({ data, chartStyle }: Props) {
+	console.log(data);
 	const candlestickSeries = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -33,8 +35,6 @@ function Chart({ data }: Props) {
 				background: { type: ColorType.Solid, color: "#323333" },
 				textColor: "white",
 			},
-			width: candlestickSeries.current?.clientWidth,
-			height: 600,
 			autoSize: true,
 			timeScale: {
 				rightOffset: 10,
@@ -88,7 +88,9 @@ function Chart({ data }: Props) {
 		};
 	}, [data]);
 
-	return <div ref={candlestickSeries} />;
+	return (
+		<div ref={candlestickSeries} style={{ width: "100%", height: "100%" }} />
+	);
 }
 
 export { Chart };
