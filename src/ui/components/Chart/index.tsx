@@ -25,14 +25,13 @@ type Props = {
 	chartStyle?: { width: number; height: number };
 };
 
-function Chart({ data, chartStyle }: Props) {
-	console.log(data);
+function Chart({ data }: Props) {
 	const candlestickSeries = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		const chart = createChart(candlestickSeries.current!, {
 			layout: {
-				background: { type: ColorType.Solid, color: "#323333" },
+				background: { type: ColorType.Solid, color: "#101014" },
 				textColor: "white",
 			},
 			autoSize: true,
@@ -42,10 +41,10 @@ function Chart({ data, chartStyle }: Props) {
 			},
 			grid: {
 				vertLines: {
-					color: "#4f4f4f",
+					color: "#212121",
 				},
 				horzLines: {
-					color: "#4f4f4f",
+					color: "#212121",
 				},
 			},
 			crosshair: {

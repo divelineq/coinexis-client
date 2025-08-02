@@ -181,7 +181,7 @@ export default tseslint.config(
 			"unicorn/no-useless-length-check": "warn",
 			"unicorn/no-useless-spread": "warn",
 			"unicorn/numeric-separators-style": "warn",
-			"unicorn/prefer-add-event-listener": "warn",
+			"unicorn/prefer-add-event-listener": "off",
 			"unicorn/prefer-array-find": "warn",
 			"unicorn/prefer-array-flat": "warn",
 			"unicorn/prefer-array-flat-map": "warn",
