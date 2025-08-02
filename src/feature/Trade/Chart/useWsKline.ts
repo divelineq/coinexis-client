@@ -50,6 +50,7 @@ export function useWsKline({ interval, symbol }: Props): OhlcData {
 
 			setKline(upendKline);
 			klineRef.current = upendKline;
+			document.title = `${symbol} | ${upendKline.close}`;
 		};
 
 		ws.onerror = (err) => {
