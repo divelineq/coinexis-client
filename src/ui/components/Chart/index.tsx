@@ -78,6 +78,8 @@ type Props = {
 	height?: string;
 };
 
+const LOAD_BATCH = 200;
+
 function Chart({ data, newData, width, height }: Props) {
 	const [hoveredData, setHoveredData] = useState<
 		(OhlcData & { color?: string }) | null
@@ -86,11 +88,16 @@ function Chart({ data, newData, width, height }: Props) {
 	const candlestickSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const newDataRef = useRef<OhlcData | null>(null);
+	const loadedRangeRef = useRef<OhlcData[]>([]);
+	const loadIndexRef = useRef<number>(data.length - LOAD_BATCH);
 
 	useEffect(() => {
 		if (!containerRef.current) return;
 
-		const lineData = data.map((item) => ({
+		const initialSlice = data.slice(-LOAD_BATCH);
+		loadedRangeRef.current = initialSlice;
+
+		const lineData = initialSlice.map((item) => ({
 			time: item.time,
 			value: (item.open + item.close) / 2,
 		}));
@@ -112,7 +119,7 @@ function Chart({ data, newData, width, height }: Props) {
 			CandlestickSeries,
 			CANDLESTICK_COLORS,
 		);
-		candlestickSeries.setData(data);
+		candlestickSeries.setData(initialSlice);
 		candlestickSeriesRef.current = candlestickSeries;
 
 		chart.subscribeCrosshairMove((param) => {
@@ -129,6 +136,27 @@ function Chart({ data, newData, width, height }: Props) {
 						? "var(--buy-color)"
 						: "var(--sell-color)",
 			});
+		});
+
+		chart.timeScale().subscribeVisibleLogicalRangeChange((range) => {
+			if (!range) return;
+			if (!candlestickSeriesRef.current) return;
+
+			const visibleFrom = Number(range.from);
+			const total = loadedRangeRef.current.length;
+			if (total === 0) return;
+
+			const threshold = total * 0.1;
+			if (visibleFrom <= threshold) {
+				const nextStart = Math.max(0, loadIndexRef.current - LOAD_BATCH);
+				if (nextStart === loadIndexRef.current) return;
+
+				const newData = data.slice(nextStart, loadIndexRef.current);
+				loadIndexRef.current = nextStart;
+
+				loadedRangeRef.current = [...newData, ...loadedRangeRef.current];
+				candlestickSeriesRef.current.setData(loadedRangeRef.current);
+			}
 		});
 
 		const handleResize = () => {

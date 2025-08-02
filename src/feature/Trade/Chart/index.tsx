@@ -4,7 +4,7 @@ import { useKline } from "./useKline";
 import { useWsKline } from "./useWsKline";
 
 const LIMIT_KLINE = 1000;
-const INTERVAL = "1";
+const INTERVAL = "5";
 const CATEGORY = "spot";
 
 function Chart({ symbol }: { symbol: string }) {

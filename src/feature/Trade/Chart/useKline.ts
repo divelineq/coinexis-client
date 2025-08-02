@@ -1,4 +1,5 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export function useKline(
 	symbol: string,
@@ -6,12 +7,16 @@ export function useKline(
 	limitKline: number,
 	category: string,
 ) {
+	//TODO: надо сделать чтобы он получал все монеты или получал следующий диапазон при пролистывании
 	return useQuery({
 		queryKey: ["kline", symbol, interval, limitKline, category],
-		queryFn: () =>
-			fetch(
+		queryFn: async () => {
+			const res = await axios.get(
 				`https://api.bybit.com/v5/market/kline?category=${category}&symbol=${symbol}&interval=${interval}&limit=${limitKline}`,
-			).then((res) => res.json()),
+			);
+
+			return res.data;
+		},
 
 		select: (data) =>
 			data.result.list
