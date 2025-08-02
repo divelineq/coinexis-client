@@ -7,12 +7,25 @@ export function useOrderbook(symbol: string, depth: number) {
 		bids: [],
 		asks: [],
 	});
-	const lastURef = useRef<number | null>(null);
 	const wsRef = useRef<WebSocket | null>(null);
+	const hasSnapshotRef = useRef<boolean>(false);
+	const bufferRef = useRef<OrderbookType>({
+		bids: [],
+		asks: [],
+	});
 
 	useEffect(() => {
 		const ws = new WebSocket("wss://stream.bybit.com/v5/public/spot");
 		wsRef.current = ws;
+
+		const interval = setInterval(() => {
+			if (!hasSnapshotRef.current) return;
+
+			setOrderbook({
+				bids: bufferRef.current.bids,
+				asks: bufferRef.current.asks,
+			});
+		}, 1000);
 
 		ws.onopen = () => {
 			if (ws.readyState === WebSocket.OPEN) {
@@ -31,19 +44,19 @@ export function useOrderbook(symbol: string, depth: number) {
 			const { type, data } = message;
 
 			if (type === "snapshot") {
+				bufferRef.current = { bids: data.b, asks: data.a };
+				hasSnapshotRef.current = true;
 				setOrderbook({ bids: data.b, asks: data.a });
 			}
 
 			if (type === "delta") {
-				setOrderbook((prev) => {
-					const updatedBids = applyUpdates(prev.bids, data.b, true);
-					const updatedAsks = applyUpdates(prev.asks, data.a, false);
-					lastURef.current = data.u;
-					return {
-						bids: updatedBids,
-						asks: updatedAsks,
-					};
-				});
+				const base = hasSnapshotRef.current ? bufferRef.current : orderbook;
+				const updatedBids = applyUpdates(base.bids, data.b, true);
+				const updatedAsks = applyUpdates(base.asks, data.a, false);
+				bufferRef.current = {
+					bids: updatedBids,
+					asks: updatedAsks,
+				};
 			}
 		};
 
@@ -56,6 +69,8 @@ export function useOrderbook(symbol: string, depth: number) {
 		};
 
 		return () => {
+			clearInterval(interval);
+
 			if (ws.readyState === WebSocket.OPEN) {
 				ws.send(
 					JSON.stringify({
@@ -67,7 +82,7 @@ export function useOrderbook(symbol: string, depth: number) {
 
 			ws.close();
 		};
-	}, []);
+	}, [symbol, depth]);
 
 	return orderbook;
 }
