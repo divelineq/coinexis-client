@@ -12,23 +12,40 @@ import {
 	type Time,
 	createChart,
 } from "lightweight-charts";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { HoveredInfo } from "./HoveredInfo";
 
 const CANDLESTICK_COLORS: Partial<CandlestickStyleOptions> = {
-	upColor: "#26a69a",
-	downColor: "#ef5350",
+	upColor: "#20B26C",
+	downColor: "#EF454A",
 	borderVisible: true,
-	wickUpColor: "#26a69a",
-	wickDownColor: "#ef5350",
+	wickUpColor: "#20B26C",
+	wickDownColor: "#EF454A",
 };
 
 const CHART_OPTIONS = {
+	// autoSize: true,
 	autoScale: true,
+	crosshairMarkerVisible: false,
+	crosshairMarkerRadius: 0,
+	timeScale: {
+		timeVisible: true,
+		secondsVisible: false,
+		tickMarkFormatter: (time: number) => {
+			const date = new Date(time * 1000);
+			const hours = String(date.getHours()).padStart(2, "0");
+			const minutes = String(date.getMinutes()).padStart(2, "0");
+
+			return `${hours}:${minutes}`;
+		},
+	},
+
 	layout: {
 		background: { type: ColorType.Solid, color: "#101014" },
-		textColor: "white",
+		textColor: "#525252",
+		fontSize: 10,
 	},
-	autoSize: true,
+
 	grid: {
 		vertLines: {
 			color: "#212121",
@@ -57,9 +74,14 @@ type Props = {
 	newData: OhlcData;
 	className?: string;
 	chartStyle?: { width: number; height: number };
+	width?: string;
+	height?: string;
 };
 
-function Chart({ data, newData }: Props) {
+function Chart({ data, newData, width, height }: Props) {
+	const [hoveredData, setHoveredData] = useState<
+		(OhlcData & { color?: string }) | null
+	>(data.at(-1)!);
 	const chartRef = useRef<IChartApi | null>(null);
 	const candlestickSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -82,6 +104,7 @@ function Chart({ data, newData }: Props) {
 			color: "#fff",
 			lastValueVisible: false,
 			crosshairMarkerVisible: false,
+			priceLineVisible: false,
 		});
 		lineSeries.setData(lineData);
 
@@ -91,6 +114,22 @@ function Chart({ data, newData }: Props) {
 		);
 		candlestickSeries.setData(data);
 		candlestickSeriesRef.current = candlestickSeries;
+
+		chart.subscribeCrosshairMove((param) => {
+			if (!param.time && !param.hoveredSeries) {
+				setHoveredData(newDataRef.current);
+				return;
+			}
+
+			const ohlcData = param.seriesData.get(candlestickSeries) as OhlcData;
+			setHoveredData({
+				...ohlcData,
+				color:
+					ohlcData?.close > ohlcData?.open
+						? "var(--buy-color)"
+						: "var(--sell-color)",
+			});
+		});
 
 		const handleResize = () => {
 			chart.applyOptions({ width: containerRef.current?.clientWidth });
@@ -120,7 +159,11 @@ function Chart({ data, newData }: Props) {
 		}
 	}, [newData, candlestickSeriesRef.current]);
 
-	return <div ref={containerRef} style={{ width: "100%", height: "100%" }} />;
+	return (
+		<div className="relative" ref={containerRef} style={{ width, height }}>
+			<HoveredInfo data={hoveredData} />
+		</div>
+	);
 }
 
 export { Chart };
