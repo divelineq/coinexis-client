@@ -6,10 +6,14 @@ import { useKline } from "./useKline";
 import { useWsKline } from "./useWsKline";
 
 const LIMIT_KLINE = 1000;
-const DEFAULT_INTERVAL = "1";
 const CATEGORY = "spot";
+const DEFAULT_INTERVAL = "1";
 
-function Chart({ symbol }: { symbol: string }) {
+type Props = {
+	symbol: string;
+};
+
+function Chart({ symbol }: Props) {
 	const [interval, setInterval] = useState(DEFAULT_INTERVAL);
 	const queryClient = useQueryClient();
 	const { data, isLoading, error } = useKline(

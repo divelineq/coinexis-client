@@ -1,10 +1,5 @@
 import {
 	CandlestickSeries,
-	type CandlestickStyleOptions,
-	type ChartOptions,
-	ColorType,
-	CrosshairMode,
-	type DeepPartial,
 	type IChartApi,
 	type ISeriesApi,
 	LineSeries,
@@ -12,6 +7,7 @@ import {
 	createChart,
 } from "lightweight-charts";
 import { useEffect, useRef, useState } from "react";
+import { CANDLESTICK_COLORS, CHART_OPTIONS } from "./Consts";
 import { HoveredInfo } from "./HoveredInfo";
 import { IntervalButtons } from "./IntervalButtons";
 
@@ -25,53 +21,6 @@ type Props = {
 	interval: string;
 	onIntervalChange: (interval: string) => void;
 };
-
-const CANDLESTICK_COLORS: Partial<CandlestickStyleOptions> = {
-	upColor: "#20B26C",
-	downColor: "#EF454A",
-	borderVisible: true,
-	wickUpColor: "#20B26C",
-	wickDownColor: "#EF454A",
-};
-
-const CHART_OPTIONS = {
-	// autoSize: true,
-	autoScale: true,
-	crosshairMarkerVisible: false,
-	crosshairMarkerRadius: 0,
-	timeScale: {
-		rightOffset: 20,
-		timeVisible: true,
-		secondsVisible: false,
-	},
-	layout: {
-		background: { type: ColorType.Solid, color: "#101014" },
-		textColor: "#525252",
-		fontSize: 10,
-	},
-
-	grid: {
-		vertLines: {
-			color: "#212121",
-		},
-		horzLines: {
-			color: "#212121",
-		},
-	},
-	crosshair: {
-		mode: CrosshairMode.Normal,
-		horzLine: {
-			visible: true,
-			color: "white",
-			labelVisible: true,
-		},
-		vertLine: {
-			visible: true,
-			color: "white",
-			labelVisible: true,
-		},
-	},
-} as DeepPartial<ChartOptions>;
 
 const LOAD_BATCH = 200;
 const VISIBLE_BAR = 120;
