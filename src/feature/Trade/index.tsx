@@ -8,6 +8,8 @@ import { Sidebar } from "./Sidebar";
 function Trade() {
 	const { symbol } = Route.useLoaderData();
 
+	//TODO сделать 1 вебсокет с 3 потоками (kline, orderbook, trades)
+
 	return (
 		<div className="min-h-screen bg-background">
 			<div className="size-full mx-auto grid grid-cols-1 lg:grid-cols-6 gap-2">
