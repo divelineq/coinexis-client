@@ -1,20 +1,19 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { Chart as UiChart } from "@ui";
-import { useState } from "react";
 import { Skeleton } from "./Skeleton";
+import { useIntervalState } from "./useIntervalState";
 import { useKline } from "./useKline";
 import { useWsKline } from "./useWsKline";
 
 const LIMIT_KLINE = 1000;
 const CATEGORY = "spot";
-const DEFAULT_INTERVAL = "1";
 
 type Props = {
 	symbol: string;
 };
 
 function Chart({ symbol }: Props) {
-	const [interval, setInterval] = useState(DEFAULT_INTERVAL);
+	const [interval, setInterval] = useIntervalState();
 	const queryClient = useQueryClient();
 	const { data, isLoading, error } = useKline(
 		symbol,
