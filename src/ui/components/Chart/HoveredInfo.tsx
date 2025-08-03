@@ -7,7 +7,7 @@ type Props = {
 function HoveredInfo({ data }: Props) {
 	if (!data || !data.open || !data.high || !data.low || !data.close) return;
 	return (
-		<p className="absolute top-0 left-0 z-10 p-2 tabular-nums flex gap-2 text-zinc-400">
+		<p className="absolute top-6 left-2 z-10 p-2 tabular-nums flex gap-2 text-zinc-400">
 			<span>
 				O:{" "}
 				<span style={{ color: data.color }}>

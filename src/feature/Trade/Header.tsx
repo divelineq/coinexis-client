@@ -4,13 +4,6 @@ function Header({ symbol }: { symbol: string }) {
 			<div className="flex items-center gap-2">
 				<div className="font-bold text-lg">{symbol}</div>
 			</div>
-			<div className="flex gap-4 text-sm">
-				<div>1s</div>
-				<div>1m</div>
-				<div>30m</div>
-				<div>1h</div>
-				<div>1d</div>
-			</div>
 			<div className="flex gap-2">
 				<button className="px-3 py-1 bg-zinc-800 rounded">Settings</button>
 				<button className="px-3 py-1 bg-zinc-800 rounded">Tools</button>

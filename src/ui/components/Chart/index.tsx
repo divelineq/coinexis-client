@@ -9,11 +9,22 @@ import {
 	type ISeriesApi,
 	LineSeries,
 	type OhlcData,
-	type Time,
 	createChart,
 } from "lightweight-charts";
 import { useEffect, useRef, useState } from "react";
 import { HoveredInfo } from "./HoveredInfo";
+import { IntervalButtons } from "./IntervalButtons";
+
+type Props = {
+	data: OhlcData[];
+	newData: OhlcData;
+	className?: string;
+	chartStyle?: { width: number; height: number };
+	width?: string;
+	height?: string;
+	interval: string;
+	onIntervalChange: (interval: string) => void;
+};
 
 const CANDLESTICK_COLORS: Partial<CandlestickStyleOptions> = {
 	upColor: "#20B26C",
@@ -29,17 +40,10 @@ const CHART_OPTIONS = {
 	crosshairMarkerVisible: false,
 	crosshairMarkerRadius: 0,
 	timeScale: {
+		rightOffset: 20,
 		timeVisible: true,
 		secondsVisible: false,
-		tickMarkFormatter: (time: number) => {
-			const date = new Date(time * 1000);
-			const hours = String(date.getHours()).padStart(2, "0");
-			const minutes = String(date.getMinutes()).padStart(2, "0");
-
-			return `${hours}:${minutes}`;
-		},
 	},
-
 	layout: {
 		background: { type: ColorType.Solid, color: "#101014" },
 		textColor: "#525252",
@@ -69,18 +73,17 @@ const CHART_OPTIONS = {
 	},
 } as DeepPartial<ChartOptions>;
 
-type Props = {
-	data: OhlcData[];
-	newData: OhlcData;
-	className?: string;
-	chartStyle?: { width: number; height: number };
-	width?: string;
-	height?: string;
-};
-
 const LOAD_BATCH = 200;
+const VISIBLE_BAR = 120;
 
-function Chart({ data, newData, width, height }: Props) {
+function Chart({
+	data,
+	newData,
+	width,
+	height,
+	interval,
+	onIntervalChange,
+}: Props) {
 	const [hoveredData, setHoveredData] = useState<
 		(OhlcData & { color?: string }) | null
 	>(data.at(-1)!);
@@ -103,8 +106,26 @@ function Chart({ data, newData, width, height }: Props) {
 		}));
 
 		const chart = createChart(containerRef.current, CHART_OPTIONS);
-		chart.timeScale().fitContent();
+		chart.applyOptions({});
+		const timeScale = chart.timeScale();
+
+		const totalBars = data.length;
+
+		if (totalBars >= VISIBLE_BAR) {
+			setTimeout(() => {
+				chart.timeScale().setVisibleLogicalRange({
+					from: data.length - VISIBLE_BAR,
+					to: totalBars - 1,
+				});
+				chart.timeScale().scrollToRealTime();
+			}, 0);
+		} else {
+			chart.timeScale().fitContent();
+		}
+
 		chartRef.current = chart;
+
+		timeScale.fitContent();
 
 		const lineSeries = chart.addSeries(LineSeries, {
 			lineWidth: 1,
@@ -138,7 +159,7 @@ function Chart({ data, newData, width, height }: Props) {
 			});
 		});
 
-		chart.timeScale().subscribeVisibleLogicalRangeChange((range) => {
+		timeScale.subscribeVisibleLogicalRangeChange((range) => {
 			if (!range) return;
 			if (!candlestickSeriesRef.current) return;
 
@@ -163,14 +184,6 @@ function Chart({ data, newData, width, height }: Props) {
 			chart.applyOptions({ width: containerRef.current?.clientWidth });
 		};
 
-		const from = data.length - 100;
-		const to = data.length - 1;
-
-		chart.timeScale().setVisibleRange({
-			from: data[from].time,
-			to: (Number(data[to].time) + 10) as Time,
-		});
-
 		window.addEventListener("resize", handleResize);
 
 		return () => {
@@ -178,7 +191,7 @@ function Chart({ data, newData, width, height }: Props) {
 
 			chart.remove();
 		};
-	}, []);
+	}, [data]);
 
 	useEffect(() => {
 		if (newDataRef.current !== newData) {
@@ -189,6 +202,7 @@ function Chart({ data, newData, width, height }: Props) {
 
 	return (
 		<div className="relative" ref={containerRef} style={{ width, height }}>
+			<IntervalButtons value={interval} onChange={onIntervalChange} />
 			<HoveredInfo data={hoveredData} />
 		</div>
 	);

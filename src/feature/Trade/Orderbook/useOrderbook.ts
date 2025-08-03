@@ -61,6 +61,13 @@ export function useOrderbook(symbol: string, depth: number) {
 		};
 
 		ws.onerror = (err) => {
+			if (
+				ws.readyState === WebSocket.CLOSING ||
+				ws.readyState === WebSocket.CLOSED
+			) {
+				return;
+			}
+
 			console.error("WebSocket error", err);
 		};
 

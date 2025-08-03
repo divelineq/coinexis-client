@@ -9,7 +9,7 @@ export function useKline(
 ) {
 	//TODO: надо сделать чтобы он получал все монеты или получал следующий диапазон при пролистывании
 	return useQuery({
-		queryKey: ["kline", symbol, interval, limitKline, category],
+		queryKey: ["kline", interval, symbol, limitKline, category],
 		queryFn: async () => {
 			const res = await axios.get(
 				`https://api.bybit.com/v5/market/kline?category=${category}&symbol=${symbol}&interval=${interval}&limit=${limitKline}`,

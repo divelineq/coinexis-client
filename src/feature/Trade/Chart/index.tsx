@@ -1,21 +1,25 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { Chart as UiChart } from "@ui";
+import { useState } from "react";
 import { Skeleton } from "./Skeleton";
 import { useKline } from "./useKline";
 import { useWsKline } from "./useWsKline";
 
 const LIMIT_KLINE = 1000;
-const INTERVAL = "5";
+const DEFAULT_INTERVAL = "1";
 const CATEGORY = "spot";
 
 function Chart({ symbol }: { symbol: string }) {
+	const [interval, setInterval] = useState(DEFAULT_INTERVAL);
+	const queryClient = useQueryClient();
 	const { data, isLoading, error } = useKline(
 		symbol,
-		INTERVAL,
+		interval,
 		LIMIT_KLINE,
 		CATEGORY,
 	);
 
-	const wsKline = useWsKline({ interval: INTERVAL, symbol });
+	const wsKline = useWsKline({ interval, symbol });
 
 	return (
 		<div className="flex-1">
@@ -26,6 +30,13 @@ function Chart({ symbol }: { symbol: string }) {
 					<UiChart
 						data={data}
 						newData={wsKline}
+						interval={interval}
+						onIntervalChange={(interval) => {
+							setInterval(interval);
+							queryClient.invalidateQueries({
+								queryKey: ["kline", interval, symbol, LIMIT_KLINE, CATEGORY],
+							});
+						}}
 						width="1200px"
 						height="600px"
 					/>
