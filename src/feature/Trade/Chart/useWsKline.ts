@@ -6,6 +6,29 @@ interface Props {
 	symbol: string;
 }
 
+interface WsKlineType {
+	conn_id?: string;
+	op?: string;
+	ret_smg?: string;
+	success?: string;
+	type?: string;
+	topic?: string;
+	ts?: number;
+	data?: {
+		close: string; // закрытие
+		confirm: boolean; // подтверждение свечи (bool)
+		end: number; // время конца свечи (timestamp в мс)
+		high: string; // максимум
+		interval: string; // интервал, например "1" (в минутах или другом формате)
+		low: string; // минимум
+		open: string; // открытие
+		start: number; // время начала свечи (timestamp в мс)
+		timestamp: number; // время получения (timestamp в мс)
+		turnover: string; // оборот
+		volume: string;
+	}[];
+}
+
 export function useWsKline({ interval, symbol }: Props): OhlcData {
 	const [kline, setKline] = useState<OhlcData | null>(null);
 	const wsRef = useRef<WebSocket | null>(null);
@@ -26,7 +49,7 @@ export function useWsKline({ interval, symbol }: Props): OhlcData {
 		};
 
 		ws.onmessage = (event) => {
-			const message = JSON.parse(event.data);
+			const message: WsKlineType = JSON.parse(event.data);
 
 			if (
 				message.topic !== topic ||
