@@ -143,7 +143,7 @@ function Chart({
 	}, [data]);
 
 	useEffect(() => {
-		if (newDataRef.current !== newData) {
+		if (newData && newDataRef.current !== newData) {
 			candlestickSeriesRef.current?.update(newData);
 			newDataRef.current = newData;
 		}

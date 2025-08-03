@@ -1,11 +1,11 @@
+import type { OrderbookType } from "../types";
 import { OrderbookList } from "./OrderbookList";
 import { PercentBar } from "./PercentBar";
-import { useOrderbook } from "./useOrderbook";
 
-type Props = { symbol: string; depth: number };
+type Props = { orderbook: OrderbookType };
 
-function Orderbook({ symbol, depth }: Props) {
-	const orderbook = useOrderbook(symbol, depth);
+function Orderbook({ orderbook }: Props) {
+	if (!orderbook) return;
 
 	return (
 		<div className="w-full bg-[#101014] p-2 flex flex-col">
