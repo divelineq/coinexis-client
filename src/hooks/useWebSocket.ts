@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 type WebSocketCallback = (
 	channel: string,
@@ -18,15 +18,9 @@ const useWebSocket = (
 	callback: WebSocketCallback,
 	options: WebSocketOptions = {},
 ) => {
-	const {
-		enabled = true,
-		reconnect = true,
-		reconnectInterval = 3000,
-		maxReconnectAttempts = 5,
-	} = options;
+	const { enabled = true } = options;
 
-	const ws = useRef<WebSocket | null>(null);
-	const reconnectAttempts = useRef(0);
+	// const ws = useRef<WebSocket | null>(null);
 	const activeSubscriptions = useRef<Set<string>>(new Set());
 	const callbackRef = useRef(callback);
 
@@ -34,106 +28,70 @@ const useWebSocket = (
 		callbackRef.current = callback;
 	}, [callback]);
 
-	const getSubscriptionKey = useCallback((channel: string) => {
-		return channel;
-	}, []);
-
-	const sendSubscriptions = useCallback(() => {
-		if (!ws.current || ws.current.readyState !== WebSocket.OPEN) return;
-
-		for (const channel of channels) {
-			const subKey = getSubscriptionKey(channel);
-
-			if (!activeSubscriptions.current.has(subKey)) {
-				ws.current?.send(
-					JSON.stringify({
-						op: "subscribe",
-						args: [channel],
-					}),
-				);
-				activeSubscriptions.current.add(subKey);
-			}
-		}
-	}, [channels, getSubscriptionKey]);
-
-	const handleMessage = useCallback((event: MessageEvent) => {
-		try {
-			const message = JSON.parse(event.data);
-
-			if (message.data !== undefined) {
-				callbackRef.current(message.topic, message.type, message.data);
-			}
-		} catch (error) {
-			console.error("WebSocket message parsing error:", error);
-		}
-	}, []);
-
-	const connect = useCallback(() => {
+	useEffect(() => {
 		if (!enabled) return;
 
-		ws.current = new WebSocket("wss://stream.bybit.com/v5/public/spot");
+		const ws = new WebSocket("wss://stream.bybit.com/v5/public/spot");
 
-		ws.current.onopen = () => {
-			reconnectAttempts.current = 0;
-			sendSubscriptions();
-		};
-
-		ws.current.onmessage = handleMessage;
-
-		ws.current.onclose = () => {
-			if (reconnect && reconnectAttempts.current < maxReconnectAttempts) {
-				reconnectAttempts.current += 1;
-				setTimeout(connect, reconnectInterval);
+		ws.onopen = () => {
+			for (const channel of channels) {
+				if (!activeSubscriptions.current.has(channel)) {
+					console.info(`Соединение по каналу ${channel}открыто`);
+					ws.send(
+						JSON.stringify({
+							op: "subscribe",
+							args: [channel],
+						}),
+					);
+					activeSubscriptions.current.add(channel);
+				}
 			}
 		};
 
-		ws.current.onerror = (error) => {
+		ws.onmessage = (event) => {
+			const message = JSON.parse(event.data);
+
+			if (!message?.topic) {
+				return;
+			}
+
+			callbackRef.current(message.topic, message.type, message.data);
+		};
+
+		ws.onerror = (error) => {
 			if (
-				ws.current?.readyState === WebSocket.CLOSING ||
-				ws.current?.readyState === WebSocket.CLOSED
+				ws.readyState === WebSocket.CLOSING ||
+				ws.readyState === WebSocket.CLOSED
 			) {
 				return;
 			}
 
-			console.error("WebSocket error:", error);
+			console.error("WebSocket error", error);
 		};
-	}, [
-		enabled,
-		reconnect,
-		reconnectInterval,
-		maxReconnectAttempts,
-		handleMessage,
-		sendSubscriptions,
-	]);
 
-	useEffect(() => {
-		if (ws.current?.readyState === WebSocket.OPEN) {
-			sendSubscriptions();
-		}
-	}, [channels, sendSubscriptions]);
-
-	useEffect(() => {
-		if (enabled) {
-			connect();
-		} else if (ws.current) {
-			ws.current.close();
-			ws.current = null;
-			activeSubscriptions.current.clear();
-		}
+		ws.onclose = () => {
+			ws.close();
+		};
 
 		return () => {
-			if (ws.current) {
-				console.info("Closing WebSocket connection");
+			if (ws.readyState === WebSocket.OPEN) {
 				for (const channel of channels) {
-					ws.current?.send(
-						JSON.stringify({ op: "unsubscribe", args: [channel] }),
+					console.info(`Соединение по каналу ${channel} закрыто`);
+					ws.send(
+						JSON.stringify({
+							op: "unsubscribe",
+							args: [channel],
+						}),
 					);
+					activeSubscriptions.current.delete(channel);
 				}
 
-				ws.current.close();
+				ws.close();
+			} else if (ws.readyState === WebSocket.CONNECTING) {
+				ws.close();
 			}
 		};
-	}, [enabled, connect]);
+	}, [channels, enabled]);
 };
 
 export { useWebSocket };
