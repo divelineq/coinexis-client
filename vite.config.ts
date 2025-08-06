@@ -20,15 +20,16 @@ export default defineConfig({
 			"@api": path.resolve(__dirname, "./src/api"),
 			"@service": path.resolve(__dirname, "./src/service"),
 			"@feature": path.resolve(__dirname, "./src/feature"),
+			"@hooks": path.resolve(__dirname, "./src/hooks"),
 		},
 	},
 	server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:4200',
-        changeOrigin: true,
-        secure: true,
-      }
-    }
-  }
+		proxy: {
+			"/api": {
+				target: "http://localhost:4200",
+				changeOrigin: true,
+				secure: true,
+			},
+		},
+	},
 });

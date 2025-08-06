@@ -1,3 +1,4 @@
+import { useWebSocket } from "@hooks";
 import { WalletField } from "@ui";
 import { parseAsString, useQueryState } from "nuqs";
 import { Cards } from "./Cards";
@@ -5,6 +6,8 @@ import { useNft } from "./useNft";
 import { usePaginationState } from "./usePaginationState";
 
 function Nft() {
+	useWebSocket(["kline.1.BTCUSDT"], (_, __, data) => console.log(data[0]));
+
 	const [address, setAddress] = useQueryState(
 		"address",
 		parseAsString.withOptions({ clearOnDefault: false }),
