@@ -1,19 +1,91 @@
+import { useWebSocket } from "@hooks";
+import cx from "classix";
+import { useState } from "react";
+import type { TickersWsDto } from "./types";
+
 type Props = {
 	symbol: string;
-	tickers: any;
 };
 
-function Header({ symbol, tickers }: Props) {
+function Header({ symbol }: Props) {
+	const [tickers, setTickers] = useState<TickersWsDto | null>(null);
+
+	useWebSocket<TickersWsDto>([`tickers.${symbol}`], (_, __, data) =>
+		setTickers(data),
+	);
+
 	return (
-		<div className="flex items-center justify-between px-4 py-2 bg-[#101014]">
-			<div className="flex items-center gap-2">
-				<div className="font-bold text-lg">{symbol}</div>
+		<div className="flex items-center justify-start px-4 py-2 bg-[#101014]">
+			<div className="flex flex-col  border-r border-white/50 px-2 ">
+				<div className="font-bold text-md">{symbol}</div>
+				<div className="text-xs text-white/50">spot</div>
 			</div>
-			{tickers && <div>lastPrice: {tickers.lastPrice}</div>}
-			<div className="flex gap-2">
-				<button className="px-3 py-1 bg-zinc-800 rounded">Settings</button>
-				<button className="px-3 py-1 bg-zinc-800 rounded">Tools</button>
-			</div>
+			{tickers && (
+				<div className="pl-2 flex gap-6 items-center">
+					<div>
+						<p
+							className={cx(
+								Number(tickers.price24hPcnt) > 0
+									? "text-buy"
+									: Number(tickers.price24hPcnt) < 0
+										? "text-sell"
+										: "text-white",
+							)}
+						>
+							{Number(tickers.lastPrice).toFixed(1)}
+						</p>
+						<p className="text-xs text-white/50">
+							{Number(tickers.lastPrice).toLocaleString("en-US", {
+								style: "currency",
+								currency: "USD",
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2,
+							})}{" "}
+							USD
+						</p>
+					</div>
+					<div className="">
+						<p className="text-xs">24H Change</p>
+						<p
+							className={cx(
+								Number(tickers.price24hPcnt) > 0
+									? "text-buy"
+									: Number(tickers.price24hPcnt) < 0
+										? "text-sell"
+										: "text-white",
+								"text-xs",
+							)}
+						>
+							{Number(tickers.price24hPcnt) > 0 ? "+" : "-"}
+							{Number(tickers.price24hPcnt).toFixed(2)}%
+						</p>
+					</div>
+					<div>
+						<p className="text-xs">24H High</p>
+						<p className="text-xs text-white/50">
+							{Number(tickers.highPrice24h).toLocaleString("en-US")}
+						</p>
+					</div>
+					<div>
+						<p className="text-xs">24H Low</p>
+						<p className="text-xs text-white/50">
+							{Number(tickers.lowPrice24h).toLocaleString("en-US")}
+						</p>
+					</div>
+					<div>
+						<p className="text-xs">24H Turnover</p>
+						<p className="text-xs text-white/50">
+							{Number(tickers.turnover24h).toLocaleString("en-US")}
+						</p>
+					</div>
+					<div>
+						<p className="text-xs">24H Volume</p>
+						<p className="text-xs text-white/50">
+							{Number(tickers.volume24h).toLocaleString("en-US")}
+						</p>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }

@@ -3,6 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Chart as UiChart } from "@ui";
 import type { OhlcData } from "lightweight-charts";
 import { useState } from "react";
+import type { KlineWsDto } from "../types";
 import { useIntervalState } from "../useIntervalState";
 import { Skeleton } from "./Skeleton";
 import { useKline } from "./useKline";
@@ -25,17 +26,16 @@ function Chart({ symbol }: Props) {
 		error,
 	} = useKline(symbol, interval, LIMIT_KLINE, CATEGORY);
 
-	useWebSocket(
+	useWebSocket<KlineWsDto[]>(
 		[`kline.${interval}.${symbol}`],
-		(_, __, data) => {
+		(_, __, data) =>
 			setKline({
 				time: data[0].start,
 				open: +data[0].open,
 				close: +data[0].close,
 				low: +data[0].low,
 				high: +data[0].high,
-			});
-		},
+			}),
 		{ enabled: !!historyKline },
 	);
 

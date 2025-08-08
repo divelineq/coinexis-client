@@ -1,6 +1,6 @@
 import { useWebSocket } from "@hooks";
 import { useEffect, useRef, useState } from "react";
-import type { OrderbookDto, OrderbookType } from "../types";
+import type { OrderbookType, OrderbookWsDto } from "../types";
 import { OrderbookList } from "./OrderbookList";
 import { PercentBar } from "./PercentBar";
 import { updateOrderbook } from "./updateOrderbook";
@@ -37,7 +37,7 @@ function Orderbook({ symbol }: Props) {
 		return () => clearInterval(interval);
 	}, []);
 
-	useWebSocket<OrderbookDto>(
+	useWebSocket<OrderbookWsDto>(
 		[`orderbook.${ORDERBOOK_DEPTH}.${symbol}`],
 		(_, type, data) => {
 			if (type === "snapshot") {
