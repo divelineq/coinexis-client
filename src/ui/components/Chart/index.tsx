@@ -12,7 +12,6 @@ import { HoveredInfo } from "./HoveredInfo";
 import { IntervalButtons } from "./IntervalButtons";
 
 type Props = {
-	symbol: string;
 	data: OhlcData[];
 	newData?: OhlcData | null;
 	className?: string;
@@ -27,7 +26,6 @@ const LOAD_BATCH = 200;
 const VISIBLE_BAR = 120;
 
 function Chart({
-	symbol,
 	data,
 	newData,
 	width,
@@ -146,8 +144,13 @@ function Chart({
 
 	useEffect(() => {
 		if (newData && newDataRef.current !== newData) {
-			candlestickSeriesRef.current?.update(newData);
-			newDataRef.current = newData;
+			const lastBar = loadedRangeRef.current.at(-1);
+
+			if (lastBar && newData.time >= lastBar.time) {
+				candlestickSeriesRef.current?.update(newData);
+				loadedRangeRef.current[loadedRangeRef.current.length - 1] = newData;
+				newDataRef.current = newData;
+			}
 		}
 	}, [newData, candlestickSeriesRef.current]);
 

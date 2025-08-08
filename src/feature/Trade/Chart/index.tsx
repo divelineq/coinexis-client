@@ -46,7 +46,6 @@ function Chart({ symbol }: Props) {
 				{error && <div className="text-red-400">Error: {error.message}</div>}
 				{!isLoading && !error && historyKline && (
 					<UiChart
-						symbol={symbol}
 						data={historyKline}
 						newData={newKline}
 						interval={interval}
