@@ -10,13 +10,22 @@ type Props = {
 function Header({ symbol }: Props) {
 	const [tickers, setTickers] = useState<TickersWsDto | null>(null);
 
-	useWebSocket<TickersWsDto>([`tickers.${symbol}`], (_, __, data) =>
-		setTickers(data),
-	);
+	useWebSocket<TickersWsDto>([`tickers.${symbol}`], (_, __, data) => {
+		setTickers(data);
+		document.title = `${symbol} | ${Number(data.lastPrice).toLocaleString(
+			"en-US",
+			{
+				style: "currency",
+				currency: "USD",
+				minimumFractionDigits: 2,
+				maximumFractionDigits: 2,
+			},
+		)}`;
+	});
 
 	return (
 		<div className="flex items-center justify-start px-4 py-2 bg-[#101014]">
-			<div className="flex flex-col  border-r border-white/50 px-2 ">
+			<div className="flex flex-col  border-r border-white/50 px-6 ">
 				<div className="font-bold text-md">{symbol}</div>
 				<div className="text-xs text-white/50">spot</div>
 			</div>
@@ -30,11 +39,12 @@ function Header({ symbol }: Props) {
 									: Number(tickers.price24hPcnt) < 0
 										? "text-sell"
 										: "text-white",
+								"font-mono",
 							)}
 						>
 							{Number(tickers.lastPrice).toFixed(1)}
 						</p>
-						<p className="text-xs text-white/50">
+						<p className="text-xs text-white/50 font-mono">
 							{Number(tickers.lastPrice).toLocaleString("en-US", {
 								style: "currency",
 								currency: "USD",
@@ -53,35 +63,46 @@ function Header({ symbol }: Props) {
 									: Number(tickers.price24hPcnt) < 0
 										? "text-sell"
 										: "text-white",
-								"text-xs",
+								"text-xs font-mono",
 							)}
 						>
 							{Number(tickers.price24hPcnt) > 0 ? "+" : "-"}
-							{Number(tickers.price24hPcnt).toFixed(2)}%
+							{Number(
+								((Number(tickers.lastPrice) - Number(tickers.prevPrice24h)) /
+									Number(tickers.prevPrice24h)) *
+									100,
+							).toFixed(2)}
+							%
 						</p>
 					</div>
 					<div>
 						<p className="text-xs">24H High</p>
-						<p className="text-xs text-white/50">
+						<p className="text-xs text-white/50 font-mono">
 							{Number(tickers.highPrice24h).toLocaleString("en-US")}
 						</p>
 					</div>
 					<div>
 						<p className="text-xs">24H Low</p>
-						<p className="text-xs text-white/50">
+						<p className="text-xs text-white/50 font-mono">
 							{Number(tickers.lowPrice24h).toLocaleString("en-US")}
 						</p>
 					</div>
 					<div>
 						<p className="text-xs">24H Turnover</p>
-						<p className="text-xs text-white/50">
-							{Number(tickers.turnover24h).toLocaleString("en-US")}
+						<p className="text-xs text-white/50 font-mono">
+							{Number(tickers.turnover24h).toLocaleString("en-US", {
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2,
+							})}
 						</p>
 					</div>
 					<div>
 						<p className="text-xs">24H Volume</p>
-						<p className="text-xs text-white/50">
-							{Number(tickers.volume24h).toLocaleString("en-US")}
+						<p className="text-xs text-white/50 font-mono">
+							{Number(tickers.volume24h).toLocaleString("en-US", {
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2,
+							})}
 						</p>
 					</div>
 				</div>

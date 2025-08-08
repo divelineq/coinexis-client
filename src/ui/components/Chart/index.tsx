@@ -12,6 +12,7 @@ import { HoveredInfo } from "./HoveredInfo";
 import { IntervalButtons } from "./IntervalButtons";
 
 type Props = {
+	symbol: string;
 	data: OhlcData[];
 	newData?: OhlcData | null;
 	className?: string;
@@ -26,6 +27,7 @@ const LOAD_BATCH = 200;
 const VISIBLE_BAR = 120;
 
 function Chart({
+	symbol,
 	data,
 	newData,
 	width,
