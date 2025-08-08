@@ -1,11 +1,56 @@
-import type { OrderbookType } from "../types";
+import { useWebSocket } from "@hooks";
+import { useEffect, useRef, useState } from "react";
+import type { OrderbookDto, OrderbookType } from "../types";
 import { OrderbookList } from "./OrderbookList";
 import { PercentBar } from "./PercentBar";
+import { updateOrderbook } from "./updateOrderbook";
 
-type Props = { orderbook: OrderbookType };
+type Props = {
+	symbol: string;
+};
 
-function Orderbook({ orderbook }: Props) {
-	if (!orderbook) return;
+const ORDERBOOK_DEPTH = 50;
+
+function Orderbook({ symbol }: Props) {
+	const [orderbook, setOrderbook] = useState<OrderbookType>({
+		bids: [],
+		asks: [],
+	});
+	const orderbookRef = useRef<OrderbookType>(orderbook);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			const bids = updateOrderbook(
+				orderbookRef.current.bids,
+				orderbookRef.current.bids,
+				true,
+			);
+			const asks = updateOrderbook(
+				orderbookRef.current.asks,
+				orderbookRef.current.asks,
+				false,
+			);
+
+			setOrderbook({ bids, asks });
+		}, 1000);
+
+		return () => clearInterval(interval);
+	}, []);
+
+	useWebSocket<OrderbookDto>(
+		[`orderbook.${ORDERBOOK_DEPTH}.${symbol}`],
+		(_, type, data) => {
+			if (type === "snapshot") {
+				setOrderbook({ bids: data.b, asks: data.a });
+				return;
+			}
+
+			orderbookRef.current = {
+				bids: updateOrderbook(orderbookRef.current.bids, data.b, false),
+				asks: updateOrderbook(orderbookRef.current.asks, data.a, true),
+			};
+		},
+	);
 
 	return (
 		<div className="w-full bg-[#101014] p-2 flex flex-col">

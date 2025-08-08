@@ -3,6 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Chart as UiChart } from "@ui";
 import type { OhlcData } from "lightweight-charts";
 import { useState } from "react";
+import { useIntervalState } from "../useIntervalState";
 import { Skeleton } from "./Skeleton";
 import { useKline } from "./useKline";
 
@@ -11,11 +12,11 @@ const CATEGORY = "spot";
 
 type Props = {
 	symbol: string;
-	interval: string;
-	onIntervalChange: (interval: string) => void;
 };
 
-function Chart({ symbol, interval, onIntervalChange }: Props) {
+function Chart({ symbol }: Props) {
+	const [interval, setInterval] = useIntervalState();
+
 	const [newKline, setKline] = useState<OhlcData | null>(null);
 	const queryClient = useQueryClient();
 	const {
@@ -49,7 +50,7 @@ function Chart({ symbol, interval, onIntervalChange }: Props) {
 						newData={newKline}
 						interval={interval}
 						onIntervalChange={(interval) => {
-							onIntervalChange(interval);
+							setInterval(interval);
 							queryClient.invalidateQueries({
 								queryKey: ["kline", interval, symbol, LIMIT_KLINE, CATEGORY],
 							});

@@ -1,19 +1,11 @@
 import { Route } from "../../routes/market/$symbol";
 import { Chart } from "./Chart";
 import { Footer } from "./Footer";
+import { Orderbook } from "./Orderbook";
 import { Sidebar } from "./Sidebar";
-import { useIntervalState } from "./useIntervalState";
-
-const ORDERBOOK_DEPTH = 50;
 
 function Trade() {
 	const { symbol } = Route.useLoaderData();
-	const [interval, setInterval] = useIntervalState();
-	// const topics = useMemo(
-	// 	() => [`tickers.${symbol}`, `orderbook.${ORDERBOOK_DEPTH}.${symbol}`],
-	// 	[symbol, interval],
-	// );
-	// const { orderbook, tickers } = useTradeSocket({ topics });
 
 	return (
 		<div className="min-h-screen bg-background">
@@ -25,12 +17,8 @@ function Trade() {
 							<div className="flex-1 flex ">
 								<div className="flex-1 flex flex-col rounded">
 									<div className="flex-1 flex gap-2">
-										<Chart
-											symbol={symbol}
-											interval={interval}
-											onIntervalChange={setInterval}
-										/>
-										{/* <Orderbook orderbook={orderbook} /> */}
+										<Chart symbol={symbol} />
+										<Orderbook symbol={symbol} />
 									</div>
 								</div>
 							</div>

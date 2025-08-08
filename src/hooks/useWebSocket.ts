@@ -1,18 +1,18 @@
 import { useCallback, useEffect, useRef } from "react";
 
-type WebSocketCallback = (
+type WebSocketCallback<T> = (
 	channel: string,
 	type: string | undefined,
-	data: any,
+	data: T,
 ) => void;
 
 interface WebSocketOptions {
 	enabled?: boolean;
 }
 
-export const useWebSocket = (
+export const useWebSocket = <T>(
 	channels: string[],
-	callback: WebSocketCallback,
+	callback: WebSocketCallback<T>,
 	options: WebSocketOptions = {},
 ) => {
 	const cb = useCallback(callback, [callback]);

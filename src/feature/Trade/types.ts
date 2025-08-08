@@ -5,6 +5,14 @@ export type OrderbookType = {
 	asks: Level[];
 };
 
+export type OrderbookDto = {
+	a: Level[];
+	b: Level[];
+	s: string;
+	seq: number;
+	u: number;
+};
+
 export interface WsKlineType {
 	conn_id?: string;
 	op?: string;
