@@ -35,14 +35,6 @@ export function useTradeSocket({ topics }: Props) {
 				return;
 			setTickers(tickersRef.current);
 
-			setKline({
-				time: klineRef.current?.start,
-				open: Number(klineRef.current?.open),
-				high: Number(klineRef.current?.high),
-				low: Number(klineRef.current?.low),
-				close: Number(klineRef.current?.close),
-			});
-
 			setOrderbook({
 				bids: orderbookBufferRef.current.bids,
 				asks: orderbookBufferRef.current.asks,

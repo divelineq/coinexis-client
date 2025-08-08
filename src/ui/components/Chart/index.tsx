@@ -13,7 +13,7 @@ import { IntervalButtons } from "./IntervalButtons";
 
 type Props = {
 	data: OhlcData[];
-	newData: OhlcData;
+	newData?: OhlcData | null;
 	className?: string;
 	chartStyle?: { width: number; height: number };
 	width?: string;

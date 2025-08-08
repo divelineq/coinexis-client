@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 type WebSocketCallback = (
 	channel: string,
@@ -8,90 +8,109 @@ type WebSocketCallback = (
 
 interface WebSocketOptions {
 	enabled?: boolean;
-	reconnect?: boolean;
-	reconnectInterval?: number;
-	maxReconnectAttempts?: number;
 }
 
-const useWebSocket = (
+export const useWebSocket = (
 	channels: string[],
 	callback: WebSocketCallback,
 	options: WebSocketOptions = {},
 ) => {
+	const cb = useCallback(callback, [callback]);
 	const { enabled = true } = options;
-
-	// const ws = useRef<WebSocket | null>(null);
+	const wsRef = useRef<WebSocket | null>(null);
 	const activeSubscriptions = useRef<Set<string>>(new Set());
-	const callbackRef = useRef(callback);
-
-	useEffect(() => {
-		callbackRef.current = callback;
-	}, [callback]);
+	const callbackRef = useRef(cb);
 
 	useEffect(() => {
 		if (!enabled) return;
 
 		const ws = new WebSocket("wss://stream.bybit.com/v5/public/spot");
+		wsRef.current = ws;
 
 		ws.onopen = () => {
+			console.info("WebSocket соединение открыто");
 			for (const channel of channels) {
-				if (!activeSubscriptions.current.has(channel)) {
-					console.info(`Соединение по каналу ${channel}открыто`);
-					ws.send(
-						JSON.stringify({
-							op: "subscribe",
-							args: [channel],
-						}),
-					);
-					activeSubscriptions.current.add(channel);
-				}
+				subscribeChannel(ws, channel, activeSubscriptions.current);
 			}
 		};
 
 		ws.onmessage = (event) => {
-			const message = JSON.parse(event.data);
-
-			if (!message?.topic) {
-				return;
+			try {
+				const message = JSON.parse(event.data);
+				if (message?.topic) {
+					callbackRef.current(message.topic, message.type, message.data);
+				}
+			} catch (error) {
+				console.error("Ошибка парсинга сообщения WS:", error);
 			}
-
-			callbackRef.current(message.topic, message.type, message.data);
 		};
 
 		ws.onerror = (error) => {
-			if (
-				ws.readyState === WebSocket.CLOSING ||
-				ws.readyState === WebSocket.CLOSED
-			) {
-				return;
+			if (wsRef.current?.readyState === WebSocket.OPEN) {
+				console.error("WebSocket error", error);
 			}
-
-			console.error("WebSocket error", error);
 		};
 
 		ws.onclose = () => {
-			ws.close();
+			console.info("WebSocket соединение закрыто");
+			activeSubscriptions.current.clear();
 		};
 
 		return () => {
 			if (ws.readyState === WebSocket.OPEN) {
-				for (const channel of channels) {
-					console.info(`Соединение по каналу ${channel} закрыто`);
-					ws.send(
-						JSON.stringify({
-							op: "unsubscribe",
-							args: [channel],
-						}),
-					);
-					activeSubscriptions.current.delete(channel);
+				for (const channel of activeSubscriptions.current) {
+					unsubscribeChannel(ws, channel, activeSubscriptions.current);
 				}
-
-				ws.close();
-			} else if (ws.readyState === WebSocket.CONNECTING) {
-				ws.close();
 			}
+
+			ws.close();
 		};
+	}, [enabled]);
+
+	useEffect(() => {
+		if (
+			!enabled ||
+			!wsRef.current ||
+			wsRef.current.readyState !== WebSocket.OPEN
+		) {
+			return;
+		}
+
+		const ws = wsRef.current;
+
+		const newChannels = channels.filter(
+			(c) => !activeSubscriptions.current.has(c),
+		);
+		const removedChannels = [...activeSubscriptions.current].filter(
+			(c) => !channels.includes(c),
+		);
+
+		for (const channel of newChannels) {
+			subscribeChannel(ws, channel, activeSubscriptions.current);
+		}
+
+		for (const channel of removedChannels) {
+			unsubscribeChannel(ws, channel, activeSubscriptions.current);
+		}
 	}, [channels, enabled]);
 };
 
-export { useWebSocket };
+function subscribeChannel(
+	ws: WebSocket,
+	channel: string,
+	activeSubscriptions: Set<string>,
+) {
+	ws.send(JSON.stringify({ op: "subscribe", args: [channel] }));
+	activeSubscriptions.add(channel);
+	console.info(`Подписка на канал: ${channel}`);
+}
+
+function unsubscribeChannel(
+	ws: WebSocket,
+	channel: string,
+	activeSubscriptions: Set<string>,
+) {
+	ws.send(JSON.stringify({ op: "unsubscribe", args: [channel] }));
+	activeSubscriptions.delete(channel);
+	console.info(`Отписка от канала: ${channel}`);
+}

@@ -1,6 +1,8 @@
+import { useWebSocket } from "@hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { Chart as UiChart } from "@ui";
 import type { OhlcData } from "lightweight-charts";
+import { useState } from "react";
 import { Skeleton } from "./Skeleton";
 import { useKline } from "./useKline";
 
@@ -9,18 +11,32 @@ const CATEGORY = "spot";
 
 type Props = {
 	symbol: string;
-	newKline: OhlcData;
 	interval: string;
 	onIntervalChange: (interval: string) => void;
 };
 
-function Chart({ symbol, newKline, interval, onIntervalChange }: Props) {
+function Chart({ symbol, interval, onIntervalChange }: Props) {
+	const [newKline, setKline] = useState<OhlcData | null>(null);
 	const queryClient = useQueryClient();
 	const {
 		data: historyKline,
 		isLoading,
 		error,
 	} = useKline(symbol, interval, LIMIT_KLINE, CATEGORY);
+
+	useWebSocket(
+		[`kline.${interval}.${symbol}`],
+		(_, __, data) => {
+			setKline({
+				time: data[0].start,
+				open: +data[0].open,
+				close: +data[0].close,
+				low: +data[0].low,
+				high: +data[0].high,
+			});
+		},
+		{ enabled: !!historyKline },
+	);
 
 	return (
 		<div className="flex-1">
