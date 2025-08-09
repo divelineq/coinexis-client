@@ -5,18 +5,18 @@ import { usePaginationState } from "./usePaginationState";
 import { useTransactions } from "./useTransactions";
 
 function Transactions() {
-	const [address, setAddress] = useQueryState("address", parseAsString);
+	const [wallet, setWallet] = useQueryState("wallet", parseAsString);
 	const [pagination, setPagination] = usePaginationState();
 
 	const { data, isLoading, error, isFetched, isFetching } = useTransactions(
-		address,
+		wallet,
 		pagination.pageSize,
 		pagination.pageIndex * pagination.pageSize,
 	);
 
 	return (
 		<div className="p-4">
-			<WalletField onChange={setAddress} isPending={isLoading} />
+			<WalletField onChange={setWallet} isPending={isLoading} />
 			{data && (
 				<TransactionsInfo
 					shouldShowSkeleton={!isFetched && isFetching}
