@@ -7,10 +7,11 @@ import {
 	type Time,
 	createChart,
 } from "lightweight-charts";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CANDLESTICK_COLORS, CHART_OPTIONS } from "./Consts";
 import { HoveredInfo } from "./HoveredInfo";
 import { IntervalButtons } from "./IntervalButtons";
+import { setupVisibleRange } from "./setupVisibleRange";
 
 type Props = {
 	data: OhlcData[];
@@ -24,7 +25,15 @@ type Props = {
 };
 
 const LOAD_BATCH = 200;
-const VISIBLE_BAR = 120;
+
+const createLineData = (data: OhlcData[]) =>
+	data.map((item) => ({
+		time: item.time,
+		value: (item.open + item.close) / 2,
+	}));
+
+const getBarColor = (ohlcData: OhlcData) =>
+	ohlcData?.close > ohlcData?.open ? "var(--buy-color)" : "var(--sell-color)";
 
 function Chart({
 	data,
@@ -37,6 +46,7 @@ function Chart({
 	const [hoveredData, setHoveredData] = useState<
 		(OhlcData & { color?: string }) | null
 	>(data.at(-1)!);
+
 	const chartRef = useRef<IChartApi | null>(null);
 	const candlestickSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -46,60 +56,32 @@ function Chart({
 	const timestampRef = useRef<Time | undefined>(null);
 	const openRef = useRef<number | undefined>(null);
 
-	useEffect(() => {
-		//? для того что бы при изменении интервала не создавал новую свечу
-		timestampRef.current = data.at(-1)?.time;
-		openRef.current = data.at(-1)?.open;
+	const createSeries = useCallback(
+		(chart: IChartApi, initialSlice: OhlcData[]) => {
+			const lineData = createLineData(initialSlice);
 
-		if (!containerRef.current) return;
+			const lineSeries = chart.addSeries(LineSeries, {
+				lineWidth: 1,
+				color: "#fff",
+				lastValueVisible: false,
+				crosshairMarkerVisible: false,
+				priceLineVisible: false,
+			});
+			lineSeries.setData(lineData);
 
-		const initialSlice = data.slice(-LOAD_BATCH);
-		loadedRangeRef.current = initialSlice;
+			const candlestickSeries = chart.addSeries(
+				CandlestickSeries,
+				CANDLESTICK_COLORS,
+			);
+			candlestickSeries.setData(initialSlice);
 
-		const lineData = initialSlice.map((item) => ({
-			time: item.time,
-			value: (item.open + item.close) / 2,
-		}));
+			return candlestickSeries;
+		},
+		[],
+	);
 
-		const chart = createChart(containerRef.current, CHART_OPTIONS);
-		chart.applyOptions({});
-		const timeScale = chart.timeScale();
-
-		const totalBars = data.length;
-
-		if (totalBars >= VISIBLE_BAR) {
-			setTimeout(() => {
-				chart.timeScale().setVisibleLogicalRange({
-					from: data.length - VISIBLE_BAR,
-					to: totalBars - 1,
-				});
-				chart.timeScale().scrollToRealTime();
-			}, 0);
-		} else {
-			chart.timeScale().fitContent();
-		}
-
-		chartRef.current = chart;
-
-		timeScale.fitContent();
-
-		const lineSeries = chart.addSeries(LineSeries, {
-			lineWidth: 1,
-			color: "#fff",
-			lastValueVisible: false,
-			crosshairMarkerVisible: false,
-			priceLineVisible: false,
-		});
-		lineSeries.setData(lineData);
-
-		const candlestickSeries = chart.addSeries(
-			CandlestickSeries,
-			CANDLESTICK_COLORS,
-		);
-		candlestickSeries.setData(initialSlice);
-		candlestickSeriesRef.current = candlestickSeries;
-
-		chart.subscribeCrosshairMove((param) => {
+	const handleCrosshairMove = useCallback(
+		(candlestickSeries: ISeriesApi<"Candlestick">) => (param: any) => {
 			if (!param.time && !param.hoveredSeries) {
 				setHoveredData(newDataRef.current!);
 				return;
@@ -108,16 +90,15 @@ function Chart({
 			const ohlcData = param.seriesData.get(candlestickSeries) as OhlcData;
 			setHoveredData({
 				...ohlcData,
-				color:
-					ohlcData?.close > ohlcData?.open
-						? "var(--buy-color)"
-						: "var(--sell-color)",
+				color: getBarColor(ohlcData),
 			});
-		});
+		},
+		[],
+	);
 
-		timeScale.subscribeVisibleLogicalRangeChange((range) => {
-			if (!range) return;
-			if (!candlestickSeriesRef.current) return;
+	const handleVisibleRangeChange = useCallback(
+		() => (range: any) => {
+			if (!range || !candlestickSeriesRef.current) return;
 
 			const visibleFrom = Number(range.from);
 			const total = loadedRangeRef.current.length;
@@ -134,7 +115,33 @@ function Chart({
 				loadedRangeRef.current = [...newData, ...loadedRangeRef.current];
 				candlestickSeriesRef.current.setData(loadedRangeRef.current);
 			}
-		});
+		},
+		[data],
+	);
+
+	const initializeChart = useCallback(() => {
+		if (!containerRef.current) return;
+
+		//? для того что бы при изменении интервала не создавал новую свечу
+		timestampRef.current = data.at(-1)?.time;
+		openRef.current = data.at(-1)?.open;
+
+		const initialSlice = data.slice(-LOAD_BATCH);
+		loadedRangeRef.current = initialSlice;
+
+		const chart = createChart(containerRef.current, CHART_OPTIONS);
+		chart.applyOptions({});
+		chartRef.current = chart;
+
+		setupVisibleRange(chart, data.length);
+
+		const candlestickSeries = createSeries(chart, initialSlice);
+		candlestickSeriesRef.current = candlestickSeries;
+
+		chart.subscribeCrosshairMove(handleCrosshairMove(candlestickSeries));
+		chart
+			.timeScale()
+			.subscribeVisibleLogicalRangeChange(handleVisibleRangeChange());
 
 		const handleResize = () => {
 			chart.applyOptions({ width: containerRef.current?.clientWidth });
@@ -144,33 +151,44 @@ function Chart({
 
 		return () => {
 			window.removeEventListener("resize", handleResize);
-
 			chart.remove();
 		};
-	}, [data]);
+	}, [
+		data,
+		setupVisibleRange,
+		createSeries,
+		handleCrosshairMove,
+		handleVisibleRangeChange,
+	]);
 
-	useEffect(() => {
+	const updateNewData = useCallback(() => {
 		if (!newData || newDataRef.current === newData) return;
 
 		const lastBar = loadedRangeRef.current.at(-1);
+		if (!lastBar || newData.time < lastBar.time) return;
 
-		if (lastBar && newData.time >= lastBar.time) {
-			if (newData.open !== openRef.current) {
-				openRef.current = newData.open;
-				timestampRef.current = newData.time;
-			}
-
-			const currentNewData: OhlcData<Time> = {
-				...newData,
-				time: timestampRef.current as Time,
-			};
-
-			candlestickSeriesRef.current?.update(currentNewData);
-			loadedRangeRef.current[loadedRangeRef.current.length - 1] =
-				currentNewData;
-			newDataRef.current = currentNewData;
+		if (newData.open !== openRef.current) {
+			openRef.current = newData.open;
+			timestampRef.current = newData.time;
 		}
-	}, [newData, candlestickSeriesRef.current]);
+
+		const currentNewData: OhlcData<Time> = {
+			...newData,
+			time: timestampRef.current as Time,
+		};
+
+		candlestickSeriesRef.current?.update(currentNewData);
+		loadedRangeRef.current[loadedRangeRef.current.length - 1] = currentNewData;
+		newDataRef.current = currentNewData;
+	}, [newData]);
+
+	useEffect(() => {
+		return initializeChart();
+	}, [initializeChart]);
+
+	useEffect(() => {
+		updateNewData();
+	}, [updateNewData]);
 
 	return (
 		<div className="relative" ref={containerRef} style={{ width, height }}>
