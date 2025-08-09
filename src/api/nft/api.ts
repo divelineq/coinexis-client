@@ -3,8 +3,8 @@ import type { WalletNFTsResponse } from "./dto";
 
 const API = import.meta.env.VITE_API_KEY;
 
-export const nftApi = {
-	async getMany(
+export class NftApi {
+	public async getMany(
 		address: string | null,
 		signal: AbortSignal,
 		limit: number,
@@ -21,5 +21,5 @@ export const nftApi = {
 		);
 
 		return res.data;
-	},
-};
+	}
+}

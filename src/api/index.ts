@@ -1,7 +1,7 @@
 import { CoinsApi } from "./coins";
+import { NftApi } from "./nft";
 import { TickersApi } from "./tickers";
 
-export * from "./categories";
 export * from "./coins";
 export * from "./history";
 export * from "./nft";
@@ -16,6 +16,7 @@ export * from "./types";
 class Api {
 	public tickers = new TickersApi();
 	public coins = new CoinsApi();
+	public nft = new NftApi();
 }
 
 export const api = new Api();

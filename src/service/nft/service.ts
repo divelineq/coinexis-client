@@ -1,4 +1,4 @@
-import { nftApi } from "@api";
+import { api } from "@api";
 import axios from "axios";
 import type { NftMetadata, ServiceOutput } from "./types";
 
@@ -32,7 +32,7 @@ export const nftService = {
 		address: string | null,
 		signal: AbortSignal,
 	): Promise<ServiceOutput> {
-		const res = await nftApi.getMany(address, signal, limit, offset);
+		const res = await api.nft.getMany(address, signal, limit, offset);
 
 		const meta = await Promise.all(
 			res.data.map(async (data) => {
