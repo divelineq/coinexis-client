@@ -1,5 +1,4 @@
-import type { SmartTransactions } from "@api";
-import { transactionService } from "@service";
+import { type SmartTransactions, api } from "@api";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 export function useTransactions(
@@ -9,7 +8,7 @@ export function useTransactions(
 ) {
 	return useQuery<SmartTransactions>({
 		queryKey: ["wallet-portfolio", address, limit, offset],
-		queryFn: () => transactionService.getTransactions(address, limit, offset),
+		queryFn: () => api.transactions.getMany(address, limit, offset),
 		enabled: !!address,
 		placeholderData: keepPreviousData,
 	});
