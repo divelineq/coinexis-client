@@ -1,2 +1,2 @@
+export * from "../types/history";
 export * from "./api";
-export * from "./dto";

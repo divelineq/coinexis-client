@@ -1,4 +1,4 @@
-import { api, historyApi, type OneCoinType, type QuerySortBy } from "@api";
+import { type OneCoinType, type QuerySortBy, api } from "@api";
 import type {
 	CoinsService,
 	SortedCoinsServiceResponse,
@@ -51,7 +51,7 @@ export const coinService = {
 
 		const coinsWithHistory = await Promise.all(
 			coins.data.map(async (coin) => {
-				const res = await historyApi.getHistory(
+				const res = await api.history.getHistory(
 					period,
 					signal,
 					coin.id,

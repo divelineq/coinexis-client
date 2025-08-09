@@ -1,10 +1,10 @@
 import { httpModulaClient } from "../httpClient";
-import type { HistoryType } from "./dto";
+import type { HistoryType } from "../types/history";
 
 const API = import.meta.env.VITE_API_KEY;
 
-export const historyApi = {
-	async getHistory(
+export class HistoryApi {
+	public async getHistory(
 		period: string,
 		signal: AbortSignal,
 		id: number | null,
@@ -22,5 +22,5 @@ export const historyApi = {
 		);
 
 		return res.data.data;
-	},
-};
+	}
+}

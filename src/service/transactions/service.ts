@@ -1,7 +1,7 @@
-import { transactionsApi } from "../../api/transactions";
+import { api } from "@api";
 
 export const transactionService = {
 	async getTransactions(address: string | null, limit: number, offset: number) {
-		return transactionsApi.getMany(address, limit, offset);
+		return api.transactions.getMany(address, limit, offset);
 	},
 };

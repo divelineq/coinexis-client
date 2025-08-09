@@ -1,2 +1,2 @@
+export * from "../types/tickers24h";
 export * from "./api";
-export * from "./dto";

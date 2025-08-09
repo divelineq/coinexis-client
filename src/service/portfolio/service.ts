@@ -1,4 +1,4 @@
-import { portfolioApi } from "@api";
+import { api } from "@api";
 import type { PortfolioService } from "./types";
 
 export const portfolioService = {
@@ -6,7 +6,7 @@ export const portfolioService = {
 		address: string | null,
 		signal: AbortSignal,
 	): Promise<PortfolioService> {
-		const portfolio = await portfolioApi.getOne(address, signal);
+		const portfolio = await api.portfolio.getOne(address, signal);
 
 		return {
 			portfolio,

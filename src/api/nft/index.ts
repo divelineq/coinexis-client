@@ -1,2 +1,2 @@
+export * from "../types/nft";
 export * from "./api";
-export * from "./dto";

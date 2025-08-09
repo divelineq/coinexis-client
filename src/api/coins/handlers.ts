@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import type { ManyCoinsType } from "src/api/coins/dto";
+import type { ManyCoinsType } from "src/api/types/coins";
 
 export const allAssetsHandler = [
 	http.get<never, never, { data: ManyCoinsType[] }>(

@@ -1,8 +1,11 @@
 import { httpBinanceClient } from "../httpClient";
-import type { Ticker24HType } from "./dto";
+import type { Ticker24HType } from "../types/tickers24h";
 
-export const ticker24hApi = {
-	async getOne(symbol: string, signal: AbortSignal): Promise<Ticker24HType> {
+export class Ticker24hApi {
+	public async getOne(
+		symbol: string,
+		signal: AbortSignal,
+	): Promise<Ticker24HType> {
 		const res = await httpBinanceClient.get<Ticker24HType>(
 			`/ticker/24hr?symbol=${symbol}`,
 			{
@@ -11,8 +14,9 @@ export const ticker24hApi = {
 		);
 
 		return res.data;
-	},
-	async getMany(
+	}
+
+	public async getMany(
 		symbols: string[],
 		signal: AbortSignal,
 	): Promise<Ticker24HType[]> {
@@ -24,5 +28,5 @@ export const ticker24hApi = {
 		);
 
 		return res.data;
-	},
-};
+	}
+}

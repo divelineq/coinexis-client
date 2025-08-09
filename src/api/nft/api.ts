@@ -1,5 +1,5 @@
 import { httpModulaClient } from "../httpClient";
-import type { WalletNFTsResponse } from "./dto";
+import type { WalletNFTsResponse } from "../types/nft";
 
 const API = import.meta.env.VITE_API_KEY;
 
