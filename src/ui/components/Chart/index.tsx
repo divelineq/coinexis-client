@@ -47,6 +47,7 @@ function Chart({
 	const openRef = useRef<number | undefined>(null);
 
 	useEffect(() => {
+		//? для того что бы при изменении интервала не создавал новую свечу
 		timestampRef.current = data.at(-1)?.time;
 		openRef.current = data.at(-1)?.open;
 
