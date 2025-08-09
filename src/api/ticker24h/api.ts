@@ -8,9 +8,7 @@ export class Ticker24hApi {
 	): Promise<Ticker24HType> {
 		const res = await httpBinanceClient.get<Ticker24HType>(
 			`/ticker/24hr?symbol=${symbol}`,
-			{
-				signal,
-			},
+			{ signal },
 		);
 
 		return res.data;
@@ -22,9 +20,7 @@ export class Ticker24hApi {
 	): Promise<Ticker24HType[]> {
 		const res = await httpBinanceClient.get<Ticker24HType[]>(
 			`/ticker/24hr??symbols=${symbols.join(",")}`,
-			{
-				signal,
-			},
+			{ signal },
 		);
 
 		return res.data;

@@ -16,12 +16,7 @@ export class TickersApi {
 	): Promise<DefaultResponse<TickersValidationType>> {
 		const query = qs.stringify(params);
 
-		const res = await axios.get(`/api/tickers?${query}`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-			signal,
-		});
+		const res = await axios.get(`/api/tickers?${query}`, { signal });
 
 		return res.data;
 	}

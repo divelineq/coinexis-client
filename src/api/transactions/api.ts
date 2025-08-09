@@ -2,14 +2,15 @@ import axios from "axios";
 import type { SmartTransactions } from "../types/transactions";
 
 export class TransactionsApi {
-	public async getMany(wallet: string | null, limit: number, offset: number) {
+	public async getMany(
+		wallet: string | null,
+		limit: number,
+		offset: number,
+		signal: AbortSignal,
+	) {
 		const res = await axios.get<SmartTransactions>(
 			`api/transactions?wallet=${wallet}&limit=${limit}&offset=${offset}`,
-			{
-				headers: {
-					"Content-Type": "application/json",
-				},
-			},
+			{ signal },
 		);
 
 		return res.data;

@@ -9,6 +9,8 @@ type Props = {
 	shouldShowSkeleton: boolean;
 };
 
+//TODO: сейчас даже если не надо строка кликабельная и может перекидывать куда попало
+
 function Rows({
 	rowModel,
 	virtualizer,

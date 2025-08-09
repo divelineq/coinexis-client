@@ -1,23 +1,16 @@
-import { httpModulaClient } from "../httpClient";
+import axios from "axios";
 import type { WalletNFTsResponse } from "../types/nft";
-
-const API = import.meta.env.VITE_API_KEY;
 
 export class NftApi {
 	public async getMany(
-		address: string | null,
+		wallet: string | null,
 		signal: AbortSignal,
 		limit: number,
 		offset: number,
 	) {
-		const res = await httpModulaClient.get<WalletNFTsResponse>(
-			`/wallet/nfts?offset=${offset}&limit=${limit}&wallet=${address}&pagination=true`,
-			{
-				headers: {
-					Authorization: `Bearer ${API}`,
-				},
-				signal,
-			},
+		const res = await axios.get<WalletNFTsResponse>(
+			`api/nfts?offset=${offset}&limit=${limit}&wallet=${wallet}&pagination=true`,
+			{ signal },
 		);
 
 		return res.data;

@@ -11,7 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TransactionsRouteImport } from './routes/transactions'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
-import { Route as NftRouteImport } from './routes/nft'
+import { Route as NftsRouteImport } from './routes/nfts'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MarketIndexRouteImport } from './routes/market/index'
 import { Route as MarketSymbolRouteImport } from './routes/market/$symbol'
@@ -26,9 +26,9 @@ const PortfolioRoute = PortfolioRouteImport.update({
   path: '/portfolio',
   getParentRoute: () => rootRouteImport,
 } as any)
-const NftRoute = NftRouteImport.update({
-  id: '/nft',
-  path: '/nft',
+const NftsRoute = NftsRouteImport.update({
+  id: '/nfts',
+  path: '/nfts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -49,7 +49,7 @@ const MarketSymbolRoute = MarketSymbolRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/nft': typeof NftRoute
+  '/nfts': typeof NftsRoute
   '/portfolio': typeof PortfolioRoute
   '/transactions': typeof TransactionsRoute
   '/market/$symbol': typeof MarketSymbolRoute
@@ -57,7 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/nft': typeof NftRoute
+  '/nfts': typeof NftsRoute
   '/portfolio': typeof PortfolioRoute
   '/transactions': typeof TransactionsRoute
   '/market/$symbol': typeof MarketSymbolRoute
@@ -66,7 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/nft': typeof NftRoute
+  '/nfts': typeof NftsRoute
   '/portfolio': typeof PortfolioRoute
   '/transactions': typeof TransactionsRoute
   '/market/$symbol': typeof MarketSymbolRoute
@@ -76,7 +76,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/nft'
+    | '/nfts'
     | '/portfolio'
     | '/transactions'
     | '/market/$symbol'
@@ -84,7 +84,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/nft'
+    | '/nfts'
     | '/portfolio'
     | '/transactions'
     | '/market/$symbol'
@@ -92,7 +92,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/nft'
+    | '/nfts'
     | '/portfolio'
     | '/transactions'
     | '/market/$symbol'
@@ -101,7 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  NftRoute: typeof NftRoute
+  NftsRoute: typeof NftsRoute
   PortfolioRoute: typeof PortfolioRoute
   TransactionsRoute: typeof TransactionsRoute
   MarketSymbolRoute: typeof MarketSymbolRoute
@@ -124,11 +124,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortfolioRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/nft': {
-      id: '/nft'
-      path: '/nft'
-      fullPath: '/nft'
-      preLoaderRoute: typeof NftRouteImport
+    '/nfts': {
+      id: '/nfts'
+      path: '/nfts'
+      fullPath: '/nfts'
+      preLoaderRoute: typeof NftsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -157,7 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  NftRoute: NftRoute,
+  NftsRoute: NftsRoute,
   PortfolioRoute: PortfolioRoute,
   TransactionsRoute: TransactionsRoute,
   MarketSymbolRoute: MarketSymbolRoute,

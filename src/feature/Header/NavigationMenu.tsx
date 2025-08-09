@@ -56,7 +56,7 @@ export function NavigationMenuDemo() {
 				</NavigationMenuItem>
 				<NavigationMenuItem>
 					<NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-						<Link className="[&.active]:text-primary" to="/nft">
+						<Link className="[&.active]:text-primary" to="/nfts">
 							Nfts
 						</Link>
 					</NavigationMenuLink>

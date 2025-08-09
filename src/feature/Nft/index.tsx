@@ -5,20 +5,20 @@ import { useNft } from "./useNft";
 import { usePaginationState } from "./usePaginationState";
 
 function Nft() {
-	const [address, setAddress] = useQueryState(
-		"address",
+	const [wallet, setWallet] = useQueryState(
+		"wallet",
 		parseAsString.withOptions({ clearOnDefault: false }),
 	);
 	const [pagination, setPagination] = usePaginationState();
 	const { data, isLoading, error, isFetched, isFetching } = useNft(
-		address,
+		wallet,
 		pagination.pageIndex * pagination.pageSize,
 		pagination.pageSize,
 	);
 
 	return (
 		<div className="p-4">
-			<WalletField onChange={setAddress} isPending={isLoading} />
+			<WalletField onChange={setWallet} isPending={isLoading} />
 			<Cards
 				error={error}
 				data={data}
