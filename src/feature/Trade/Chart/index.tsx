@@ -1,7 +1,7 @@
 import { useWebSocket } from "@hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { Chart as UiChart } from "@ui";
-import type { OhlcData } from "lightweight-charts";
+import type { OhlcData, Time } from "lightweight-charts";
 import { useState } from "react";
 import type { KlineWsDto } from "../types";
 import { useIntervalState } from "../useIntervalState";
@@ -30,7 +30,7 @@ function Chart({ symbol }: Props) {
 		[`kline.${interval}.${symbol}`],
 		(_, __, data) =>
 			setKline({
-				time: data[0].start,
+				time: Math.floor((data[0].timestamp as number) / 1000) as Time,
 				open: +data[0].open,
 				close: +data[0].close,
 				low: +data[0].low,

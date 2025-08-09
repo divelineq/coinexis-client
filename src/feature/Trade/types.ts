@@ -36,7 +36,7 @@ export interface KlineWsDto {
 	low: string; // минимум
 	open: string; // открытие
 	start: Time; // время начала свечи (timestamp в мс)
-	timestamp: number; // время получения (timestamp в мс)
+	timestamp: Time; // время получения (timestamp в мс)
 	turnover: string; // оборот
 	volume: string;
 }

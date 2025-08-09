@@ -4,6 +4,7 @@ import {
 	type ISeriesApi,
 	LineSeries,
 	type OhlcData,
+	type Time,
 	createChart,
 } from "lightweight-charts";
 import { useEffect, useRef, useState } from "react";
@@ -39,11 +40,16 @@ function Chart({
 	const chartRef = useRef<IChartApi | null>(null);
 	const candlestickSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
-	const newDataRef = useRef<OhlcData | null>(null);
+	const newDataRef = useRef<OhlcData>(data.at(-1));
 	const loadedRangeRef = useRef<OhlcData[]>([]);
 	const loadIndexRef = useRef<number>(data.length - LOAD_BATCH);
+	const timestampRef = useRef<Time | undefined>(null);
+	const openRef = useRef<number | undefined>(null);
 
 	useEffect(() => {
+		timestampRef.current = data.at(-1)?.time;
+		openRef.current = data.at(-1)?.open;
+
 		if (!containerRef.current) return;
 
 		const initialSlice = data.slice(-LOAD_BATCH);
@@ -94,7 +100,7 @@ function Chart({
 
 		chart.subscribeCrosshairMove((param) => {
 			if (!param.time && !param.hoveredSeries) {
-				setHoveredData(newDataRef.current);
+				setHoveredData(newDataRef.current!);
 				return;
 			}
 
@@ -143,14 +149,25 @@ function Chart({
 	}, [data]);
 
 	useEffect(() => {
-		if (newData && newDataRef.current !== newData) {
-			const lastBar = loadedRangeRef.current.at(-1);
+		if (!newData || newDataRef.current === newData) return;
 
-			if (lastBar && newData.time >= lastBar.time) {
-				candlestickSeriesRef.current?.update(newData);
-				loadedRangeRef.current[loadedRangeRef.current.length - 1] = newData;
-				newDataRef.current = newData;
+		const lastBar = loadedRangeRef.current.at(-1);
+
+		if (lastBar && newData.time >= lastBar.time) {
+			if (newData.open !== openRef.current) {
+				openRef.current = newData.open;
+				timestampRef.current = newData.time;
 			}
+
+			const currentNewData: OhlcData<Time> = {
+				...newData,
+				time: timestampRef.current as Time,
+			};
+
+			candlestickSeriesRef.current?.update(currentNewData);
+			loadedRangeRef.current[loadedRangeRef.current.length - 1] =
+				currentNewData;
+			newDataRef.current = currentNewData;
 		}
 	}, [newData, candlestickSeriesRef.current]);
 
