@@ -9,7 +9,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { CHART_OPTIONS } from "./Consts";
 import { HoveredInfo } from "./HoveredInfo";
 import { IntervalButtons } from "./IntervalButtons";
+import { buildHoveredColor } from "./buildHoveredColor";
 import { createSeries } from "./createSeries";
+import { crosshairMove } from "./crosshairMove";
 import { setupVisibleRange } from "./setupVisibleRange";
 
 type Props = {
@@ -35,35 +37,16 @@ function Chart({
 }: Props) {
 	const [hoveredData, setHoveredData] = useState<
 		(OhlcData & { color?: string }) | null
-	>(data.at(-1)!);
+	>({ ...data.at(-1)!, color: buildHoveredColor(data.at(-1)!) });
 
 	const chartRef = useRef<IChartApi | null>(null);
 	const candlestickSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
-	const newDataRef = useRef<OhlcData>(data.at(-1));
+	const newDataRef = useRef<OhlcData>(data.at(-1)!);
 	const loadedRangeRef = useRef<OhlcData[]>([]);
 	const loadIndexRef = useRef<number>(data.length - LOAD_BATCH);
 	const timestampRef = useRef<Time | undefined>(null);
 	const openRef = useRef<number | undefined>(null);
-
-	const handleCrosshairMove = useCallback(
-		(candlestickSeries: ISeriesApi<"Candlestick">) => (param: any) => {
-			if (!param.time && !param.hoveredSeries) {
-				setHoveredData(newDataRef.current!);
-				return;
-			}
-
-			const ohlcData = param.seriesData.get(candlestickSeries) as OhlcData;
-			setHoveredData({
-				...ohlcData,
-				color:
-					ohlcData?.close > ohlcData?.open
-						? "var(--buy-color)"
-						: "var(--sell-color)",
-			});
-		},
-		[],
-	);
 
 	const handleVisibleRangeChange = useCallback(
 		() => (range: any) => {
@@ -107,7 +90,9 @@ function Chart({
 		const candlestickSeries = createSeries(chart, initialSlice);
 		candlestickSeriesRef.current = candlestickSeries;
 
-		chart.subscribeCrosshairMove(handleCrosshairMove(candlestickSeries));
+		chart.subscribeCrosshairMove(
+			crosshairMove(candlestickSeries, setHoveredData, newDataRef.current),
+		);
 		chart
 			.timeScale()
 			.subscribeVisibleLogicalRangeChange(handleVisibleRangeChange());
@@ -126,7 +111,7 @@ function Chart({
 		data,
 		setupVisibleRange,
 		createSeries,
-		handleCrosshairMove,
+		crosshairMove,
 		handleVisibleRangeChange,
 	]);
 
@@ -147,6 +132,10 @@ function Chart({
 		};
 
 		candlestickSeriesRef.current?.update(currentNewData);
+		setHoveredData({
+			...currentNewData,
+			color: buildHoveredColor(currentNewData),
+		});
 		loadedRangeRef.current[loadedRangeRef.current.length - 1] = currentNewData;
 		newDataRef.current = currentNewData;
 	}, [newData]);
