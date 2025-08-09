@@ -1,16 +1,15 @@
 import {
-	CandlestickSeries,
 	type IChartApi,
 	type ISeriesApi,
-	LineSeries,
 	type OhlcData,
 	type Time,
 	createChart,
 } from "lightweight-charts";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CANDLESTICK_COLORS, CHART_OPTIONS } from "./Consts";
+import { CHART_OPTIONS } from "./Consts";
 import { HoveredInfo } from "./HoveredInfo";
 import { IntervalButtons } from "./IntervalButtons";
+import { createSeries } from "./createSeries";
 import { setupVisibleRange } from "./setupVisibleRange";
 
 type Props = {
@@ -25,15 +24,6 @@ type Props = {
 };
 
 const LOAD_BATCH = 200;
-
-const createLineData = (data: OhlcData[]) =>
-	data.map((item) => ({
-		time: item.time,
-		value: (item.open + item.close) / 2,
-	}));
-
-const getBarColor = (ohlcData: OhlcData) =>
-	ohlcData?.close > ohlcData?.open ? "var(--buy-color)" : "var(--sell-color)";
 
 function Chart({
 	data,
@@ -56,30 +46,6 @@ function Chart({
 	const timestampRef = useRef<Time | undefined>(null);
 	const openRef = useRef<number | undefined>(null);
 
-	const createSeries = useCallback(
-		(chart: IChartApi, initialSlice: OhlcData[]) => {
-			const lineData = createLineData(initialSlice);
-
-			const lineSeries = chart.addSeries(LineSeries, {
-				lineWidth: 1,
-				color: "#fff",
-				lastValueVisible: false,
-				crosshairMarkerVisible: false,
-				priceLineVisible: false,
-			});
-			lineSeries.setData(lineData);
-
-			const candlestickSeries = chart.addSeries(
-				CandlestickSeries,
-				CANDLESTICK_COLORS,
-			);
-			candlestickSeries.setData(initialSlice);
-
-			return candlestickSeries;
-		},
-		[],
-	);
-
 	const handleCrosshairMove = useCallback(
 		(candlestickSeries: ISeriesApi<"Candlestick">) => (param: any) => {
 			if (!param.time && !param.hoveredSeries) {
@@ -90,7 +56,10 @@ function Chart({
 			const ohlcData = param.seriesData.get(candlestickSeries) as OhlcData;
 			setHoveredData({
 				...ohlcData,
-				color: getBarColor(ohlcData),
+				color:
+					ohlcData?.close > ohlcData?.open
+						? "var(--buy-color)"
+						: "var(--sell-color)",
 			});
 		},
 		[],
