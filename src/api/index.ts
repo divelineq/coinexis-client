@@ -1,4 +1,3 @@
-import { CoinsApi } from "./coins";
 import { HistoryApi } from "./history";
 import { NftApi } from "./nft";
 import { PortfolioApi } from "./portfolio";
@@ -9,7 +8,6 @@ import { TransactionsApi } from "./transactions";
 class Api {
 	public ticker24h = new Ticker24hApi();
 	public tickers = new TickersApi();
-	public coins = new CoinsApi();
 	public nft = new NftApi();
 	public history = new HistoryApi();
 	public portfolio = new PortfolioApi();
