@@ -9,8 +9,6 @@ type Props = {
 	shouldShowSkeleton: boolean;
 };
 
-//TODO: сейчас даже если не надо строка кликабельная и может перекидывать куда попало
-
 function Rows({
 	rowModel,
 	virtualizer,
@@ -26,6 +24,8 @@ function Rows({
 		});
 	};
 
+	//TODO: сейчас даже если не надо строка кликабельная и может перекидывать куда попало пофиксить
+
 	return (
 		<div
 			className="relative"
@@ -33,13 +33,12 @@ function Rows({
 		>
 			{virtualizer.getVirtualItems().map((virtualRow) => {
 				const row = rowModel.rows[virtualRow.index];
-				const isOdd = virtualRow.index % 2 !== 0;
 
 				return (
 					<button
 						key={row.id}
 						className={`absolute flex w-full items-center text-sm ${
-							isOdd ? "bg-muted/30" : "bg-background"
+							virtualRow.index % 2 !== 0 ? "bg-muted/30" : "bg-background"
 						} hover:bg-muted/50 border-b border-border transition`}
 						style={{
 							transform: `translateY(${virtualRow.start}px)`,
