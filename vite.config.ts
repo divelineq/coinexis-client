@@ -12,7 +12,11 @@ export default defineConfig({
 			routesDirectory: "./src/routes",
 		}),
 		tailwindcss(),
-		react(),
+		react({
+			babel: {
+				plugins: ["babel-plugin-react-compiler"],
+			},
+		}),
 	],
 	resolve: {
 		alias: {
