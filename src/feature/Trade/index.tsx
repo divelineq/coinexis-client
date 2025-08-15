@@ -1,4 +1,4 @@
-import { Route } from "../../routes/market/$symbol";
+import { Route } from "../../routes/spot/$symbol";
 import { Chart } from "./Chart";
 import { Footer } from "./Footer";
 import { Header } from "./Header";

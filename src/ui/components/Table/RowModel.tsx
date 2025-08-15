@@ -15,11 +15,13 @@ function Rows({
 	shouldShowSkeleton,
 	rowHeight = 80,
 }: Props) {
+	//! по непонятной причине виртуалайзер не работает с компайлером
+	"use no memo";
 	const navigate = useNavigate();
 
 	const handleClick = (coin: string) => {
 		navigate({
-			to: "/market/$coin",
+			to: "/spot/$coin",
 			params: { coin },
 		});
 	};

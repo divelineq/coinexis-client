@@ -1,6 +1,6 @@
 "use client";
 
-import { Link, useRouter } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import {
 	NavigationMenu,
 	NavigationMenuContent,
@@ -10,15 +10,8 @@ import {
 	NavigationMenuTrigger,
 	navigationMenuTriggerStyle,
 } from "@ui";
-import { createSerializer, parseAsString } from "nuqs";
-
-const serializer = createSerializer({
-	tab: parseAsString,
-});
 
 export function NavigationMenuDemo() {
-	const router = useRouter();
-
 	return (
 		<NavigationMenu viewport={false} className="z-200 text-left">
 			<NavigationMenuList>
@@ -35,14 +28,7 @@ export function NavigationMenuDemo() {
 						<ul className="grid w-[400px] gap-4">
 							<li>
 								<NavigationMenuLink asChild>
-									<Link
-										to={serializer("market", {
-											tab: "all",
-										})}
-										onClick={() => {
-											router.invalidate();
-										}}
-									>
+									<Link to="spot">
 										<div className="font-medium">Spot</div>
 										<div className="text-muted-foreground">
 											A complete list of cryptocurrencies, including both

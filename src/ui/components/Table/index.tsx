@@ -71,6 +71,8 @@ function Table<TColumns extends any[], TData extends any[]>({
 	rowHeight,
 	manualPagination = false,
 }: Props<TColumns, TData>) {
+	//! по непонятной причине виртуалайзер не работает с компайлером
+	"use no memo";
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const parentRef = useRef<HTMLDivElement>(null);
 
@@ -109,7 +111,7 @@ function Table<TColumns extends any[], TData extends any[]>({
 	});
 
 	return (
-		<div className={cx(className, "overflow-auto")} ref={parentRef}>
+		<div className={cx(className, "overflow-auto ")} ref={parentRef}>
 			<div className="flex justify-between w-full py-2">
 				<SearchFilter className="w-1/5" table={table} searchId={searchId} />
 				<PaginationActions table={table} />

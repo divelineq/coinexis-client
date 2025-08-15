@@ -26,7 +26,7 @@ function Home() {
 						</p>
 						<div className="flex gap-4">
 							<Button size="lg">
-								<Link to="/market">Попробовать</Link>
+								<Link to="/spot">Попробовать</Link>
 							</Button>
 						</div>
 					</div>
