@@ -23,9 +23,8 @@ type Props = {
 	height?: string;
 	interval: string;
 	onIntervalChange: (interval: string) => void;
+	getPrevData?: () => void;
 };
-
-const LOAD_BATCH = 200;
 
 function Chart({
 	data,
@@ -34,6 +33,7 @@ function Chart({
 	height,
 	interval,
 	onIntervalChange,
+	getPrevData,
 }: Props) {
 	const [hoveredData, setHoveredData] = useState<
 		(OhlcData & { color?: string }) | null
@@ -44,28 +44,27 @@ function Chart({
 	const containerRef = useRef<HTMLDivElement>(null);
 	const newDataRef = useRef<OhlcData>(data.at(-1)!);
 	const loadedRangeRef = useRef<OhlcData[]>([]);
-	const loadIndexRef = useRef<number>(data.length - LOAD_BATCH);
+	const hasCalledRef = useRef(false);
 	const timestampRef = useRef<Time | undefined>(null);
 	const openRef = useRef<number | undefined>(null);
+
+	useEffect(() => {
+		if (candlestickSeriesRef.current && data.length > 0) {
+			candlestickSeriesRef.current.setData(data);
+		}
+	}, [data]);
 
 	const handleVisibleRangeChange = useCallback(
 		() => (range: any) => {
 			if (!range || !candlestickSeriesRef.current) return;
 
-			const visibleFrom = Number(range.from);
-			const total = loadedRangeRef.current.length;
-			if (total === 0) return;
-
-			const threshold = total * 0.1;
-			if (visibleFrom <= threshold) {
-				const nextStart = Math.max(0, loadIndexRef.current - LOAD_BATCH);
-				if (nextStart === loadIndexRef.current) return;
-
-				const newData = data.slice(nextStart, loadIndexRef.current);
-				loadIndexRef.current = nextStart;
-
-				loadedRangeRef.current = [...newData, ...loadedRangeRef.current];
-				candlestickSeriesRef.current.setData(loadedRangeRef.current);
+			if (range.from < 10) {
+				if (!hasCalledRef.current) {
+					getPrevData?.();
+					hasCalledRef.current = true;
+				}
+			} else {
+				hasCalledRef.current = false;
 			}
 		},
 		[data],
@@ -74,12 +73,9 @@ function Chart({
 	const initializeChart = useCallback(() => {
 		if (!containerRef.current) return;
 
-		//? для того что бы при изменении интервала не создавал новую свечу
+		//! для того что бы при изменении интервала не создавал новую свечу
 		timestampRef.current = data.at(-1)?.time;
 		openRef.current = data.at(-1)?.open;
-
-		const initialSlice = data.slice(-LOAD_BATCH);
-		loadedRangeRef.current = initialSlice;
 
 		const chart = createChart(containerRef.current, CHART_OPTIONS);
 		chart.applyOptions({});
@@ -87,7 +83,7 @@ function Chart({
 
 		setupVisibleRange(chart, data.length);
 
-		const candlestickSeries = createSeries(chart, initialSlice);
+		const candlestickSeries = createSeries(chart, data);
 		candlestickSeriesRef.current = candlestickSeries;
 
 		chart.subscribeCrosshairMove(
@@ -107,18 +103,12 @@ function Chart({
 			window.removeEventListener("resize", handleResize);
 			chart.remove();
 		};
-	}, [
-		data,
-		setupVisibleRange,
-		createSeries,
-		crosshairMove,
-		handleVisibleRangeChange,
-	]);
+	}, []);
 
 	const updateNewData = useCallback(() => {
 		if (!newData || newDataRef.current === newData) return;
 
-		const lastBar = loadedRangeRef.current.at(-1);
+		const lastBar = data.at(-1);
 		if (!lastBar || newData.time < lastBar.time) return;
 
 		if (newData.open !== openRef.current) {

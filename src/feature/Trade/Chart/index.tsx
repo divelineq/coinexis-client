@@ -17,13 +17,13 @@ type Props = {
 
 function Chart({ symbol }: Props) {
 	const [interval, setInterval] = useIntervalState();
-
 	const [newKline, setKline] = useState<OhlcData | null>(null);
 	const queryClient = useQueryClient();
 	const {
 		data: historyKline,
 		isLoading,
 		error,
+		fetchNextPage,
 	} = useKline(symbol, interval, LIMIT_KLINE, CATEGORY);
 
 	useWebSocket<KlineWsDto[]>(
@@ -46,6 +46,7 @@ function Chart({ symbol }: Props) {
 				{error && <div className="text-red-400">Error: {error.message}</div>}
 				{!isLoading && !error && historyKline && (
 					<UiChart
+						getPrevData={fetchNextPage}
 						data={historyKline}
 						newData={newKline}
 						interval={interval}

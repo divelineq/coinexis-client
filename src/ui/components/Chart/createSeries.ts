@@ -6,14 +6,11 @@ import {
 } from "lightweight-charts";
 import { CANDLESTICK_COLORS } from "./Consts";
 
-const createLineData = (data: OhlcData[]) =>
-	data.map((item) => ({
-		time: item.time,
-		value: (item.open + item.close) / 2,
-	}));
-
 export function createSeries(chart: IChartApi, initialSlice: OhlcData[]) {
-	const lineData = createLineData(initialSlice);
+	const lineData = initialSlice.map(({ time, open, close }) => ({
+		time,
+		value: (open + close) / 2,
+	}));
 
 	const lineSeries = chart.addSeries(LineSeries, {
 		lineWidth: 1,
