@@ -50,6 +50,8 @@ function Chart({
 
 	useEffect(() => {
 		if (candlestickSeriesRef.current && data.length > 0) {
+			timestampRef.current = data.at(-1)?.time;
+			openRef.current = data.at(-1)?.open;
 			candlestickSeriesRef.current.setData(data);
 		}
 	}, [data]);
@@ -67,15 +69,11 @@ function Chart({
 				hasCalledRef.current = false;
 			}
 		},
-		[data],
+		[],
 	);
 
 	const initializeChart = useCallback(() => {
 		if (!containerRef.current) return;
-
-		//! для того что бы при изменении интервала не создавал новую свечу
-		timestampRef.current = data.at(-1)?.time;
-		openRef.current = data.at(-1)?.open;
 
 		const chart = createChart(containerRef.current, CHART_OPTIONS);
 		chart.applyOptions({});
