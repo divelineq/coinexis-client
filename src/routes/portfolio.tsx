@@ -1,8 +1,8 @@
-import { PortfolioInfo } from "@feature";
+import { Portfolio } from "@feature";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/portfolio")({
-	component: PortfolioInfo,
+	component: Portfolio,
 	pendingComponent: () => <div>Loading wallet...</div>,
 	errorComponent: () => <div>Error wallet :(</div>,
 });

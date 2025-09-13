@@ -19,14 +19,16 @@ function Nft() {
 	return (
 		<div className="p-4">
 			<WalletField onChange={setWallet} isPending={isLoading} />
-			<Cards
-				error={error}
-				data={data}
-				isLoading={isLoading}
-				pagination={pagination}
-				onPageChange={setPagination}
-				shouldShowSkeleton={!isFetched && isFetching}
-			/>
+			{data && (
+				<Cards
+					error={error}
+					data={data}
+					isLoading={isLoading}
+					pagination={pagination}
+					onPageChange={setPagination}
+					shouldShowSkeleton={!isFetched && isFetching}
+				/>
+			)}
 		</div>
 	);
 }

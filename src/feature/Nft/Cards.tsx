@@ -1,11 +1,11 @@
-import type { ServiceOutput } from "@service";
+import type { WalletNFTsResponse } from "@api";
 import { ErrorScreen } from "@ui";
 import { Skeleton } from "./Card/Skeleton.tsx";
 import { Card } from "./Card/index.ts";
 import { ListToolbar } from "./ListToolbar";
 
 export type CardsProps = {
-	data: ServiceOutput | undefined;
+	data: WalletNFTsResponse | undefined;
 	shouldShowSkeleton: boolean;
 	isLoading: boolean;
 	error: Error | null;
@@ -24,6 +24,14 @@ function Cards({
 	if (!data) return;
 
 	if (error) return <ErrorScreen error={error} />;
+
+	if (data.data.length === 0) {
+		return (
+			<div className="w-full flex justify-center p-4">
+				Нет данных для отображения
+			</div>
+		);
+	}
 
 	return (
 		<div className="rounded-md border border-zinc-700 bg-zinc-900 shadow-inner mt-4">
