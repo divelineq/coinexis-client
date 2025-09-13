@@ -31,7 +31,6 @@ function TransactionsInfo({
 					searchId="asset_name"
 					defaultColumns={DEFAULT_TRANSACTIONS_COLUMNS}
 					rowCount={data.pagination.total}
-					manualPagination
 				/>
 			)}
 		</div>

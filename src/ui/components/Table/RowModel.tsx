@@ -1,5 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
-import { type RowModel, flexRender } from "@tanstack/react-table";
+import { type Row, type RowModel, flexRender } from "@tanstack/react-table";
 import type { Virtualizer } from "@tanstack/react-virtual";
 
 type Props = {
@@ -7,27 +6,23 @@ type Props = {
 	virtualizer: Virtualizer<HTMLDivElement, Element>;
 	rowHeight?: number;
 	shouldShowSkeleton: boolean;
+	disabled?: boolean;
+	onClick?: (row: Row<any>) => void;
 };
 
 function Rows({
 	rowModel,
 	virtualizer,
 	shouldShowSkeleton,
+	onClick,
 	rowHeight = 80,
 }: Props) {
 	//! по непонятной причине виртуалайзер не работает с компайлером
 	"use no memo";
-	const navigate = useNavigate();
 
-	const handleClick = (coin: string) => {
-		navigate({
-			to: "/spot/$coin",
-			params: { coin },
-		});
-	};
+	const isDisabled = !onClick;
 
 	//TODO: сейчас даже если не надо строка кликабельная и может перекидывать куда попало пофиксить
-
 	return (
 		<div
 			className="relative"
@@ -38,6 +33,7 @@ function Rows({
 
 				return (
 					<button
+						disabled={isDisabled}
 						key={row.id}
 						className={`absolute flex w-full items-center text-sm ${
 							virtualRow.index % 2 !== 0 ? "bg-muted/30" : "bg-background"
@@ -46,9 +42,7 @@ function Rows({
 							transform: `translateY(${virtualRow.start}px)`,
 							height: `${rowHeight}px`,
 						}}
-						onClick={() => {
-							handleClick(row.original.symbol);
-						}}
+						onClick={() => onClick?.(row)}
 					>
 						{row.getVisibleCells().map((cell) => (
 							<div

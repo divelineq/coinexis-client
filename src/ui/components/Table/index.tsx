@@ -1,6 +1,7 @@
 import type { Updater } from "@tanstack/react-query";
 import {
 	type PaginationState,
+	type Row,
 	getCoreRowModel,
 	getFilteredRowModel,
 	getPaginationRowModel,
@@ -46,10 +47,31 @@ type Props<TColumns extends unknown[], TData extends unknown[]> = {
 	 * @default 80px
 	 */
 	rowHeight?: number;
+
+	/**
+	 * Флаг, который включает отображение skeleton-заглушек в ячейках таблицы
+	 */
 	shouldShowSkeleton: boolean;
+
+	/**
+	 * Дополнительные CSS-классы для контейнера таблицы
+	 */
 	className?: string;
+
+	/**
+	 * Текущее состояние пагинации (номер страницы, размер страницы)
+	 */
 	pagination: PaginationState;
+
+	/**
+	 * Callback, который вызывается при изменении пагинации
+	 */
 	onPaginationChange?: (old: PaginationState) => void;
+
+	/**
+	 * Callback, который вызывается при клике на строку таблицы
+	 */
+	onRowClick?: (row: Row<any>) => void;
 };
 
 interface ColumnFilter {
@@ -68,6 +90,7 @@ function Table<TColumns extends any[], TData extends any[]>({
 	pagination,
 	pageCount,
 	onPaginationChange,
+	onRowClick,
 	rowHeight,
 	manualPagination = false,
 }: Props<TColumns, TData>) {
@@ -118,6 +141,7 @@ function Table<TColumns extends any[], TData extends any[]>({
 			</div>
 			<HeaderGroups headers={table.getHeaderGroups()} />
 			<Rows
+				onClick={onRowClick}
 				shouldShowSkeleton={shouldShowSkeleton}
 				rowModel={table.getRowModel()}
 				virtualizer={virtualizer}
