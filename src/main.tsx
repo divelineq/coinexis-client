@@ -6,9 +6,12 @@ import { NuqsAdapter } from "nuqs/adapters/react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
+import { scan } from "react-scan";
 import { Toaster } from "sonner";
 import "./index.css";
 import { routeTree } from "./routeTree.gen";
+
+scan({ enabled: true });
 
 async function enableMocking() {
 	//* test/development/production
