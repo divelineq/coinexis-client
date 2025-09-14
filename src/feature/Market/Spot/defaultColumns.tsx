@@ -1,10 +1,9 @@
-import type { TickersValidationType } from "@api";
+import type { TickersSpotResponse } from "@api";
 import { createColumnHelper } from "@tanstack/react-table";
 import { BsInfoCircle } from "react-icons/bs";
 import { Tooltip } from "react-tooltip";
 
-const columnHelper =
-	createColumnHelper<TickersValidationType["list"][number]>();
+const columnHelper = createColumnHelper<TickersSpotResponse["list"][number]>();
 
 export const DEFAULT_COLUMNS = [
 	columnHelper.accessor("symbol", {

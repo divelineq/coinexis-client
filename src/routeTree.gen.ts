@@ -13,8 +13,8 @@ import { Route as TransactionsRouteImport } from './routes/transactions'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as NftsRouteImport } from './routes/nfts'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SpotIndexRouteImport } from './routes/spot/index'
-import { Route as SpotSymbolRouteImport } from './routes/spot/$symbol'
+import { Route as MarketCategoryIndexRouteImport } from './routes/market/$category/index'
+import { Route as MarketCategorySymbolRouteImport } from './routes/market/$category/$symbol'
 
 const TransactionsRoute = TransactionsRouteImport.update({
   id: '/transactions',
@@ -36,14 +36,14 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SpotIndexRoute = SpotIndexRouteImport.update({
-  id: '/spot/',
-  path: '/spot/',
+const MarketCategoryIndexRoute = MarketCategoryIndexRouteImport.update({
+  id: '/market/$category/',
+  path: '/market/$category/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SpotSymbolRoute = SpotSymbolRouteImport.update({
-  id: '/spot/$symbol',
-  path: '/spot/$symbol',
+const MarketCategorySymbolRoute = MarketCategorySymbolRouteImport.update({
+  id: '/market/$category/$symbol',
+  path: '/market/$category/$symbol',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -52,16 +52,16 @@ export interface FileRoutesByFullPath {
   '/nfts': typeof NftsRoute
   '/portfolio': typeof PortfolioRoute
   '/transactions': typeof TransactionsRoute
-  '/spot/$symbol': typeof SpotSymbolRoute
-  '/spot': typeof SpotIndexRoute
+  '/market/$category/$symbol': typeof MarketCategorySymbolRoute
+  '/market/$category': typeof MarketCategoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/nfts': typeof NftsRoute
   '/portfolio': typeof PortfolioRoute
   '/transactions': typeof TransactionsRoute
-  '/spot/$symbol': typeof SpotSymbolRoute
-  '/spot': typeof SpotIndexRoute
+  '/market/$category/$symbol': typeof MarketCategorySymbolRoute
+  '/market/$category': typeof MarketCategoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -69,8 +69,8 @@ export interface FileRoutesById {
   '/nfts': typeof NftsRoute
   '/portfolio': typeof PortfolioRoute
   '/transactions': typeof TransactionsRoute
-  '/spot/$symbol': typeof SpotSymbolRoute
-  '/spot/': typeof SpotIndexRoute
+  '/market/$category/$symbol': typeof MarketCategorySymbolRoute
+  '/market/$category/': typeof MarketCategoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -79,18 +79,24 @@ export interface FileRouteTypes {
     | '/nfts'
     | '/portfolio'
     | '/transactions'
-    | '/spot/$symbol'
-    | '/spot'
+    | '/market/$category/$symbol'
+    | '/market/$category'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/nfts' | '/portfolio' | '/transactions' | '/spot/$symbol' | '/spot'
+  to:
+    | '/'
+    | '/nfts'
+    | '/portfolio'
+    | '/transactions'
+    | '/market/$category/$symbol'
+    | '/market/$category'
   id:
     | '__root__'
     | '/'
     | '/nfts'
     | '/portfolio'
     | '/transactions'
-    | '/spot/$symbol'
-    | '/spot/'
+    | '/market/$category/$symbol'
+    | '/market/$category/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -98,8 +104,8 @@ export interface RootRouteChildren {
   NftsRoute: typeof NftsRoute
   PortfolioRoute: typeof PortfolioRoute
   TransactionsRoute: typeof TransactionsRoute
-  SpotSymbolRoute: typeof SpotSymbolRoute
-  SpotIndexRoute: typeof SpotIndexRoute
+  MarketCategorySymbolRoute: typeof MarketCategorySymbolRoute
+  MarketCategoryIndexRoute: typeof MarketCategoryIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -132,18 +138,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/spot/': {
-      id: '/spot/'
-      path: '/spot'
-      fullPath: '/spot'
-      preLoaderRoute: typeof SpotIndexRouteImport
+    '/market/$category/': {
+      id: '/market/$category/'
+      path: '/market/$category'
+      fullPath: '/market/$category'
+      preLoaderRoute: typeof MarketCategoryIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/spot/$symbol': {
-      id: '/spot/$symbol'
-      path: '/spot/$symbol'
-      fullPath: '/spot/$symbol'
-      preLoaderRoute: typeof SpotSymbolRouteImport
+    '/market/$category/$symbol': {
+      id: '/market/$category/$symbol'
+      path: '/market/$category/$symbol'
+      fullPath: '/market/$category/$symbol'
+      preLoaderRoute: typeof MarketCategorySymbolRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -154,8 +160,8 @@ const rootRouteChildren: RootRouteChildren = {
   NftsRoute: NftsRoute,
   PortfolioRoute: PortfolioRoute,
   TransactionsRoute: TransactionsRoute,
-  SpotSymbolRoute: SpotSymbolRoute,
-  SpotIndexRoute: SpotIndexRoute,
+  MarketCategorySymbolRoute: MarketCategorySymbolRoute,
+  MarketCategoryIndexRoute: MarketCategoryIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

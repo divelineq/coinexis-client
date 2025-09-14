@@ -1,4 +1,4 @@
-import type { DefaultResponse, TickersValidationType } from "@api";
+import type { DefaultResponse, TickersSpotResponse } from "@api";
 import axios from "axios";
 import qs from "query-string";
 
@@ -13,7 +13,7 @@ export class TickersApi {
 	public async getTickers(
 		params: Params,
 		signal: AbortSignal,
-	): Promise<DefaultResponse<TickersValidationType>> {
+	): Promise<DefaultResponse<TickersSpotResponse>> {
 		const query = qs.stringify(params);
 
 		const res = await axios.get(`/api/tickers?${query}`, { signal });
