@@ -22,6 +22,14 @@ function BaseMarket() {
 	if (isLoading) return <Skeleton />;
 	if (error) return <ErrorScreen error={error} />;
 
+	if (data?.result.list.length === 0) {
+		return (
+			<div className="w-full flex justify-center p-4">
+				Нет данных для отображения
+			</div>
+		);
+	}
+
 	const handleClick = (row: Row<any>) => {
 		navigate({
 			to: `/market/${category}/$coin`,

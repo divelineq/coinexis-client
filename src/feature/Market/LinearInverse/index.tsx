@@ -8,3 +8,10 @@ export const LinearData: CategoryData = {
 	},
 	columns: DEFAULT_COLUMNS,
 };
+
+export const InverseData: CategoryData = {
+	params: {
+		category: TickerCategory.Inverse,
+	},
+	columns: DEFAULT_COLUMNS,
+};
