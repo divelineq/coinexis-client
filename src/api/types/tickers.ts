@@ -138,6 +138,20 @@ export const TICKERS_VALIDATION_SCHEMA = z.discriminatedUnion("category", [
 	TICKERS_LINEAR_VALIDATION_SCHEMA,
 ]);
 
+export type TickersResponse = z.input<typeof TICKERS_VALIDATION_SCHEMA>;
+
 export type TickersSpotResponse = z.input<
 	typeof TICKERS_SPOT_VALIDATION_SCHEMA
+>;
+
+export type TickersOptionResponse = z.input<
+	typeof TICKERS_OPTION_VALIDATION_SCHEMA
+>;
+
+export type TickersInverseResponse = z.input<
+	typeof TICKERS_INVERSE_VALIDATION_SCHEMA
+>;
+
+export type TickersLinearResponse = z.input<
+	typeof TICKERS_LINEAR_VALIDATION_SCHEMA
 >;
