@@ -1,6 +1,6 @@
 import { useWebSocket } from "@hooks";
 import { useQueryClient } from "@tanstack/react-query";
-import { Chart as UiChart } from "@ui";
+import { ErrorScreen, Chart as UiChart } from "@ui";
 import type { OhlcData, Time } from "lightweight-charts";
 import { useState } from "react";
 import type { KlineWsDto } from "../types";
@@ -39,11 +39,19 @@ function Chart({ symbol }: Props) {
 		{ enabled: !!historyKline },
 	);
 
+	if (error) {
+		return (
+			<ErrorScreen
+				error={error}
+				message="Нет данных для отображения данной валюты"
+			/>
+		);
+	}
+
 	return (
 		<div className="flex-1">
 			<div className="size-full rounded flex text-sm">
 				{isLoading && <Skeleton width="1200px" height="600px" />}
-				{error && <div className="text-red-400">Error: {error.message}</div>}
 				{!isLoading && !error && historyKline && (
 					<UiChart
 						getPrevData={fetchNextPage}
