@@ -1,13 +1,13 @@
 import { Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { ModeToggle } from "./ModeToggle";
-import { NavigationMenuDemo } from "./NavigationMenu";
+import { NavigationMenu } from "./NavigationMenu";
 
 export function Header() {
 	return (
 		<>
 			<div className="p-2 flex text-center justify-between items-center">
-				<NavigationMenuDemo />
+				<NavigationMenu />
 				<ModeToggle />
 			</div>
 			<hr className="border-custom" />
