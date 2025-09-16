@@ -53,7 +53,7 @@ function Orderbook({ symbol }: Props) {
 	);
 
 	return (
-		<div className="w-full bg-[#101014] p-2 flex flex-col">
+		<div className="size-full bg-[#101014] p-2 flex flex-col basis-1/5">
 			<div className="text-sm font-semibold mb-2">Order Book</div>
 			<div className="flex flex-col gap-2 h-full">
 				<div className="w-full flex flex-col justify-between text-[14px] gap-2">

@@ -49,27 +49,23 @@ function Chart({ symbol }: Props) {
 	}
 
 	return (
-		<div className="flex-1">
-			<div className="size-full rounded flex text-sm">
-				{isLoading && <Skeleton width="1200px" height="600px" />}
-				{!isLoading && !error && historyKline && (
-					<UiChart
-						getPrevData={fetchNextPage}
-						data={historyKline}
-						newData={newKline}
-						interval={interval}
-						onIntervalChange={(interval) => {
-							setInterval(interval);
-							queryClient.invalidateQueries({
-								queryKey: ["kline", interval, symbol, LIMIT_KLINE, CATEGORY],
-							});
-						}}
-						width="1200px"
-						height="600px"
-					/>
-				)}
-				{!isLoading && !error && !historyKline && <div>No data</div>}
-			</div>
+		<div className="flex-1 size-full rounded flex text-sm basis-4/5">
+			{isLoading && <Skeleton width="100%" height="100%" />}
+			{!isLoading && !error && historyKline && (
+				<UiChart
+					getPrevData={fetchNextPage}
+					data={historyKline}
+					newData={newKline}
+					interval={interval}
+					onIntervalChange={(interval) => {
+						setInterval(interval);
+						queryClient.invalidateQueries({
+							queryKey: ["kline", interval, symbol, LIMIT_KLINE, CATEGORY],
+						});
+					}}
+				/>
+			)}
+			{!isLoading && !error && !historyKline && <div>No data</div>}
 		</div>
 	);
 }

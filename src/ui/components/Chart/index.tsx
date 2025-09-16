@@ -19,8 +19,6 @@ type Props = {
 	newData?: OhlcData | null;
 	className?: string;
 	chartStyle?: { width: number; height: number };
-	width?: string;
-	height?: string;
 	interval: string;
 	onIntervalChange: (interval: string) => void;
 	getPrevData?: () => void;
@@ -29,8 +27,6 @@ type Props = {
 function Chart({
 	data,
 	newData,
-	width,
-	height,
 	interval,
 	onIntervalChange,
 	getPrevData,
@@ -137,7 +133,11 @@ function Chart({
 	}, [updateNewData]);
 
 	return (
-		<div className="relative" ref={containerRef} style={{ width, height }}>
+		<div
+			className="relative"
+			ref={containerRef}
+			style={{ width: "100%", height: "100%" }}
+		>
 			<IntervalButtons value={interval} onChange={onIntervalChange} />
 			<HoveredInfo data={hoveredData} />
 		</div>

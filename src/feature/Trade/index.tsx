@@ -9,27 +9,19 @@ function Trade() {
 	const { symbol } = Route.useLoaderData();
 
 	return (
-		<div className="min-h-screen bg-background">
-			<div className="size-full mx-auto grid grid-cols-1 lg:grid-cols-6 gap-2">
-				<div className="col-span-1 lg:col-span-5 flex flex-col gap-2">
+		<div className="h-[70vh] bg-background">
+			<div className="size-full flex flex-col 2xl:flex-row gap-2">
+				<div className="basis-5/6 flex flex-col gap-2 ">
 					<Header symbol={symbol} />
-					<div className="flex flex-1 ">
-						<div className="flex-1 flex flex-col gap-2">
-							<div className="flex-1 flex ">
-								<div className="flex-1 flex flex-col rounded">
-									<div className="flex-1 flex gap-2">
-										<Chart symbol={symbol} />
-										<Orderbook symbol={symbol} />
-									</div>
-								</div>
-							</div>
-							<Footer symbol={symbol} />
+					<div className="flex flex-col flex-1 h-full gap-2">
+						<div className="flex flex-col 2xl:flex-row flex-1 h-full gap-2">
+							<Chart symbol={symbol} />
+							<Orderbook symbol={symbol} />
 						</div>
+						<Footer symbol={symbol} />
 					</div>
 				</div>
-				<div className="col-span-1">
-					<Sidebar />
-				</div>
+				<Sidebar />
 			</div>
 		</div>
 	);

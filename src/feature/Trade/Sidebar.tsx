@@ -1,6 +1,6 @@
 function Sidebar() {
 	return (
-		<div className="flex flex-col h-full bg-[#101014] p-4 gap-4">
+		<div className="basis-1/6 flex flex-col size-full bg-[#101014] p-4 gap-4">
 			<div className="font-semibold mb-2">Trade Panel</div>
 			<div className="space-y-3 flex-1 overflow-auto h-full flex flex-col justify-between">
 				<div className="bg-zinc-900 rounded p-3 flex flex-col gap-2">
