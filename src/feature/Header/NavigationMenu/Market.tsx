@@ -25,7 +25,7 @@ export function Market() {
 					<li>
 						<NavigationMenuLink asChild>
 							<Link to="/market/$category" params={{ category: "linear" }}>
-								<div className="font-medium">Linear</div>
+								<div className="font-medium">USDT Perpetual</div>
 								<div className="text-muted-foreground">
 									USDT-margined perpetual contracts settled in stablecoins.
 								</div>
@@ -35,14 +35,15 @@ export function Market() {
 					<li>
 						<NavigationMenuLink asChild>
 							<Link to="/market/$category" params={{ category: "inverse" }}>
-								<div className="font-medium">Inverse</div>
+								<div className="font-medium">Coin Perpetual</div>
 								<div className="text-muted-foreground">
 									Coin-margined contracts settled in the base cryptocurrency.
 								</div>
 							</Link>
 						</NavigationMenuLink>
 					</li>
-					<li>
+					{/* //TODO: подумать как реализовать option */}
+					{/* <li>
 						<NavigationMenuLink asChild>
 							<Link to="/market/$category" params={{ category: "option" }}>
 								<div className="font-medium">Option</div>
@@ -51,7 +52,7 @@ export function Market() {
 								</div>
 							</Link>
 						</NavigationMenuLink>
-					</li>
+					</li> */}
 				</ul>
 			</NavigationMenuContent>
 		</NavigationMenuItem>

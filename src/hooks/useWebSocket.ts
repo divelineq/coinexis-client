@@ -24,7 +24,7 @@ export const useWebSocket = <T>(
 	useEffect(() => {
 		if (!enabled) return;
 
-		const ws = new WebSocket("wss://stream.bybit.com/v5/public/spot");
+		const ws = new WebSocket("wss://stream-testnet.bybit.com/v5/public/spot");
 		wsRef.current = ws;
 
 		ws.onopen = () => {
