@@ -1,15 +1,17 @@
-import { NftApi } from "./nft";
-import { PortfolioApi } from "./portfolio";
-import { Ticker24hApi } from "./ticker24h";
-import { TickersApi } from "./tickers";
-import { TransactionsApi } from "./transactions";
+import { Nft } from "./nft";
+import { Portfolio } from "./portfolio";
+import { Ticker24h } from "./ticker24h";
+import { Tickers } from "./tickers";
+import { Transactions } from "./transactions";
+import { WalletBalance } from "./walletBalance";
 
 class Api {
-	public ticker24h = new Ticker24hApi();
-	public tickers = new TickersApi();
-	public nft = new NftApi();
-	public portfolio = new PortfolioApi();
-	public transactions = new TransactionsApi();
+	public ticker24h = new Ticker24h();
+	public tickers = new Tickers();
+	public nft = new Nft();
+	public portfolio = new Portfolio();
+	public transactions = new Transactions();
+	public walletBalance = new WalletBalance();
 }
 
 export const api = new Api();

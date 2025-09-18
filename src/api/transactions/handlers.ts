@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import type { SmartTransactions } from "src/api/types/transactions";
+import type { SmartTransactions } from "src/api/transactions/types";
 
 export const transactionsHandler = [
 	http.get<never, never, SmartTransactions>(

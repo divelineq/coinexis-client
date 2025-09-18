@@ -6,3 +6,5 @@ export type DefaultResponse<T> = {
 	time: number;
 	bybit: string;
 };
+
+export type AccountType = "UNIFIED" | "CONTRACT" | "SPOT" | "FUND";

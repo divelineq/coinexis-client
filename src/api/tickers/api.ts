@@ -1,6 +1,7 @@
-import type { DefaultResponse, TickersSpotResponse } from "@api";
+import type { DefaultResponse } from "@api";
 import axios from "axios";
 import qs from "query-string";
+import type { TickersSpotResponse } from "./types";
 
 type Params = {
 	category: string;
@@ -9,7 +10,7 @@ type Params = {
 	expDate?: string;
 };
 
-export class TickersApi {
+export class Tickers {
 	public async getTickers(
 		params: Params,
 		signal: AbortSignal,

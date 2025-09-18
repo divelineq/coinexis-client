@@ -1,7 +1,7 @@
 import { httpBinanceClient } from "../httpClient";
-import type { Ticker24HType } from "../types/tickers24h";
+import type { Ticker24HType } from "./types";
 
-export class Ticker24hApi {
+export class Ticker24h {
 	public async getOne(
 		symbol: string,
 		signal: AbortSignal,

@@ -1,7 +1,7 @@
 import axios from "axios";
-import type { SmartTransactions } from "../types/transactions";
+import type { SmartTransactions } from "./types";
 
-export class TransactionsApi {
+export class Transactions {
 	public async getMany(
 		wallet: string | null,
 		limit: number,

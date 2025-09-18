@@ -1,7 +1,7 @@
 import axios from "axios";
-import type { WalletNFTsResponse } from "../types/nft";
+import type { WalletNFTsResponse } from "./types";
 
-export class NftApi {
+export class Nft {
 	public async getMany(
 		wallet: string | null,
 		signal: AbortSignal,
