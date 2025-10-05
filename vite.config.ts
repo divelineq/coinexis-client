@@ -22,7 +22,7 @@ export default defineConfig({
 		alias: {
 			"@ui": path.resolve(__dirname, "./src/ui"),
 			"@api": path.resolve(__dirname, "./src/api"),
-			"@feature": path.resolve(__dirname, "./src/feature"),
+			"@features": path.resolve(__dirname, "./src/features"),
 			"@hooks": path.resolve(__dirname, "./src/hooks"),
 		},
 	},

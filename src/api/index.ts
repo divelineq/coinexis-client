@@ -16,4 +16,3 @@ class Api {
 
 export const api = new Api();
 export * from "./enums";
-export * from "./types";

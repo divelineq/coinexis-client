@@ -1,5 +1,5 @@
 import { httpBinanceClient } from "../httpClient";
-import type { Ticker24HType } from "./types";
+import type { Ticker24HType } from "../types";
 
 export class Ticker24h {
 	public async getOne(

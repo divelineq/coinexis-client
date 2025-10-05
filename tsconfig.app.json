@@ -6,7 +6,7 @@
     "paths": {
       "@ui": ["src/ui"],
       "@api": ["src/api"],
-      "@feature": ["src/feature"],
+      "@features": ["src/features"],
       "@hooks": ["src/hooks"]
     },
     "types": ["node"],

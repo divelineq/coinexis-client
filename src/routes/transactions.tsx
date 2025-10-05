@@ -1,4 +1,4 @@
-import { Transactions } from "@feature";
+import { Transactions } from "@features";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/transactions")({

@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { PortfolioType } from "./types";
+import type { PortfolioType } from "../types";
 
 export class Portfolio {
 	public async getOne(address: string | null, signal: AbortSignal) {

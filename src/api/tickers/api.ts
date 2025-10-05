@@ -1,7 +1,7 @@
 import type { DefaultResponse } from "@api";
 import axios from "axios";
 import qs from "query-string";
-import type { TickersSpotResponse } from "./types";
+import type { TickersSpotResponse } from "../types";
 
 type Params = {
 	category: string;

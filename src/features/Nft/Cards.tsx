@@ -1,8 +1,8 @@
 import type { WalletNFTsResponse } from "@api";
 import { ErrorScreen } from "@ui";
 import { Skeleton } from "./Card/Skeleton.tsx";
-import { Card } from "./Card/index.ts";
-import { ListToolbar } from "./ListToolbar";
+import { Card } from "./Card/index.ts.tsx";
+import { ListToolbar } from "./ListToolbar/index.tsx";
 
 export type CardsProps = {
 	data: WalletNFTsResponse | undefined;

@@ -1,4 +1,4 @@
-import { Market } from "@feature";
+import { Market } from "@features";
 import { createFileRoute } from "@tanstack/react-router";
 import { ErrorScreen } from "@ui";
 

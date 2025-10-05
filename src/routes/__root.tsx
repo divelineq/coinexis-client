@@ -1,4 +1,4 @@
-import { Header } from "@feature";
+import { Header } from "@features";
 import { createRootRoute } from "@tanstack/react-router";
 import { ErrorScreen } from "@ui";
 

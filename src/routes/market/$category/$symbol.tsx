@@ -1,4 +1,4 @@
-import { Trade } from "@feature";
+import { Trade } from "@features";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/market/$category/$symbol")({

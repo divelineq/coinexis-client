@@ -5,15 +5,6 @@ import { BestCoinsInfo } from "./CoinInfo";
 import { FeatureItem } from "./FeatureItem";
 
 function Home() {
-	// useEffect(() => {
-	// 	fetch("/api/asset/transfer/query-account-coins-balance?accountType=FUND")
-	// 		.then((res) => res.json())
-	// 		.then((data) => console.log(data, "query-account-coins-balance"));
-	// 	fetch("/api/asset/transfer/query-inter-transfer-list")
-	// 		.then((res) => res.json())
-	// 		.then((data) => console.log(data, "query-inter-transfer-list"));
-	// }, []);
-
 	return (
 		<main className="bg-background text-white font-orbitron min-h-screen overflow-x-hidden">
 			<section className="py-20 px-6 md:px-20">

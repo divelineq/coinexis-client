@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { SmartTransactions } from "./types";
+import type { SmartTransactions } from "../types";
 
 export class Transactions {
 	public async getMany(
