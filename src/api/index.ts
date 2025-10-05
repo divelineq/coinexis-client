@@ -9,7 +9,7 @@ import { WalletBalance } from "./walletBalance";
 
 class Api {
 	public inferTransferList = new InferTransferList();
-	public queryAccountCoinsBalance = new AccountCoinsBalance();
+	public accountCoinsBalance = new AccountCoinsBalance();
 	public ticker24h = new Ticker24h();
 	public tickers = new Tickers();
 	public nft = new Nft();

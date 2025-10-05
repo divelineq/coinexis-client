@@ -5,9 +5,9 @@ import type {
 } from "../../../dto";
 
 export class AccountCoinsBalance {
-	public async getOne(params: AccountCoinsBalanceParams, signal: AbortSignal) {
+	public async getOne(signal: AbortSignal, params: AccountCoinsBalanceParams) {
 		const res = await axios.get<AccountCoinsBalanceResponse>(
-			`api/query-account-coins-balance?accountType=${params.accountType}&coin=${params.coin}`,
+			`api/asset/transfer/query-account-coins-balance?accountType=${params.accountType}&coin=${params.coin}`,
 			{ signal },
 		);
 
@@ -15,11 +15,11 @@ export class AccountCoinsBalance {
 	}
 
 	public async getMany(
-		params: Pick<AccountCoinsBalanceParams, "accountType">,
 		signal: AbortSignal,
+		params: Pick<AccountCoinsBalanceParams, "accountType">,
 	) {
 		const res = await axios.get<AccountCoinsBalanceResponse[]>(
-			`api/query-account-coins-balance?accountType=${params.accountType}`,
+			`api/asset/transfer/query-account-coins-balance?accountType=${params.accountType}`,
 			{ signal },
 		);
 

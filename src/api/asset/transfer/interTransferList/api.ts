@@ -5,9 +5,9 @@ import type {
 } from "../../../dto";
 
 export class InferTransferList {
-	public async getMany(params: InferTransferListParams, signal: AbortSignal) {
+	public async getMany(signal: AbortSignal, params?: InferTransferListParams) {
 		const res = await axios.get<AccountCoinsBalanceResponse[]>(
-			`api/query-inter-transfer-list?accountType=${params.coin}&startTime=${params.startTime}&endTime=${params.endTime}&limit=${params.limit}&cursor=${params.cursor}`,
+			`/api/asset/transfer/query-inter-transfer-list?transferId=${params?.transferId}&coin=${params?.coin}&status=${params?.status}&startTime=${params?.startTime}&endTime=${params?.endTime}&limit=${params?.limit}&cursor=${params?.cursor}`,
 			{ signal },
 		);
 
