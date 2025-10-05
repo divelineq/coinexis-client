@@ -1,6 +1,6 @@
 import axios from "axios";
-import type { WalletBalanceResponse } from "../types";
-import type { AccountType } from "../types/common";
+import type { WalletBalanceResponse } from "../dto";
+import type { AccountType } from "../dto/common";
 
 export class WalletBalance {
 	public async getMany(signal: AbortSignal, accountType: AccountType) {

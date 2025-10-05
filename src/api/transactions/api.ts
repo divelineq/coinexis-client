@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { SmartTransactions } from "../types";
+import type { SmartTransactionsResponse } from "../dto";
 
 export class Transactions {
 	public async getMany(
@@ -8,7 +8,7 @@ export class Transactions {
 		offset: number,
 		signal: AbortSignal,
 	) {
-		const res = await axios.get<SmartTransactions>(
+		const res = await axios.get<SmartTransactionsResponse>(
 			`api/transactions?wallet=${wallet}&limit=${limit}&offset=${offset}`,
 			{ signal },
 		);

@@ -51,4 +51,6 @@ export const MANY_PORTFOLIO_VALIDATION_SCHEMA = z.object({
 	assets: ASSETS_VALIDATION_SCHEMA,
 });
 
-export type PortfolioType = z.infer<typeof MANY_PORTFOLIO_VALIDATION_SCHEMA>;
+export type PortfolioResponse = z.input<
+	typeof MANY_PORTFOLIO_VALIDATION_SCHEMA
+>;

@@ -24,5 +24,5 @@ export const WalletNFTsResponseSchema = z.object({
 	pagination: PAGINATION_VALIDATION_SCHEMA,
 });
 
-export type NFTType = z.infer<typeof NFT_VALIDATION_SCHEMA>;
+export type NFTResponse = z.input<typeof NFT_VALIDATION_SCHEMA>;
 export type WalletNFTsResponse = z.infer<typeof WalletNFTsResponseSchema>;

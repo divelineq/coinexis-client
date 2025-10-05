@@ -24,4 +24,4 @@ export const TICKER_24H_VALIDATION_SCHEMA = z.object({
 	count: z.number().int().nonnegative(),
 });
 
-export type Ticker24HType = z.infer<typeof TICKER_24H_VALIDATION_SCHEMA>;
+export type Ticker24HResponse = z.input<typeof TICKER_24H_VALIDATION_SCHEMA>;

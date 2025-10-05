@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { WalletNFTsResponse } from "../types";
+import type { WalletNFTsResponse } from "../dto";
 
 export class Nft {
 	public async getMany(

@@ -74,7 +74,9 @@ export const TRANSACTIONS_VALIDATION_SCHEMA = z.object({
 		.optional(),
 });
 
-export type TransactionType = z.infer<typeof TRANSACTIONS_VALIDATION_SCHEMA>;
+export type TransactionResponse = z.input<
+	typeof TRANSACTIONS_VALIDATION_SCHEMA
+>;
 
 const AssetSchema = z.object({
 	name: z.string(),
@@ -84,7 +86,6 @@ const AssetSchema = z.object({
 	logo: z.url(),
 });
 
-// Схема для отдельной транзакции
 const TransactionSchema = z.object({
 	timestamp: z.number(),
 	asset: AssetSchema,
@@ -112,6 +113,6 @@ export const WalletTransactionsResponseSchema = z.object({
 	}),
 });
 
-export type SmartTransactions = z.infer<
+export type SmartTransactionsResponse = z.input<
 	typeof WalletTransactionsResponseSchema
 >;
